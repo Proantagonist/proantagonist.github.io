@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script type="text/javascript" src="//use.typekit.net/chg3ejy.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <title>TAMU CatMapper</title>
+    </head>
+
+
+    <body>
+        <div id="landing">
+            
+            <iframe id="landing-map"
+              width="100%"
+              height="100%"
+              frameborder="0" style="border:0"
+              src="https://www.google.com/maps/embed/v1/view?key=AIzaSyD9qD73Z4DtNIiYsNErbNYyDepAKFB4YBw&center=30.612297, -96.340191
+              &zoom=17
+              &maptype=satellite">
+            </iframe>
+
+            <div id="landing-base">
+                <header>
+                    <nav class="login-sign">
+                        <a class="button-2" href="#">Sign Up</a>
+                        <a class="button-2" href="#">Log In</a>
+                    </nav>
+                </header>
+                <div id="intro">
+                    <h1>CAT MAPPER <span id="title"></span></h1>
+                    <h3>A Volunteer Map of Outdoor Cats</h3>
+                    
+                    <a href="#cat-map" class="button-1">start mapping cats</a>
+                    <p><span class="separator">OR</span></p>
+                    <a href="#about" class="button-1">learn about this project</a>
+                    </div>
+                <div id="mobile-app">
+                    <p>Download it for:</p>
+                    <span class="product-logo" id="apple"><a href="#" class="image-link"></a></span>
+                    <span class="product-logo" id="andy"><a href="#" class="image-link"></a></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mapping">
+        
+            <nav id="shape-controls">
+                <a href="#" class="button-3">SUBMIT SHAPE</a>
+                <a href="#" class="button-3">DELETE SHAPE</a>
+            </nav>
+            
+            <iframe id="cat-map"
+              width="90%"
+              height="75%"
+              frameborder="0"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD9qD73Z4DtNIiYsNErbNYyDepAKFB4YBw
+                &q=Texas+A%26M+University">
+            </iframe>
+        </div>
+        
+        <div id="about">
+        
+                <span class="separator"><h2>ABOUT</h2></span>
+            
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        
+        <footer>
+        
+                <p>Texas A&amp;M University &copy; 2014 &mdash; GeoInnovation Center</p>
+            <nav>
+                <ul>
+                    <li><a href="#">About   |   </a></li>
+                    <li><a href="#">Contact |   </a></li>
+                    <li><a href="#">Security Policy |   </a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </nav>
+        
+        </footer>
+    
+    </body>
+    
+</html>
