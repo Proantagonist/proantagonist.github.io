@@ -365,6 +365,10 @@ footer li:after{
     width:4rem;
 }
 
+#credit, #credit a{
+    font-size:.9rem;
+    line-height:2rem;
+}
 
 
 
