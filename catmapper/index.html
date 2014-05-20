@@ -6,8 +6,27 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="//use.typekit.net/chg3ejy.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script>
+    //Snippet from "http://css-tricks.com/snippets/jquery/smooth-scrolling/"
+	$(function() {
+	  $('a[href*=#]:not([href=#])').click(function() {
+	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+
+	      var target = $(this.hash);
+	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+	      if (target.length) {
+	        $('html,body').animate({
+	          scrollTop: target.offset().top
+	        }, 1000);
+	        return false;
+	      }
+	    }
+	  });
+	});
+	</script>
     <title>TAMU CatMapper</title>
     </head>
 
@@ -36,17 +55,22 @@
                     <span class="product-logo" id="apple"><a href="#" class="image-link"></a></span>
                     <span class="product-logo" id="andy"><a href="#" class="image-link"></a></span>
                 </div>
+                <div class="arrowContainer" title="Continue to Mapping">
+                    <div class="downArrow">
+                        <a href="#mapping" class="image-link"></a>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div id="mapping">
-        
             <nav id="shape-controls">
-                <a href="#" class="button-3">SUBMIT SHAPE</a>
-                <a href="#" class="button-3">DELETE SHAPE</a>
+                <a href="javascript:void(0)" class="button-3">SUBMIT SHAPE</a>
+                <a href="javascript:void(0)" class="button-3">DELETE SHAPE</a>
             </nav>
             
             <div id="cat-mapContainer">
+                
                 <iframe id="cat-map"
                   width="100%"
                   height="100%"
@@ -55,35 +79,43 @@
                     &q=Texas+A%26M+University">
                 </iframe>
             </div>
+            <div class="arrowContainer">
+                <div class="downArrow">
+                    <a href="#about" title="Continue.." class="image-link"></a>
+                </div>
+            </div>
 
         </div>
         
         <div id="about">
         
             <h2>ABOUT</h2>
-            <h3>What's our mission?</h3>
+            <h4>What's our mission?</h4>
             <p>Stemming from research at the Texas A&M University Department of Geography, TAMU GeoServices offers a number of geographic information processing services. These services are provided to the greater geospatial community to assist in geospatial-related research and data processing, analysis, and visualization. Texas A&M University Geoservices offers direct access to the latest cutting edge research on geocoding, address parsing, normalization and standardization, and open source geospatial mapping and visualization.</p>
             
-            <h3>Facts &amp; Figures</h3>
+            <h4>Facts &amp; Figures</h4>
             <p>New to Texas A&M GeoServices? Interested but not sure if we are legit? Read a little about the facts & figures of our services to help you decide if using our services is for you. Our services are called over                      250,000 times a day on a regular basis. We have over 14,000 users to date who rely on us! Why not add yourself to this list?</p>
             
-            <h3>People</h3>
+            <h4>People</h4>
             <p>The Texas A&M GeoServices site is developed, maintained, and support for TAMU students, faculty, and staff. We strive to train our students to be successful GIScientists and developers. Employment at TAMU GeoServices provides these students with training and real-world experience that we hope will get them jobs.</p>
             
-            <h3>Privacy &amp; Security</h3>
+            <h4>Privacy &amp; Security</h4>
             <p>We know that your data are important to you. We know that in many cases, these data may be confidential or otherwise secure. We take the security of your data very seriously, and have policies, training, and continual testing and certification in place to make sure that your data are as secure as possible. Our security policies enable us to store and process health data, for example.</p>
             
-            <h3>UCGIS Profile</h3>
+            <h4>UCGIS Profile</h4>
             <p>Texas A&M University is a member institution of the University Consortium for Geographic Information Science (UCGIS). UCGIS provides TAMU students, faculty & staff with the ability to participate in national research projects, drive GIS education internationally, and affect policy with respect to the collection, analysis, and use of geographic information.</p>
             
-            <h3>Esri Developer Center</h3>
+            <h4>Esri Developer Center</h4>
             <p>Texas A&M University GeoServices is a recognized Esri Development Center (EDC). Being a member of the EDC program provides TAMU students, faculty & staff with unparalleled access to Esri resources, free passes to the Esri User and Developer Conferences, and cutting-edge tools to help facilitate GIS research & development.</p>
             
-            <h3>Careers & Assistantships</h3>
+            <h4>Careers & Assistantships</h4>
             <p>Interested in working with us at Texas A&M GeoServices? We are continually in need of support staff & developers. We have positions for TAMU students as well full-time staff. Prospective PhD and Masters students looking to do research in any of the GeoServices areas should see our current openings.</p>
             
-            
-            
+        </div>
+        <div class="arrowContainer">
+            <div id="arrowPosition1" class="upArrow">
+                <a href="#landing" title="Back to Top" class="image-link"></a>
+            </div>
         </div>
         
         <footer>

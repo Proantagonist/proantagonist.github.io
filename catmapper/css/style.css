@@ -19,18 +19,16 @@ h1{
     font-size : 6.5rem;
     line-height : 7.2rem;
     letter-spacing : 1.625rem;
-    color : #FF9969;
-    color : rgb(255, 153, 105);
+    color : #EE352A;
     padding-top:10%;
 }
 
 h2{
-    font-weight:300;
+    font-weight:600;
     font-size:4.2rem;
     line-height:4.8rem;
     letter-spacing:1.05rem;
-     color : #FF9969;
-     color : rgb(255, 153, 105);
+    color : #EE352A
 }
 
 h3{
@@ -40,8 +38,19 @@ h3{
     font-size : 2.2rem;
     line-height : 5rem;
     letter-spacing : 0.42px;
-    color : #FFFFFF;
-    color : rgb(255, 255, 255);
+    color : #EE352A;
+    
+}
+
+h4{
+    font-family: "ff-enzo-web", sans-serif;
+    font-weight:300;
+    font-style:normal;
+    font-size : 2.2rem;
+    letter-spacing : 0.42px;
+    color : #EE352A;
+    padding:2rem 0;
+    
 }
 
 a, p, span{
@@ -62,32 +71,37 @@ p{
 
 #landing, #mapping, #about, footer{
     overflow:hidden;
+    z-index:0;
 }
 
 #landing{
-    border-top: 1em solid #FF9969;
-    background-image:url(../images/landingBG.jpg);
+    border-top: 1em solid #EE352A;
     background-repeat:no-repeat;
     background-size:cover;
 }
 
+#intro{
+    
+}
+
 #intro span{
-    color:white;
+    color:#666666;
     display:block;
 }
 
 #landing-base{
     position:relative;
-    background:rgba(18, 11, 9, .92);
+    background:white;
     max-height:100%;
     width:100%;
     text-align:center;
-    padding-bottom: 15%;
+    padding-bottom: 10%;
     
 }
 
 .button-1{
-    border:1pt solid rgb(255, 153, 105);
+    border:1pt solid #EE352A;
+    color: #EE352A;
     display:block;
     max-width:24rem;
     border-radius:2px;
@@ -99,15 +113,17 @@ p{
 }
 
 .button-1:hover{
-    background:rgb(255, 153, 105);
-    color: rgb(18, 11, 9);
+    background:#EE352A;
+    color: white;
     -webkit-transition:all .4s ease-out;
     -moz-transition:all .4s ease-out;
     transition:all .4s ease-out;
 }
 
 .button-2{
-    border: 1px solid white;
+    
+    border-bottom:1px solid #EE352A;
+    color: #EE352A;
     display:inline-block;
     max-width:7rem;
     border-radius:2px;
@@ -122,15 +138,16 @@ p{
 }
 
 .button-2:hover{
-    background:white;
-    color:black;
+    background:#EE352A;
+    color:white;
     -webkit-transition:all .4s ease-out;
     -moz-transition:all .4s ease-out;
     transition:all .4s ease-out;
 }
 
 .button-3{
-    border:1pt solid white;
+    border:1pt solid #EE352A;
+    color:#EE352A;
     display:inline-block;
     width:45%;
     border-radius:2px;
@@ -142,8 +159,8 @@ p{
 }
 
 .button-3:hover{
-    background:white;
-    color: rgb(255, 153, 105);
+    background:#EE352A;
+    color: white;
     -webkit-transition:all .4s ease-out;
     -moz-transition:all .4s ease-out;
     transition:all .4s ease-out;
@@ -155,11 +172,14 @@ p{
 }
 
 #mobile-app{
-    color:white;
     position:absolute;
     float:left;
     top:0;
     margin:0 1%;
+}
+
+#mobile-app p{
+    color:#EE352A;
 }
 
 #title{
@@ -175,13 +195,12 @@ p{
     width:2.375rem;
     position:relative;
     margin:0 1rem;
-    opacity:1;
-    -webkit-transition:opacity .5s ease-in;
+    -webkit-transition:all .3s ease;
 }
 
 .product-logo:hover{
-    opacity:.5;
-    -webkit-transition:opacity .5s ease-out;
+    -webkit-transform:translateY(-10px);
+    -webkit-transition: all .3s ease;
 }
 
 #apple{
@@ -203,7 +222,7 @@ p{
 }
 
 .separator:before, .separator:after{
-    border-top:1px solid white;
+    border-top:1px solid #666666;
     display:block;
     height:1px;
     content:" ";
@@ -221,21 +240,14 @@ p{
 #mapping,
 #about{
     position:relative;
-    background:#ff9969;
-    background:rgb(255,153,105);
     height:100%;
     width:100%;
     text-align:center;
-    background-image:url(../images/dashed-bg.svg);
     background-size:cover;
     background-repeat:no-repeat;
     
 }
 
-#about{
-    background:#120b09;
-    padding-bottom:3rem;
-}
 
 #about h3, #about p{
     line-height:initial;
@@ -243,7 +255,8 @@ p{
 }
 
 #about p{
-    font-weight:100;
+    font-weight:300;
+    color:#666;
     margin:0 auto;
     width:70%;
 }
@@ -270,12 +283,13 @@ p{
 footer{
     height: 100%;
     width:100%;
-    background:rgb(255, 153, 105);
+    background:#EE352A;
     color:white;
     font-size:1rem;
     letter-spacing:0.27px;
     text-align:center;
     padding-bottom:1rem;
+    margin-top:2rem;
 }
 
 footer ul, li{
@@ -301,9 +315,63 @@ footer li:after{
     content:none;
 }
 
-/*MEDIA QUERIES*/
 
-@media only screen and (min-width:320px) and (max-width:820px){
+.upArrow{
+    height:2.2rem;
+    width:2.2rem;
+    margin:0 auto;
+    border: 1px solid #EE352A;
+    border-bottom:0;
+    border-right:0;
+    -webkit-transform:rotate(45deg);
+        -moz-transform:rotate(45deg);
+            -transform:rotate(45deg);
+    -webkit-transition:all .3s ease-in;
+        -moz-transition:all .3s ease-in;
+            transition:all .3s ease-in;
+}
+
+.upArrow:hover{
+    border-color:#666666;
+    -webkit-transition:all .3s ease-out;
+        -moz-transition:all .3s ease-out;
+            transition:all .3s ease-out;
+}
+
+.downArrow{
+    height:2.2rem;
+    width:2.2rem;
+    margin:0 auto;
+    border: 1px solid #EE352A;
+    border-top:0;
+    border-left:0;
+    -webkit-transform:rotate(45deg);
+        -moz-transform:rotate(45deg);
+            -transform:rotate(45deg);
+    -webkit-transition:all .3s ease-in;
+        -moz-transition:all .3s ease-in;
+            transition:all .3s ease-in;
+}
+
+.downArrow:hover{
+    border-color:#666666;
+    -webkit-transition:all .3s ease-out;
+        -moz-transition:all .3s ease-out;
+            transition:all .3s ease-out;
+}
+
+.arrowContainer{
+    margin:4rem auto;
+    width:4rem;
+}
+
+
+
+
+/*--------------------------------MEDIA QUERIES--------------------------------*/
+
+
+@media only screen and (min-width:315px) and (max-width:820px){
     #mobile-app{
         color:white;
         position:relative;
@@ -318,7 +386,7 @@ footer li:after{
         margin: 0 auto;
 }
 
-@media only screen and (min-width:320px) and (max-width:610px){
+@media only screen and (min-width:315px) and (max-width:610px){
     h1{
         font-size:4.5rem;
         line-height:6.2rem;
@@ -343,10 +411,14 @@ footer li:after{
 
 }
 
-@media only screen and (min-width:320px) and (max-width:440px){
+@media only screen and (min-width:315px) and (max-width:440px){
     h1{
         font-size:2.5rem;
         line-height:3.2rem;
     }
+
+    .button-1{
+    max-width:18rem;
+}
     
 }
