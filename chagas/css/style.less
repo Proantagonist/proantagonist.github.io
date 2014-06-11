@@ -2,7 +2,10 @@
 
 @maincolor:#ffcc00;
 @secondcolor:#463d34;
+@adminprimary: #3C3C3C;
 @white: #ffffff;
+@border: #DCDDDE;
+@borderFocus:#d3d3d3;
 @lato: 'Lato', sans-serif;
 @opensans:'Open Sans', sans-serif;
 
@@ -35,11 +38,11 @@
 	-o-transform: 		 skew(@deg, @deg2);
 }
 
-.transition (@transition) {
-	-webkit-transition: @transition;  
-	-moz-transition:    @transition;
-	-ms-transition:     @transition; 
-	-o-transition:      @transition;  
+.transition (@string) {
+	-webkit-transition: @string;  
+	-moz-transition:    @string;
+	-ms-transition:     @string; 
+	-o-transition:      @string;  
 }
 
 .animation (@name, @duration: 300ms, @delay: 0, @ease: ease) {
@@ -59,12 +62,15 @@ html {
   font-size: 1.5rem;
   letter-spacing: 1px;
   color: @secondcolor;
+  -webkit-font-smoothing: antialiased;
 }
+
 .content {
   overflow-x: hidden !important;
 }
 h1 {
   font-family: @opensans;
+    font-weight: 600;
 }
 h2 {
   font-family: @opensans;
@@ -149,7 +155,7 @@ em {
 }
 nav {
   padding: .4rem 0 .6rem 0;
-  background: @white;
+  background: rgba(255, 255, 255, 0.3);
   width: 100%;
   font-family: @opensans;
   font-weight: bold;
@@ -160,10 +166,17 @@ nav {
   z-index: 1001;
   text-align: center;
   top: 0;
+    -webkit-transition:background .7s ease;
 }
+
+nav:hover{
+    background: rgba(255, 255, 255,1);
+    -webkit-transition:background .7s ease;
+}
+
 nav a {
-  margin: 0 5%;
-  display: inline-block;
+    margin: 0 5%;
+    display: inline-block;    
 }
 nav a {
   text-decoration: none;
@@ -631,13 +644,354 @@ button:hover {
   transition: all 0.15s linear;
 }
 
+.floating-label-form-group label {
+    display: block;
+    position: relative;
+    opacity: 0;
+    z-index: 0;
+    font-size: .75em;
+    color: #c6bdb3;
+    vertical-align: middle;
+    text-align: center;
+    vertical-align: baseline;
+    margin: 0;
+    -webkit-transition: top 0.3s ease, opacity 0.3s ease;
+    -moz-transition: top 0.3s ease, opacity 0.3s ease;
+    -ms-transition: top 0.3s ease, opacity 0.3s ease;
+    transition: top 0.3s ease, opacity 0.3s ease;
+}
+
+.floating-label-form-group {
+//  border-left: 1px solid #ccc;
+//  padding-left: 14px;
+   
+}
+
+
+.floating-label-form-group-with-value label {
+  top: 0;
+  opacity: 1;
+}
+
+.floating-label-form-group-with-focus label {
+  color: #c6bdb3;
+}
+
+form .row:first-child .floating-label-form-group {
+  /*border-top: 1px solid #ccc;*/
+}
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGEMENT PANEL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+.adminHeader{
+    height: 2em;
+    width: 100%;
+    position: relative;
+    background: @adminprimary;
+    position: fixed;
+}
+
+article.adminContent{
+    top: 2em;
+    position: relative;
+}
+.admin#tabContainer{
+    padding: 0;
+}
+
+h1.admin{
+    color: @adminprimary;
+    font-family: 'Open Sans', sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-size: 1.5em !important;
+    letter-spacing: 2.3px;
+}
+
+h3.admin{
+    color: @adminprimary;
+    font-family: 'Open Sans', sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+    font-size: .7em;
+    letter-spacing: 2.3px;
+    padding: 1em 0;
+}
+
+h3.admin:first-child{
+    padding-top: 0;
+}
+
+.titleFormat{
+    padding: 1em 5.5em !important;
+    font-family: @opensans;
+    
+    p{
+        font-size: .64em;
+    }
+}
+
+.contentFormat{
+    padding: 2em 7em;
+}
+
+#tabContainer{
+    width: 100%;
+    margin-top:2em;
+}
+
+nav.admin{
+    background: none;
+}
+
+.tabs input[type=radio]{
+    display: none;
+}
+
+.tabs{
+    float: none;
+    list-style: none;
+    position: relative;
+    padding: 0;
+    font-family: @opensans;
+    padding-left: 10%;
+}
+
+.tabs li{
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
+    list-style: none;
+    margin: 0 -3px;
+}
+
+.tabs label{
+    border-radius: 2px 2px 0 0;
+    color: lighten(@adminprimary,30%);
+    cursor: pointer;
+    display: block;
+    padding: .55em 3em;
+    position: relative;
+//    -webkit-transition: all 0.2s ease-in-out;
+}
+
+.tab-content{
+    border-top: 1px solid @border;
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    top: 53px;
+    position: absolute;
+    text-align: left;
+    width: 100%;
+    z-index: 2;
+    -webkit-animation-duration: 0.5s;
+    -o-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+
+.tabs label:hover{
+    color: @adminprimary;
+}
+
+[id^=tab]:checked + label{
+    background: none;
+    border: 1px solid @border;
+    border-bottom: 5px solid white;
+    border-radius: 2px;
+    color: @secondcolor;
+    font-weight: 600;
+    z-index: 3;
+}
+
+[id^=tab]:checked ~ [id^=tab-content]{
+    display: block;
+}
+
+
+.input-item.admin{
+    margin: .8em 0;
+}
+
+input.admin{
+    font-family: @opensans;
+    margin: 0;
+    text-align: left;
+    padding-left: 1em;
+    z-index: 10;
+    border: 1px solid @border;
+}
+
+input.admin:focus{
+    outline: 2px solid #d3d3d3;
+}
+
+div.input-item.admin{
+    width: 20em;
+}
+
+button.admin{
+    font-family: @opensans;
+    text-align: center;
+    margin: 0 25%;
+    background: white;
+    border: 1px solid #d3d3d3;
+    color: @adminprimary;
+    font-variant: small-caps;
+    letter-spacing: 2.3px;
+}
+
+button.admin:hover,
+button.admin:focus{
+    background: @adminprimary;
+    color: #d3d3d3;
+}
+
+.form{
+    width: 20em;
+}
+
+.third{
+    width: 30%;
+    display: inline-block;
+}
+
+table{
+    width: 100%;
+    font-size: .8em;
+}
+
+thead{
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+th,td{
+    padding-left: .5em;
+    -webkit-transition:all .1s linear;
+}
+    
+td:first-child:hover{
+    color: #25AE60;
+    cursor: pointer;
+}
+    
+th:hover{
+    background: #e0e0e0;
+    -webkit-transition:all .1s linear;
+}
+    
+tr:not(th):hover{
+    background: @border;
+}
+        
+span{
+    padding-right: 1em;
+}
+    
+span:last-child{
+    padding-right: 0;
+}
+    
+span.details{
+    color: #3CADF1;
+}
+span.delete{
+    color: #DF4846;
+}
+    
+span.delete:hover,
+span.details:hover{
+    cursor:pointer;
+}
+
+select{
+    height: 3.5em;
+    width: 15em;
+    border: 1px solid @border;
+    text-align: center;
+    font-family: @lato;
+    font-size: .9em;
+    text-align: center;
+    border-radius: 2px;
+}
+
+select:focus{
+    outline: 2px solid @borderFocus;
+}
+
+#parentrolesContainer{
+   margin-top: 2em;
+}
+
+#rolesContainer{
+    width: 50%;
+}
+
+    #iosToggleArea {
+    height: 30px;
+    width: 60px;
+    border: 1px solid #C6C6C6;
+    border-radius: 20px;
+    background-color: #FEFEFE;
+    -webkit-transition:background-color .5s;
+}
+#iosToggleCircle {
+    height: 30px;
+    width:30px;
+    border: 1px solid #C6C6C6;
+    border-radius:20px;
+    background-color:#FEFEFE;
+    position: relative;
+    top: -1px;
+    left: -1px;
+    box-shadow: 0px 2px 20px -2px #999999;
+    -webkit-transition: all .5s;
+}
+.itemLabel {
+    font-family: calibri;
+    font-weight: bold;
+    font-size: 17px;
+    position: relative;
+    top:14px;
+    -webkit-transition: all .5s;
+}
+[id^=dummy_check] {
+//    display:none;
+}
+[id^=dummy_check]:checked ~ #iosToggleArea {
+    background-color: #4BD763;
+    -webkit-transition: background-color .5s;
+}
+.activeToggle {
+    left: 30px !important;
+    height: 26px !important;
+    width: 26px !important;
+    top: 1px !important;
+}
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<MANAGEMENT PANEL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 //------------------MEDIA QUERIES------------------
+
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+  .title {
+    top: -3.5em;
+  }
+  button.trigger {
+    bottom: 0;
+  }
+}
 
 @media screen and (max-width: 430px) {
   p,
   .question,
   li,
+  .floating-label-form-group label,
   input[type="text"],
   input[type="email"],
   input[type="color"],
@@ -672,14 +1026,7 @@ button:hover {
     font-size: 1em;
   }
 }
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
-  .title {
-    top: -3.5em;
-  }
-  button.trigger {
-    bottom: 0;
-  }
-}
+
 @media screen and (max-width: 546px) {
   #speciesShowcase {
     width: 100%;
@@ -688,6 +1035,7 @@ button:hover {
     display: none;
   }
 }
+
 @media screen and (max-width: 800px) {
   .content > div:not(.title) {
     padding: 0 1em;
@@ -700,3 +1048,4 @@ button:hover {
     margin: 0 auto;
   }
 }
+

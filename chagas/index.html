@@ -5,6 +5,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <meta charset="utf-8"> 
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic|Open+Sans:600italic,600,400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css">
     <title>Kissing Bugs and Chagas in Texas</title>
@@ -213,11 +214,26 @@ Kissing bugs are members of the Reduviidae family of insects. Other reduviids th
                     <p class="sectionDesc">We prefer email but if that's not your style we understand.</p>
                     
                     <div id="form" class="half">
-                        <input type="text" placeholder="First Name">
-                        <input type="text" placeholder="Last Name">
-                        <input type="email" placeholder="Email">
-                        <input type="text" placeholder="Message Title">
-                        <textarea type="text" placeholder="Message" style="height:4rem;"></textarea>
+                        <div class="input-item form-group floating-label-form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" placeholder="First Name" name="firstName">
+                        </div>
+                        <div class="input-item form-group floating-label-form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" placeholder="Last Name" name="lastName">
+                        </div>
+                        <div class="input-item form-group floating-label-form-group">
+                            <label for="email">Email</label>
+                            <input type="email" placeholder="Email" name="email">
+                        </div>
+                        <div class="input-item form-group floating-label-form-group">
+                            <label for="title">Message Title</label>
+                            <input type="text" placeholder="Message Title" name="title">
+                        </div>
+                        <div class="input-item form-group floating-label-form-group">
+                            <label for="message">Message</label>
+                            <textarea type="text" placeholder="Message" style="height:4rem;" name="message"></textarea>
+                        </div>
                         <button type="submit"><span id="content">Submit</span></button>
                     </div>
                     <div id="alternatecontact" class="half">

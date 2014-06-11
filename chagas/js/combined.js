@@ -1,5 +1,7 @@
 
-    //Snippet from "http://css-tricks.com/snippets/jquery/smooth-scrolling/"
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN SMOOTH VERTICAL SCROLLING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    
+
+//Snippet from "http://css-tricks.com/snippets/jquery/smooth-scrolling/"
 	$(function() {
 	  $('a[href*=#]:not([href=#])').click(function() {
 	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -16,6 +18,9 @@
 	  });
 	});
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END SMOOTH VERTICAL SCROLLING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN ACTIVE NAVIGATION TRACKING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 $("nav a").click( function() {
   $(".active").removeClass("active");
@@ -37,6 +42,35 @@ function menutoggle(){
       else
         $('#mainnav').stop().animate({"opacity": '0'});
 }
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END ACTIVE NAVIGATION TRACKING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+$("#iosToggleCircle").click(function (){
+    $("#iosToggleCircle").toggleClass("activeToggle");
+    if(".checkbox").checked{
+        $(".checkbox").prop('checked',false);
+    else
+        $(".checkbox").prop('checked',true);
+    }
+    
+});
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN FLOATING LABELS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+$(function() {
+  $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+    $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+  }).on("focus", ".floating-label-form-group", function() {
+    $(this).addClass("floating-label-form-group-with-focus");
+  }).on("blur", ".floating-label-form-group", function() {
+    $(this).removeClass("floating-label-form-group-with-focus");
+  });
+});
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END FLOATING LABELS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN LANDING PAGE EFFECT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 (function() {
 
@@ -178,3 +212,5 @@ function menutoggle(){
     window.addEventListener( 'scroll', scrollPage );
     trigger.addEventListener( 'click', function() { toggle( 'reveal' ); } );
 })();
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END LANDING PAGE EFFECT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
