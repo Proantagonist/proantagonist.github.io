@@ -4,7 +4,7 @@
 	font-family: 'ff-enzo-web';
 }
 
-html, body, .container, .header, .adminContent {
+html, body, .container, .header{
 	height: 100%;
 }
 

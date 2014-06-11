@@ -45,15 +45,6 @@ function menutoggle(){
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END ACTIVE NAVIGATION TRACKING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-$("#iosToggleCircle").click(function (){
-    $("#iosToggleCircle").toggleClass("activeToggle");
-    if(".checkbox").checked{
-        $(".checkbox").prop('checked',false);
-    else
-        $(".checkbox").prop('checked',true);
-    }
-    
-});
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN FLOATING LABELS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
