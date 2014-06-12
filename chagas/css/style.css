@@ -612,10 +612,56 @@ form .row:first-child .floating-label-form-group {
   /*border-top: 1px solid #ccc;*/
 }
 .adminHeader {
-  height: 2em;
-  width: 100%;
-  position: relative;
   background: #3c3c3c;
+  color: #ffffff;
+  height: 2em;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.menu.item,
+.menu.link {
+  display: inline-block;
+}
+.menu.item#logo {
+  width: 1.9em;
+  height: 1.9em;
+  background-image: url(../images/genericbug-compressor-header.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.menu.link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: .66em;
+  position: relative;
+  bottom: .9em;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.menu.link:hover {
+  opacity: .6;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.menu.link,
+.menu.item {
+  margin: 0 .2em;
+}
+#left-menu {
+  float: left;
+  position: relative;
+}
+#right-menu {
+  float: right;
+  position: relative;
+  bottom: -0.9em;
 }
 article.adminContent {
   position: relative;
@@ -641,7 +687,8 @@ h3.admin {
   font-weight: bold;
   font-size: .7em;
   letter-spacing: 2.3px;
-  padding: 1em 0;
+  margin: .6em 0;
+  border-bottom: 1px solid #e1e2e3;
 }
 h3.admin:first-child {
   padding-top: 0;
@@ -653,15 +700,23 @@ h3.admin:first-child {
 .titleFormat p {
   font-size: .64em;
 }
+.menuContainer {
+  padding: 1em 5.5em !important;
+  font-family: 'Open Sans', sans-serif;
+  max-height: 100%;
+  padding: 0 5.5em !important;
+}
+.menuContainer p {
+  font-size: .64em;
+}
 #disclaimer {
   color: #DF4846;
   padding: 1em 0;
   font-size: .6em;
   text-align: center;
-  margin: 0 auto;
-}
-#disclaimer span {
-  top: 50%;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 }
 .contentFormat {
   padding: 2em 7em;
@@ -669,9 +724,6 @@ h3.admin:first-child {
 #tabContainer {
   width: 100%;
   margin-top: 2em;
-}
-nav.admin {
-  background: none;
 }
 .tabs input[type=radio] {
   display: none;
@@ -732,7 +784,8 @@ nav.admin {
 .input-item.admin {
   margin: .8em 0;
 }
-input.admin {
+input.admin,
+textarea.admin {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   text-align: left;
@@ -740,7 +793,17 @@ input.admin {
   z-index: 10;
   border: 1px solid #dcddde;
 }
-input.admin:focus {
+textarea.small {
+  height: 3em;
+}
+textarea.medium {
+  height: 3em;
+}
+textarea.large {
+  height: 4em;
+}
+input.admin:focus,
+textarea.admin:focus {
   outline: 2px solid #d3d3d3;
 }
 div.input-item.admin {
@@ -778,7 +841,7 @@ thead {
 }
 th,
 td {
-  padding: .3em 0 .3em .5em;
+  padding: .5em 0 .5em .5em;
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   -ms-transition: all 0.1s linear;
@@ -789,6 +852,13 @@ td:first-child:hover,
 td:first-child:focus {
   color: #25AE60;
   cursor: pointer;
+}
+td:first-child span {
+  color: #A0A0A0;
+  font-size: .8em;
+  display: block;
+  line-height: 5px;
+  text-indent: .5em;
 }
 th:hover,
 th:focus {
@@ -875,6 +945,7 @@ input[type="checkbox"] + #toggleKnob + div {
   border: 1px solid #C6C6C6;
   border-radius: 20px;
   background-color: #ff4f4f;
+  background-color: #FEFEFE;
   position: absolute;
   z-index: 0;
   -webkit-transition: all 0.5s ease;
