@@ -56,7 +56,7 @@
 //-------------END LESS MIXINS-------------
 
 @import url(reset.css);
-@import url(component.css);
+//@import url(component.css);
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>MANAGEMENT PANEL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -107,50 +107,35 @@ li {
 em {
   font-style: italic;
 }
+
 .fancyLink {
   text-decoration: none;
-  color: #3f70ab;
+  color: rgb(10, 112, 230);
   display: inline-block;
   position: relative;
 }
-.fancyLink:before,
-.fancyLink:after {
+.fancyLink:before{
   position: absolute;
   content: '';
   height: 1px;
   width: 100%;
-  background: #3f70ab;
+  background: rgb(10, 112, 230);
   top: 90%;
   display: block;
   box-sizing: border-box;
   -webkit-transition: -webkit-transform 0.3s;
   -moz-transition: -moz-transform 0.3s;
   transition: transform .3s;
-  -webkit-transform: scale(0.3);
-  -moz-transform: scale(0.3);
-  transform: scale(0.3);
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  transform: scale(0);
 }
-.fancyLink:after {
-  opacity: 0;
-  -webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-  -moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
-  transition: top .3s, opacity .3s, transform .3s;
-  -webkit-transform: scale(0.25);
-  -moz-transform: scale(0.25);
-  transform: scale(0.25);
-}
-.fancyLink:hover::after,
+
 .fancyLink:hover::before,
-.fancyLink:focus::after,
 .fancyLink:focus::before {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   transform: scale(1);
-}
-.fancyLink:hover::after,
-.fancyLink:focus::after {
-  top: 13%;
-  opacity: 1;
 }
 
 input[type="text"],
@@ -166,12 +151,12 @@ textarea {
     color: @secondcolor;
     font-size: .75em;
     font-family: @opensans;
-    margin: 0;
     text-align: left;
-    padding-left: 1em;
+//    padding-left: 1em;
     z-index: 10;
     border: 1px solid @borderFocus;
     width: 27em;
+    position: relative;
 }
 input[type="text"]:focus,
 input[type="email"]:focus,
@@ -188,24 +173,23 @@ input[type="button"],
 button {
     font-family: @opensans;
     text-align: center;
-    margin: 0 25%;
     background: white;
     border: 1px solid @borderFocus;
     color: @adminprimary;
     font-variant: small-caps;
     letter-spacing: 2.3px;
-    width: 50%;
     font-size: .75em;
-    padding: .7rem 0;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    transition: all 0.3s linear;
+    padding: .7rem 2.5em;
+    position: relative;
+    -webkit-transition: all 0.3s linear, -webkit-transform 0s ease;
+    -moz-transition: all 0.3s linear, -webkit-transform 0s ease;
+    -o-transition: all 0.3s linear, -webkit-transform 0s ease;
+    -ms-transition: all 0.3s linear, -webkit-transform 0s ease;
+    transition: all 0.3s linear, -webkit-transform 0s ease;
 }
 input[type="submit"]:hover,
 input[type="button"]:hover,
-button:hover {
+button:hover,{
     background: @adminprimary;
     color: @white;
     -webkit-transition: all 0.3s linear;
@@ -215,13 +199,54 @@ button:hover {
     transition: all 0.3s linear;
 }
 
-.input-item{
-    margin: .8em 0;
+input[type="submit"]:active,
+input[type="button"]:active,
+button:active,{
+   .transform(scale(.98));
+    
+}
+
+.defaultBtn:before{
+    content: "SUBMIT";
+}
+
+.failed{
+    background-color: #E84C3D;
+    color: @white;
+}
+
+.failed:before{
+    content: "SORRY, THERE IS NO ACCOUNT ASSOCIATED WITH THE EMAIL PROVIDED";
+}
+
+.success{
+    background-color: #8BB800;
+    color: @white;
+}
+
+.success:after{
+    content: "ACCOUNT FOUND. CHECK YOUR EMAIL FOR FURTHER INSTRUCTIONS";
+}
+
+.success:hover,
+.success:focus{
+    background-color:lighten(#8BB800,5%);
+}
+
+.failed:hover,
+.failed:focus{
+    background-color:lighten(#E84C3D,5%);
+}
+
+.input-item,
+.submit-item{
+    margin: 1em 0;
 }
 
 .header{
-    background: @adminprimary;
-    color: @white;
+    font-family: @lato;
+    background: lighten(@adminprimary,65%);
+    color: @adminprimary;
     height: 3.25em;
     margin: 0 auto;
     min-height: 3.25em;
@@ -233,22 +258,17 @@ button:hover {
 .menu.item,
 .menu.link{
     display: inline-block;
+    font-family: @lato;
+    letter-spacing: 2px;
+    color: @adminprimary;
 }
 
-.menu.item#logo{
-    width: 3em;
-    height: 3em;
-    background-image: url(../images/genericbug-compressor-header.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
 .menu.link{
     text-decoration: none;
-    color: @white;
-    font-size: 1em;
+    color: @adminprimary;
+    font-size: .8em;
     position: relative;
-    bottom: 1em;
     .transition(all .5s ease);
 }
 
@@ -264,14 +284,18 @@ button:hover {
 
 #left-menu{
     float: left;
-    position: relative;
 }
 
 #right-menu{
     float: right;
-    position: relative;
-    bottom: -2em;
 }
+
+#left-menu,
+#right-menu{
+    position: relative;
+    top: .85em;
+}
+
 article.adminContent{
     position: relative;
 }
@@ -312,6 +336,10 @@ article.adminContent{
     z-index: 10;
 }
 
+#disclaimer:before{
+    content: "NOTE: ";
+}
+
 .contentFormat{
     padding: 2em 7em;
 }
@@ -324,6 +352,14 @@ article.adminContent{
     display: none;
 }
 
+.quarter{
+    width: 25%;
+}
+
+.half{
+    width: 50%;
+}
+
 .tabs{
     float: none;
     list-style: none;
@@ -332,6 +368,7 @@ article.adminContent{
     font-family: @opensans;
 }
 
+
 .tabs li{
     text-align: center;
     margin: 0 auto;
@@ -339,7 +376,6 @@ article.adminContent{
     list-style: none;
     margin: 0 -2px;
     font-size: 1.125em;
-    width: 25%;
 }
 
 .tabs label{
@@ -362,6 +398,7 @@ article.adminContent{
     top: 2.3em;
     position: absolute;
     text-align: left;
+    width: 100%;
     z-index: 2;
     -webkit-animation-duration: 0.5s;
     -o-animation-duration: 0.5s;
@@ -412,8 +449,9 @@ textarea.large{
     height: 6em;
 }
 
-.form{
-    width: 20em;
+.centeredForm{
+    padding: 0 25%;
+    text-align: center;
 }
 
 .third{
@@ -556,8 +594,61 @@ input[type="checkbox"]:checked{
     .transform(translateX(30px));
 }
 
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<MANAGEMENT PANEL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN LOGIN PANEL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+.website-logo{
+    background-image: url(../images/genericbug-compressor-header-blacky.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    height: 20vh;
+    width: 25vw;
+    margin: 0 auto;
+    margin-bottom: 2em;
+}
+
+label.input{
+    border-radius: 0;
+    cursor: default;
+    border: 0;
+    font-size: .75em;
+    position: relative;
+    opacity: 0;
+    padding: 0;
+    height: 1em;
+    top: -3em;
+    position: relative;
+    .transition(opacity .8s ease);
+}
+
+label.input:hover{
+    color: #898989;
+}
+
+[id^=input]:focus + label{
+    opacity: 1;
+    top: -5.5em;
+    color: #428bca;
+    .transition(opacity .8s ease);
+}
+
+[id^=input]:focus::-webkit-input-placeholder{
+    opacity: 0;
+}
+
+.login.formContainer input{
+    text-align: center;
+}
+
+.login.formContainer{
+    margin-bottom: 2em;
+}
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END LOGIN PANEL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN MEDIA QUERIES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 @media screen and (max-width: 1050px) {
@@ -604,6 +695,12 @@ input[type="checkbox"]:checked{
   }
 }
 
+@media screen and (max-width:680px){
+    .website-logo{
+        margin-bottom: -1em;
+    }
+}
+
 @media screen and (max-width:571px){
     
     .tabs{
@@ -616,6 +713,7 @@ input[type="checkbox"]:checked{
         margin: inherit;
         display: list-item;
         margin: 0;
+        width: 100%;
     }
     
     .tabs label{
@@ -672,6 +770,10 @@ input[type="checkbox"]:checked{
         top: 11em;
     }
     
+    .tab-content.login{
+        top: 5em;
+    }
+    
     .contentFormat{
         padding-top: 0;
     }
@@ -713,11 +815,12 @@ input[type="checkbox"]:checked{
         content: ".";
     }
     
-    
+    .centeredForm{
+        padding: 0;
+    }   
 }
 
 @media screen and (max-width: 546px) {
-
 }
 
 @media screen and (max-width: 430px) {
@@ -745,10 +848,14 @@ input[type="checkbox"]:checked{
   input[type="number"],
   input[type="tel"],
   input[type="url"],
-  input[type="password"]{
+  input[type="password"],
+    textarea{
       width: 100%;
   }
     
+    .form{
+    width: 95%;
+    }
     
 }
 
