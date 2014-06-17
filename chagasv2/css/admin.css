@@ -1,5 +1,4 @@
 @import url(reset.css);
-@import url(component.css);
 html {
   font-family: 'Open Sans', sans-serif;
   font-size: 1em;
@@ -45,48 +44,31 @@ em {
 }
 .fancyLink {
   text-decoration: none;
-  color: #3f70ab;
+  color: #0a70e6;
   display: inline-block;
   position: relative;
 }
-.fancyLink:before,
-.fancyLink:after {
+.fancyLink:before {
   position: absolute;
   content: '';
   height: 1px;
   width: 100%;
-  background: #3f70ab;
+  background: #0a70e6;
   top: 90%;
   display: block;
   box-sizing: border-box;
   -webkit-transition: -webkit-transform 0.3s;
   -moz-transition: -moz-transform 0.3s;
   transition: transform .3s;
-  -webkit-transform: scale(0.3);
-  -moz-transform: scale(0.3);
-  transform: scale(0.3);
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  transform: scale(0);
 }
-.fancyLink:after {
-  opacity: 0;
-  -webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-  -moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
-  transition: top .3s, opacity .3s, transform .3s;
-  -webkit-transform: scale(0.25);
-  -moz-transform: scale(0.25);
-  transform: scale(0.25);
-}
-.fancyLink:hover::after,
 .fancyLink:hover::before,
-.fancyLink:focus::after,
 .fancyLink:focus::before {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   transform: scale(1);
-}
-.fancyLink:hover::after,
-.fancyLink:focus::after {
-  top: 13%;
-  opacity: 1;
 }
 input[type="text"],
 input[type="email"],
@@ -101,12 +83,11 @@ textarea {
   color: #463d34;
   font-size: .75em;
   font-family: 'Open Sans', sans-serif;
-  margin: 0;
   text-align: left;
-  padding-left: 1em;
   z-index: 10;
   border: 1px solid #d3d3d3;
   width: 27em;
+  position: relative;
 }
 input[type="text"]:focus,
 input[type="email"]:focus,
@@ -123,20 +104,19 @@ input[type="button"],
 button {
   font-family: 'Open Sans', sans-serif;
   text-align: center;
-  margin: 0 25%;
   background: white;
   border: 1px solid #d3d3d3;
   color: #3c3c3c;
   font-variant: small-caps;
   letter-spacing: 2.3px;
-  width: 50%;
   font-size: .75em;
-  padding: .7rem 0;
-  -webkit-transition: all 0.3s linear;
-  -moz-transition: all 0.3s linear;
-  -o-transition: all 0.3s linear;
-  -ms-transition: all 0.3s linear;
-  transition: all 0.3s linear;
+  padding: .7rem 2.5em;
+  position: relative;
+  -webkit-transition: all 0.3s linear, -webkit-transform 0s ease;
+  -moz-transition: all 0.3s linear, -webkit-transform 0s ease;
+  -o-transition: all 0.3s linear, -webkit-transform 0s ease;
+  -ms-transition: all 0.3s linear, -webkit-transform 0s ease;
+  transition: all 0.3s linear, -webkit-transform 0s ease;
 }
 input[type="submit"]:hover,
 input[type="button"]:hover,
@@ -149,12 +129,48 @@ button:hover {
   -ms-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
-.input-item {
-  margin: .8em 0;
+input[type="submit"]:active,
+input[type="button"]:active,
+button:active {
+  -webkit-transform: scale(0.98);
+  -moz-transform: scale(0.98);
+  -ms-transform: scale(0.98);
+  -o-transform: scale(0.98);
+  transform: scale(0.98);
+}
+.defaultBtn:before {
+  content: "SUBMIT";
+}
+.failed {
+  background-color: #E84C3D;
+  color: #ffffff;
+}
+.failed:before {
+  content: "SORRY, THERE IS NO ACCOUNT ASSOCIATED WITH THE EMAIL PROVIDED";
+}
+.success {
+  background-color: #8BB800;
+  color: #ffffff;
+}
+.success:after {
+  content: "ACCOUNT FOUND. CHECK YOUR EMAIL FOR FURTHER INSTRUCTIONS";
+}
+.success:hover,
+.success:focus {
+  background-color: #9ed200;
+}
+.failed:hover,
+.failed:focus {
+  background-color: #eb6154;
+}
+.input-item,
+.submit-item {
+  margin: 1em 0;
 }
 .header {
-  background: #3c3c3c;
-  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+  background: #e2e2e2;
+  color: #3c3c3c;
   height: 3.25em;
   margin: 0 auto;
   min-height: 3.25em;
@@ -165,20 +181,15 @@ button:hover {
 .menu.item,
 .menu.link {
   display: inline-block;
-}
-.menu.item#logo {
-  width: 3em;
-  height: 3em;
-  background-image: url(../images/genericbug-compressor-header.svg);
-  background-repeat: no-repeat;
-  background-position: center;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 2px;
+  color: #3c3c3c;
 }
 .menu.link {
   text-decoration: none;
-  color: #ffffff;
-  font-size: 1em;
+  color: #3c3c3c;
+  font-size: .8em;
   position: relative;
-  bottom: 1em;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
@@ -199,12 +210,14 @@ button:hover {
 }
 #left-menu {
   float: left;
-  position: relative;
 }
 #right-menu {
   float: right;
+}
+#left-menu,
+#right-menu {
   position: relative;
-  bottom: -2em;
+  top: .85em;
 }
 article.adminContent {
   position: relative;
@@ -239,6 +252,9 @@ article.adminContent {
   width: 100%;
   z-index: 10;
 }
+#disclaimer:before {
+  content: "NOTE: ";
+}
 .contentFormat {
   padding: 2em 7em;
 }
@@ -247,6 +263,12 @@ article.adminContent {
 }
 .tabs input[type=radio] {
   display: none;
+}
+.quarter {
+  width: 25%;
+}
+.half {
+  width: 50%;
 }
 .tabs {
   float: none;
@@ -262,7 +284,6 @@ article.adminContent {
   list-style: none;
   margin: 0 -2px;
   font-size: 1.125em;
-  width: 25%;
 }
 .tabs label {
   border-radius: 2px 2px 0 0;
@@ -282,6 +303,7 @@ article.adminContent {
   top: 2.3em;
   position: absolute;
   text-align: left;
+  width: 100%;
   z-index: 2;
   -webkit-animation-duration: 0.5s;
   -o-animation-duration: 0.5s;
@@ -321,8 +343,9 @@ textarea.medium {
 textarea.large {
   height: 6em;
 }
-.form {
-  width: 20em;
+.centeredForm {
+  padding: 0 25%;
+  text-align: center;
 }
 .third {
   width: 30%;
@@ -473,6 +496,54 @@ input[type="checkbox"]:checked {
   -o-transform: translateX(30px);
   transform: translateX(30px);
 }
+.website-logo {
+  background-image: url(../images/genericbug-compressor-header-blacky.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  height: 20vh;
+  width: 25vw;
+  margin: 0 auto;
+  margin-bottom: 2em;
+}
+label.input {
+  border-radius: 0;
+  cursor: default;
+  border: 0;
+  font-size: .75em;
+  opacity: 0;
+  padding: 0;
+  height: 1em;
+  top: -3em;
+  position: relative;
+  -webkit-transition: opacity 0.8s ease;
+  -moz-transition: opacity 0.8s ease;
+  -ms-transition: opacity 0.8s ease;
+  -o-transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease;
+}
+label.input:hover {
+  color: #898989;
+}
+[id^=input]:focus + label {
+  opacity: 1;
+  top: -5.5em;
+  color: #428bca;
+  -webkit-transition: opacity 0.8s ease;
+  -moz-transition: opacity 0.8s ease;
+  -ms-transition: opacity 0.8s ease;
+  -o-transition: opacity 0.8s ease;
+  transition: opacity 0.8s ease;
+}
+[id^=input]:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+.login.formContainer input {
+  text-align: center;
+}
+.login.formContainer {
+  margin-bottom: 2em;
+}
 @media screen and (max-width: 1050px) {
   .titleFormat {
     padding: 1em 1em !important;
@@ -505,6 +576,11 @@ input[type="checkbox"]:checked {
     padding: .3em 2em !important;
   }
 }
+@media screen and (max-width: 680px) {
+  .website-logo {
+    margin-bottom: -1em;
+  }
+}
 @media screen and (max-width: 571px) {
   .tabs {
     position: relative;
@@ -515,6 +591,7 @@ input[type="checkbox"]:checked {
     margin: inherit;
     display: list-item;
     margin: 0;
+    width: 100%;
   }
   .tabs label {
     border-radius: 0;
@@ -558,6 +635,9 @@ input[type="checkbox"]:checked {
     border-top: none;
     top: 11em;
   }
+  .tab-content.login {
+    top: 5em;
+  }
   .contentFormat {
     padding-top: 0;
   }
@@ -591,6 +671,9 @@ input[type="checkbox"]:checked {
   #settingsContainer tbody tr td:nth-child(2)::after {
     content: ".";
   }
+  .centeredForm {
+    padding: 0;
+  }
 }
 @media screen and (max-width: 430px) {
   p,
@@ -616,7 +699,11 @@ input[type="checkbox"]:checked {
   input[type="number"],
   input[type="tel"],
   input[type="url"],
-  input[type="password"] {
+  input[type="password"],
+  textarea {
     width: 100%;
+  }
+  .form {
+    width: 95%;
   }
 }

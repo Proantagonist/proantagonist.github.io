@@ -112,12 +112,11 @@ em {
 }
 .fancyLink {
   text-decoration: none;
-  color: #3f70ab;
+  color: rgb(10, 112, 230);
   display: inline-block;
   position: relative;
 }
-.fancyLink:before,
-.fancyLink:after {
+.fancyLink:before{
   position: absolute;
   content: '';
   height: 1px;
@@ -133,27 +132,12 @@ em {
   -moz-transform: scale(0.3);
   transform: scale(0.3);
 }
-.fancyLink:after {
-  opacity: 0;
-  -webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
-  -moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
-  transition: top .3s, opacity .3s, transform .3s;
-  -webkit-transform: scale(0.25);
-  -moz-transform: scale(0.25);
-  transform: scale(0.25);
-}
-.fancyLink:hover::after,
+
 .fancyLink:hover::before,
-.fancyLink:focus::after,
 .fancyLink:focus::before {
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   transform: scale(1);
-}
-.fancyLink:hover::after,
-.fancyLink:focus::after {
-  top: 13%;
-  opacity: 1;
 }
 nav {
   padding: .4rem 0 .6rem 0;

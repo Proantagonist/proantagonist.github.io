@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"> 
+    <meta charset="utf-8"> 
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic|Open+Sans:600italic,600,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Chagas | Admin Log In</title>
+</head>
+
+    
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="menuContainer">
+                <div id="left-menu">
+                    <a href="../index.html" class="menu link">MAIN SITE</a>
+                </div>
+                <div id="right-menu" class="menu item">
+                    <a href="../index.html" class="menu link"></a>
+                </div>
+            </div>
+        </header>
+        
+        <article class="adminContent admin">
+            <div class="titleFormat">
+                <h1>LOG IN</h1>
+                <p>Kissing Bugs and Chagas in Texas</p>
+            </div>
+            <p id="disclaimer">You must log in to access the management panel!</p>
+            <div id="tabContainer">
+                <ul class="tabs">
+                    
+                    <li class="half">
+                        <input type="radio" checked name="tabs" id="tab1">
+                        <label for="tab1">Log In</label>
+                        <div id="tab-content1" class="tab-content contentFormat login">
+                            <div class="website-logo"></div>
+                            <div class="centeredForm">
+                                <div class="login formContainer">
+                                <div class="input-item">
+                                    <input type="text" id="input1" placeholder="Username/Email" name="username" required>
+                                    <label class="input" for="username">Username/Email</label>
+                                </div>
+                                <div class="input-item">
+                                    <input type="password" id="input2" name="password" placeholder="Password" required>
+                                    <label class="input" for="password">Password</label>
+                                </div>
+                                    <button type="submit"><span id="content"><a href="../admin/index.html" style="text-decoration:none; color: #3c3c3c;">LOG IN</a></span></button>
+                                </div>
+                                <p><a href="javascript:void(0)" class="fancyLink">Don't have an account?</a>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="half">
+                        <input type="radio" name="tabs" id="tab2">
+                        <label for="tab2">Credential Recovery</label>
+                        <div id="tab-content2" class="tab-content animate fadeIn contentFormat">
+
+                            <div class="centeredForm">
+                                <div class="login formContainer">
+                                    <h3>i forgot my password</h3>
+                                    <p>To reset your password, enter the email address you used to sign up.</p>
+                                <div class="input-item">
+                                    <input type="text" id="input1" placeholder="Email Adress" name="Email1" required>
+                                    <label class="input" for="Email1">Email Address</label>
+                                </div>
+                                    <button type="submit" class="defaultBtn"></button>
+                                    <h3>i forgot my username</h3>
+                                    <p>To reset your username, enter the email address you used to sign up.</p>
+                                <div class="input-item">
+                                    <input type="password" id="input2" name="Email2" placeholder="Email Address" required>
+                                    <label class="input" for="Email2">Email Address</label>
+                                </div>
+                                    <button type="submit" class="defaultBtn"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    
+                </ul>
+            </div>
+        </article>
+    </div>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!--    <script src="../js/combined.js"></script>-->
+    
+</body>
+
+
+</html>
