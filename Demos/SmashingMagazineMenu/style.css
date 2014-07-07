@@ -1,0 +1,111 @@
+body{
+    background-image: url(http://i.imgur.com/EQRvd9f.gif);
+}
+
+.sidebar{
+    width: 15em;
+    margin-left: .5em;
+    background:white;
+}
+
+ul{
+    padding: 0 0 2em 0;;
+    margin: 0;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #888;
+    padding: .5em 3.125em;
+    display: block;
+    -webkit-transition: all .3s ease;
+}
+
+a:hover{
+    color: #333;
+    background: #ff6;
+}
+
+[id^=part]{
+    border-left: 8px solid;
+
+    -webkit-transition: all .3s ease;
+}
+
+[id^=part]:hover > li > div::after{
+    display: block;
+    content: " ";
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background: #eaeaea;
+    top: 2em;
+    opacity: 1;
+}
+
+[id^=part] > li > div::after{
+    display: block;
+    content: "";
+    opacity: 0;
+    -webkit-transition: all .5s ease;
+}
+
+[id^=part] > li{
+ position: relative;
+}
+
+[id^=part] > li > div > a{
+ color: #333;
+ font-weight: bold;
+}
+
+/*-----------------------------------*/
+/*BORDER COLORS*/
+/*-----------------------------------*/
+
+#part1{
+    border-color: #c9e9e5;
+}
+
+#part1:hover{
+    border-color: #63bfb2;
+}
+
+#part2{
+    border-color:#cdeeaa;
+}
+
+#part2:hover{
+    border-color:#6ece0a;
+}
+
+#part3{
+    border-color: #f9f0a8;
+}
+
+#part3:hover{
+    border-color: #ebd203;
+}
+#part4{
+    border-color: #e0cfdf;
+}
+
+#part4:hover{
+    border-color: #a675a2;
+}
+#part5{
+    border-color: #faced2;
+}
+#part5:hover{
+    border-color: #f0717c;
+}
+#part6{
+    border-color: #bcd8f0;
+}
+#part6:hover{
+    border-color: #3e8dd2;
+}
