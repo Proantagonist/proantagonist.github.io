@@ -84,6 +84,8 @@ textarea {
   font-size: .75em;
   font-family: 'Open Sans', sans-serif;
   text-align: left;
+  padding-left: 1em;
+  box-sizing: border-box;
   z-index: 10;
   border: 1px solid #d3d3d3;
   width: 27em;
@@ -296,7 +298,7 @@ article.adminContent {
   z-index: 1;
 }
 .tab-content {
-  border-top: 0.5em solid rgba(220, 221, 222, 0.82);
+  border-top: 0.5em solid rgba(220, 221, 222, 0.5);
   box-sizing: border-box;
   display: none;
   left: 0;
@@ -320,16 +322,16 @@ article.adminContent {
   z-index: 3;
 }
 #tab1 + label {
-  border-color: #43BC9A;
+  border-color: #2ecc71;
 }
 #tab2 + label {
-  border-color: #ECC300;
+  border-color: #f1c40f;
 }
 #tab3 + label {
-  border-color: #9758B7;
+  border-color: #8e44ad;
 }
 #tab4 + label {
-  border-color: #3CADF1;
+  border-color: #3498db;
 }
 [id^=tab]:checked ~ [id^=tab-content] {
   display: block;
@@ -439,11 +441,11 @@ select:focus {
   position: absolute;
   box-shadow: 0px 2px 20px -2px #999999;
   z-index: 1;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 input[type="checkbox"] {
   height: 31px;
@@ -453,34 +455,23 @@ input[type="checkbox"] {
   top: -2px;
   left: -3px;
   opacity: 0;
-  -webkit-transition: all 0.5 ease;
-  -moz-transition: all 0.5 ease;
-  -ms-transition: all 0.5 ease;
-  -o-transition: all 0.5 ease;
-  transition: all 0.5 ease;
 }
-input[type="checkbox"] + #toggleKnob + div {
+input[type="checkbox"] ~ div {
   height: 30px;
   width: 60px;
   border: 1px solid #C6C6C6;
   border-radius: 20px;
-  background-color: #ff4f4f;
   background-color: #CCCCCC;
   position: absolute;
   z-index: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -webkit-transition: all 0.35s ease;
+  -moz-transition: all 0.35s ease;
+  -ms-transition: all 0.35s ease;
+  -o-transition: all 0.35s ease;
+  transition: all 0.35s ease;
 }
-input[type="checkbox"]:checked + #toggleKnob + div {
+input[type="checkbox"]:checked ~ div {
   background-color: #4BD763;
-  -webkit-transition: background-color 0.5s;
-  -moz-transition: background-color 0.5s;
-  -ms-transition: background-color 0.5s;
-  -o-transition: background-color 0.5s;
-  transition: background-color 0.5s;
 }
 input[type="checkbox"]:checked + #toggleKnob {
   -webkit-transform: translateX(30px) scale(0.85);
@@ -582,6 +573,10 @@ label.input:hover {
   }
 }
 @media screen and (max-width: 571px) {
+  tr:not(th):hover,
+  tr:not(th):focus {
+    background: none;
+  }
   .tabs {
     position: relative;
     padding-left: 0;
@@ -670,6 +665,7 @@ label.input:hover {
   #rolesContainer tbody tr td:nth-child(2)::after,
   #settingsContainer tbody tr td:nth-child(2)::after {
     content: ".";
+    color: white;
   }
   .centeredForm {
     padding: 0;
