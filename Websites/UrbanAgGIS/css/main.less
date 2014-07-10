@@ -150,32 +150,32 @@ h1, h2, h3 {
     MOBILE: Menu
    ============== */
 
-nav ul {
-    margin: 0;
-    padding: 0;
-}
-
-nav a {
-    display: block;
-    margin-bottom: 10px;
-    padding: .7em 0;
-
-    text-align: center;
-    text-decoration: none;
-//    font-weight: bold;
-
-    color: #333;
-//    background: #e44d26;
-}
-
-nav a:hover,
-nav a:visited {
-//    color: white;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
+//nav ul {
+//    margin: 0;
+//    padding: 0;
+//}
+//
+//nav a {
+//    display: block;
+//    margin-bottom: 10px;
+//    padding: .7em 0;
+//
+//    text-align: center;
+//    text-decoration: none;
+////    font-weight: bold;
+//
+//    color: #333;
+////    background: #e44d26;
+//}
+//
+//nav a:hover,
+//nav a:visited {
+////    color: white;
+//}
+//
+//nav a:hover {
+//    text-decoration: underline;
+//}
 
 /* ==============
     MOBILE: Main
@@ -273,6 +273,94 @@ h4{
 
 .pagination span:hover + .arrow{
     border-bottom-color: #ffffff;
+}
+
+
+i{
+    .transition(all .4s ease);
+}
+
+nav{
+    z-index: 9999;
+    position: relative;
+    float: right;
+}
+
+nav li{
+    display: inline-block;
+    padding-top: .8em;
+}
+
+nav a{
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+nav a:hover{
+    text-decoration: underline;
+}
+
+nav > ul{
+    margin: 0;
+}
+
+nav ul ul{
+    z-index: -1;
+    background: #FFFFFF;
+    display: block;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    opacity: 0;
+    padding-left: 0;
+    .transition(all .4s ease);
+}
+
+nav ul ul li{
+    display: block;
+    padding: 0 .2em;
+    z-index:1;
+    position: relative;
+}
+
+nav li:hover > ul {
+    opacity: 1;
+    top: 1em;
+    visibility: visible;
+}
+
+nav ul li:hover > i::before{
+    color: #08C;
+}
+
+nav ul li:hover > i{
+    .transform(rotateX(180deg));
+}
+
+.dropdown-menu li{
+    padding-top: 0;
+}
+
+.dropdown-menu li:first-child{
+    padding-top: 1em;
+}
+
+.dropdown-menu li a{
+    display: block;
+    text-align: left;
+    padding: .8em 1em;
+}
+
+.dropdown-menu li a:hover{
+    color: #08C;
+    text-decoration: none;
+}
+
+.with-dropdown-icon{
+    padding-right: .5em;
 }
 
 .menu{
@@ -615,6 +703,133 @@ input[type="checkbox"]:checked {
     margin-bottom: 10em;
 }
 
+.legend-container{
+    position: absolute;
+    width: 20em;
+    height: 80%;
+    background: #ffffff;
+    right: 0;
+    color: #333;
+}
+
+.legend-container header{
+    text-align: center;
+}
+
+.legend-container > div{
+    margin: auto 1.5em;
+}
+
+.legend-container h4{
+    margin: 0;
+}
+
+.legend-container p{
+    padding: 0;
+    display: block;
+}
+
+.items-container p{
+    position:relative;
+}
+
+.items-container p.dot::before{
+    content: " ";
+    display: inline-block;
+    height: .7em;
+    width: .7em;
+    border-radius: 50%;
+    background: green;
+    position: relative;
+    margin-right: .5em;
+}
+
+.items-container p.quadrilateral::before{
+    content: " ";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    background: red;
+    position: relative;
+    margin-right: .5em;
+}
+
+.items-container p.quadrilateral::after{
+    content: '';
+    display: block;
+    position: absolute;
+    border-left: .8em solid transparent;
+    border-right: .8em solid transparent;
+    border-bottom: .8em solid #FFFFFF;
+    top: -.25em;
+    left: 0;
+    .transform(rotate(45deg));
+}
+
+
+
+
+
+
+.toggleWrapper {
+  position: relative;
+}
+#toggleKnob {
+  height: 30px;
+  width: 30px;
+  border: 1px solid #C6C6C6;
+  border-radius: 20px;
+  background-color: #FEFEFE;
+  position: absolute;
+  box-shadow: 0px 2px 20px -2px #999999;
+  z-index: 1;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+input[type="checkbox"] {
+  height: 31px;
+  width: 31px;
+  position: absolute;
+  z-index: 2;
+  top: -2px;
+  left: -3px;
+  opacity: 0;
+}
+input[type="checkbox"] ~ div {
+  height: 30px;
+  width: 60px;
+  border: 1px solid #C6C6C6;
+  border-radius: 20px;
+  background: #CCCCCC;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+input[type="checkbox"]:checked ~ div {
+  background: #4BD763;
+}
+input[type="checkbox"]:checked + #toggleKnob {
+  -webkit-transform: translateX(30px) scale(0.85);
+  -moz-transform: translateX(30px) scale(0.85);
+  -ms-transform: translateX(30px) scale(0.85);
+  -o-transform: translateX(30px) scale(0.85);
+  transform: translateX(30px) scale(0.85);
+}
+input[type="checkbox"]:checked {
+  -webkit-transform: translateX(30px);
+  -moz-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  -o-transform: translateX(30px);
+  transform: translateX(30px);
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -625,33 +840,33 @@ input[type="checkbox"]:checked {
     INTERMEDIATE: Menu
    ==================== */
 
-    nav a {
-        float: left;
-        width: 25%;
-//        margin: 0 1.7%;
-//        padding: 25px 2%;
-        margin-bottom: 0;
-    }
-
-    nav li:first-child a {
-        margin-left: 0;
-    }
-
-    nav li:last-child a {
-        margin-right: 0;
-    }
-
-/* ========================
-    INTERMEDIATE: IE Fixes
-   ======================== */
-
-    nav ul li {
-        display: inline;
-    }
-
-    .oldie nav a {
-        margin: 0 0.7%;
-    }
+//    nav a {
+//        float: left;
+//        width: 25%;
+////        margin: 0 1.7%;
+////        padding: 25px 2%;
+//        margin-bottom: 0;
+//    }
+//
+//    nav li:first-child a {
+//        margin-left: 0;
+//    }
+//
+//    nav li:last-child a {
+//        margin-right: 0;
+//    }
+//
+///* ========================
+//    INTERMEDIATE: IE Fixes
+//   ======================== */
+//
+//    nav ul li {
+//        display: inline;
+//    }
+//
+//    .oldie nav a {
+//        margin: 0 0.7%;
+//    }
 }
 
 @media only screen and (min-width: 768px) {
@@ -674,11 +889,26 @@ input[type="checkbox"]:checked {
     .title {
         float: left;
     }
-
-    nav {
-        float: right;
-        width: 38%;
+    
+    .bg-image{
+        background-size:cover;
+        background-repeat: no-repeat;
+        background-position: center;
+}
+    .title.logo{
+        background-image: url(../img/logo-raster.png);
+        background-image: url(../img/logo-vector.svg);
+        height: 49px;
+        width: 131px;
+        background-size: contain;
+        margin: .15em 0; 
+        padding-left: 4%;
     }
+
+//    nav {
+//        float: right;
+//        width: 38%;
+//    }
 
 /* ============
     WIDE: Main
@@ -767,6 +997,18 @@ input[type="checkbox"]:checked {
 
 .clearfix {
     *zoom: 1;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.italics{
+    font-style: italic;
 }
 
 /* ==========================================================================

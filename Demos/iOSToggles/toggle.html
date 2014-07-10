@@ -3,62 +3,63 @@
     <head>
         <style>
 
-            .toggleWrapper{
-                position: relative;
+            .toggleWrapper {
+              position: relative;
             }
-            
-            input[type="checkbox"]{
-                height: 31px;
-                width: 31px;
-                position: absolute;
-                z-index:1;
-                top: -2px;
-                left: -3px;
-                -webkit-transition: all .5s ease;
-                opacity: 0;
-            }
-            
-            input[type="checkbox"] + #toggleKnob + div{
-                height: 30px;
-                width: 60px;
-                border: 1px solid #C6C6C6;
-                border-radius: 20px;
-                background-color: #FEFEFE;
-                position: absolute;
-                -webkit-transition:all .5s ease;
-                z-index: -1;
-            }
-            
-            input[type="checkbox"]:checked + #toggleKnob + div{
-                background-color: #4BD763;
-                -webkit-transition: background-color .5s;
-            }
-            
-            input[type="checkbox"]:checked + #toggleKnob{
-                -webkit-transform: translateX(30px) scale(.85);
-            }
-            
-            input[type="checkbox"]:checked{
-                -webkit-transform: translateX(30px);
-            }
-            
-            
-            .activeToggle {
-                left: 30px !important;
-                height: 26px !important;
-                width: 26px !important;
-                top: 1px !important;
-            }
-            
             #toggleKnob {
-                height: 30px;
-                width:30px;
-                border: 1px solid #C6C6C6;
-                border-radius:20px;
-                background-color:#FEFEFE;
-                position: absolute;
-                box-shadow: 0px 2px 20px -2px #999999;
-                -webkit-transition: all .5s;
+              height: 30px;
+              width: 30px;
+              border: 1px solid #C6C6C6;
+              border-radius: 20px;
+              background-color: #FEFEFE;
+              position: absolute;
+              box-shadow: 0px 2px 20px -2px #999999;
+              z-index: 1;
+              -webkit-transition: all 0.3s ease;
+              -moz-transition: all 0.3s ease;
+              -ms-transition: all 0.3s ease;
+              -o-transition: all 0.3s ease;
+              transition: all 0.3s ease;
+            }
+            input[type="checkbox"] {
+              height: 31px;
+              width: 31px;
+              position: absolute;
+              z-index: 2;
+              top: -2px;
+              left: -3px;
+              opacity: 0;
+            }
+            input[type="checkbox"] ~ div {
+              height: 30px;
+              width: 60px;
+              border: 1px solid #C6C6C6;
+              border-radius: 20px;
+              background: #CCCCCC;
+              position: absolute;
+              z-index: 0;
+              -webkit-transition: all 0.5s ease;
+              -moz-transition: all 0.5s ease;
+              -ms-transition: all 0.5s ease;
+              -o-transition: all 0.5s ease;
+              transition: all 0.5s ease;
+            }
+            input[type="checkbox"]:checked ~ div {
+              background: #4BD763;
+            }
+            input[type="checkbox"]:checked + #toggleKnob {
+              -webkit-transform: translateX(30px) scale(0.85);
+              -moz-transform: translateX(30px) scale(0.85);
+              -ms-transform: translateX(30px) scale(0.85);
+              -o-transform: translateX(30px) scale(0.85);
+              transform: translateX(30px) scale(0.85);
+            }
+            input[type="checkbox"]:checked {
+              -webkit-transform: translateX(30px);
+              -moz-transform: translateX(30px);
+              -ms-transform: translateX(30px);
+              -o-transform: translateX(30px);
+              transform: translateX(30px);
             }
             
         </style>

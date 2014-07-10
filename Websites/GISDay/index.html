@@ -21,18 +21,17 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <header class="clearfix">
+        
+        <header class="clearfix desktop-navigation main-menu-container">
             <div class="container12">
-                <div class="row main-menu-container">
-                    <h1 class="title column2 logo bg-image"></h1>
+                    <a href="#"><h1 class="title column2 logo bg-image"></h1></a>
                     <nav class="column10 navigation">
                         <ul class="menu">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="./index.html">Home</a></li>
                             <li onclick="return true"><a href="#" class="with-dropdown-icon">Services</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Learning</a></li>
-                                    <li><a href="#">Volunteering</a></li>
-                                    <li><a href="#">Serving</a></li>
+                                    <li><a href="javascript:void(0)">Learning</a></li>
+                                    <li><a href="javascript:void(0)">Serving</a></li>
                                 </ul>
                                 <i class="menu fa fa-angle-down"></i>
                             </li>
@@ -40,29 +39,22 @@
                             <li><a href="#">Registration</a></li>
                         </ul>
                     </nav>
-                </div>
             </div>
         </header>
         
-        <div class="full bg-image full-header-banner" id="gisday-banner">
-            <div class="container12">
-                <div class="column12 alpha omega">
-                    <div class="column6 prefix6 banner-text">
-                        <img src="img/logo-white-vector.svg"/>
-                        <p>November 17-19 | Texas A&amp;M University, College Station</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container12">
+        <div class="container12 mobile-navigation">
             <div class="clearfix">
                 <div class="row">
-                    <nav class="column12 secondary-menu">
+                    <a href="./index.html" onclick="return true"><h1 class="title column2 logo-mobile bg-image"></h1></a>
+                    <input type="checkbox" class="menu-trigger"/>
+                    <i class="fa fa-bars fa-lg white menu-icon"></i>
+                    <nav>
                         <ul>
-                            <li><a href="#">AGENDA</a></li>
-                            <li onclick="return true"><a href="#" class="with-dropdown-icon" >PRESENTERS</a>
-                                <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)" class="menu-title">Menu</a></li>
+                            <li><a href="../index.html"><i class="menu fa fa-calendar white"></i>Agenda</a></li>
+                            <li><a href="../presenters/"><i class="menu fa fa-group white"></i>Presenters</a>
+<!--
+                                <ul>
                                     <li><a href="#">Daniel Goldberg</a></li>
                                     <li><a href="#">Payton Baldridge</a></li>
                                     <li><a href="#">Michael Bishop</a></li>
@@ -70,11 +62,12 @@
                                     <li><a href="#">Andy Evans</a></li>
                                     <li><a href="#">Aaron Harmon</a></li>
                                 </ul>
-                            <i class="menu fa fa-angle-down"></i>
+-->
                             </li>
 
-                            <li><a href="#" class="with-dropdown-icon">EVENTS</a>
-                                <ul class="dropdown-menu">
+                            <li><a href="../events/"><i class="menu fa fa-cubes white"></i>Events</a>
+<!--
+                                <ul>
                                     <li><a href="">Software Introduction Workshops</a></li>
                                     <li><a href="">Advanced Software Workshops</a></li>
                                     <li><a href="">Industry Talks</a></li>
@@ -82,12 +75,65 @@
                                     <li><a href="">Receptions</a></li>
                                     <li><a href="">Recreation</a></li>
                                 </ul>
-                                <i class="menu fa fa-angle-down"></i>
+-->
                             </li>
                         </ul>
                     </nav>
                 </div>
-                
+                </div>
+            </div>
+        
+        <div class="page-container">
+        <div class="full bg-image full-header-banner" id="gisday-banner">
+            <div class="container12">
+                <div class="column12 alpha omega">
+                    <div class="column6 prefix6 banner-text">
+                        <img src="../img/logo-white-vector.svg"/>
+                        <p>November 17-19 | Texas A&amp;M University, College Station</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="full">
+            <div class="container12 desktop-navigation">
+                <div class="clearfix">
+                    <div class="row">
+                        <nav class="secondary-menu">
+                            <ul>
+                                <li><a href="javascript:void(0)">AGENDA</a></li>
+                                <li onclick="return true"><a href="./presenters/" class="with-dropdown-icon" >PRESENTERS</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Daniel Goldberg</a></li>
+                                        <li><a href="#">Payton Baldridge</a></li>
+                                        <li><a href="#">Michael Bishop</a></li>
+                                        <li><a href="#">Andrew Klein</a></li>
+                                        <li><a href="#">Andy Evans</a></li>
+                                        <li><a href="#">Aaron Harmon</a></li>
+                                    </ul>
+                                <i class="menu fa fa-angle-down"></i>
+                                </li>
+
+                                <li><a href="./events/" class="with-dropdown-icon">EVENTS</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="">Software Introduction Workshops</a></li>
+                                        <li><a href="">Advanced Software Workshops</a></li>
+                                        <li><a href="">Industry Talks</a></li>
+                                        <li><a href="">Student Opportunities/Workshops</a></li>
+                                        <li><a href="">Receptions</a></li>
+                                        <li><a href="">Recreation</a></li>
+                                    </ul>
+                                    <i class="menu fa fa-angle-down"></i>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="container12">
+            <div class="clearfix">
                 <div class="row">
                     <div class="column12 section-hero-banner alpha omega bg-image" id="agenda-hero">
                         
@@ -118,11 +164,11 @@
 -->
                                 <tbody>
                                     <tr class="row">
-                                        <td class="column3">9.00am - 12.00pm</td>
+                                        <td class="column3 bold">9.00am - 12.00pm</td>
                                         <td class="column4">
-                                            <p class="blue bold"><a href="#" class="fancyLink">Introduction to Python &amp; ArcPy</a></p>
+                                            <p class="blue bold"><a href="./events/" class="fancyLink">Introduction to Python &amp; ArcPy</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Evans Library Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -131,7 +177,7 @@
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Introduction to ArcServer</a></p>
                                             <p><span class="bold info">Presenter</span>Payton Baldridge</p>
-                                            <p><span class="bold info">Location</span>Desktop Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Desktop Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -139,11 +185,11 @@
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">12.00pm - 2.00pm</td>
+                                        <td class="column3 bold">12.00pm - 2.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Resume Workshop &amp; Lunch</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Evans 202</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans 202</a></p>
                                             <p><span class="bold info">Amenity</span>Free Pizza</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -152,7 +198,7 @@
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Center Faculty Lunch &mdash; Research</a></p>
                                             <p><span class="bold info">Presenter</span>Michael Bishop</p>
                                             <p><span class="bold info">Sponsor</span>GIS Center</p>
-                                            <p><span class="bold info">Location</span>Nice Conference Room</p>
+                                            <p><span class="bold info">Location</span><a href="">Nice Conference Room</a></p>
                                             <p><span class="bold info">Capacity</span> 20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -160,11 +206,11 @@
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">2.00pm - 5.00pm</td>
+                                        <td class="column3 bold">2.00pm - 5.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Advanced Python &amp; ArcPy (Extensions)</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Evans Library Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -172,7 +218,7 @@
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Intro to ArcGIS.com</a></p>
                                             <p><span class="bold info">Presenter</span>Andrew Klein</p>
-                                            <p><span class="bold info">Location</span>Desktop Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Desktop Lab</a></p>
                                             <p><span class="bold info">Capacity</span> 20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -180,11 +226,11 @@
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">5.00pm - 7.00pm</td>
+                                        <td class="column3 bold">5.00pm - 7.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Happy Hour(s)</a></p>
                                             <p><span class="bold info">Host</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>A Bar Somewhere</p>
+                                            <p><span class="bold info">Location</span><a href="">A Bar Somewhere</a></p>
                                             <p><span class="bold info">Capacity</span>Unlimited</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                         </td>
@@ -203,19 +249,19 @@
 <!--
                                 <thead>
                                     <tr class="row">
-                                        <th class="column3">&nbsp;</th>
-                                        <th class="column3">&nbsp;</th>
-                                        <th class="column3">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
                                     </tr>
                                 </thead>
 -->
                                 <tbody>
                                     <tr class="row">
-                                        <td class="column3">9.00am - 12.00pm</td>
+                                        <td class="column3 bold">9.00am - 12.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Intro to Spatial Analysis with R</a></p>
                                             <p><span class="bold info">Presenter</span>Andy Evans</p>
-                                            <p><span class="bold info">Location</span>Evans Library Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -223,7 +269,7 @@
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Oil &amp; Gas GIS Basics</a></p>
                                             <p><span class="bold info">Presenter</span>Andrew Klein + Special Guest</p>
-                                            <p><span class="bold info">Location</span>Lecture Hall</p>
+                                            <p><span class="bold info">Location</span><a href="">Lecture Hall</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -231,11 +277,11 @@
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">12.00pm - 1.30pm</td>
+                                        <td class="column3 bold">12.00pm - 1.30pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Industry Panel &amp; Lunch</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Memorial Student Center</p>
+                                            <p><span class="bold info">Location</span><a href="">Memorial Student Center</a></p>
                                             <p><span class="bold info">Capacity</span>40 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1.5 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -244,18 +290,18 @@
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Center Faculty Lunch &mdash; Education</a></p>
                                             <p><span class="bold info">Presenter</span>Michael Bishop</p>
                                             <p><span class="bold info">Sponsor</span>GIS Center</p>
-                                            <p><span class="bold info">Location</span>Nice Conference Room</p>
+                                            <p><span class="bold info">Location</span><a href="">Nice Conference Room</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1.5 Hours</p>
                                             <p class="attn">RSVP Required</p>
                                         </td>
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">2.00pm - 4.00pm</td>
+                                        <td class="column3 bold">2.00pm - 4.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Introduction to Android GIS Development</a></p>
                                             <p><span class="bold info">Presenter</span>Aaron Harmon</p>
-                                            <p><span class="bold info">Location</span>Evans Library Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -264,42 +310,42 @@
                                             <p class="blue bold"><a href="#" class="fancyLink">Student Research Paper Competition I</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
                                             <p><span class="bold info">Sponsor</span>MacResources</p>
-                                            <p><span class="bold info">Location</span>Evans 202</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans 202</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
                                         <td class="column4 prefix7">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Opportunities for Students</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Evans 202</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans 202</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">4.00pm - 5.00pm</td>
+                                        <td class="column3 bold">4.00pm - 5.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Clint Brown Keynote</a></p>
-                                            <p><span class="bold info">Location</span>Memorial Student Center</p>
+                                            <p><span class="bold info">Location</span><a href="">Memorial Student Center</a></p>
                                             <p><span class="bold info">Capacity</span>Unlimited</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
                                     </tr>
                                     
                                     <tr class="row">
-                                        <td class="column3">5.00pm - 7.00pm</td>
+                                        <td class="column3 bold">5.00pm - 7.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Clint Brown Reception</a></p>
-                                            <p><span class="bold info">Location</span>Faculty Club</p>
+                                            <p><span class="bold info">Location</span><a href="">Faculty Club</a></p>
                                             <p><span class="bold info">Capacity</span>Unlimited</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                         </td>
                                     </tr>
                                     
                                     <tr class="row">
-                                        <td class="column3">8.00pm - 10.00pm</td>
+                                        <td class="column3 bold">8.00pm - 10.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Clint Brown Karaoke</a></p>
-                                            <p><span class="bold info">Location</span>A Bar Somewhere</p>
+                                            <p><span class="bold info">Location</span><a href="">A Bar Somewhere</a></p>
                                             <p><span class="bold info">Capacity</span>Unlimited</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                         </td>
@@ -318,19 +364,19 @@
 <!--
                                 <thead>
                                     <tr class="row">
-                                        <th class="column3">&nbsp;</th>
-                                        <th class="column3">&nbsp;</th>
-                                        <th class="column3">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
+                                        <th class="column3 bold">&nbsp;</th>
                                     </tr>
                                 </thead>
 -->
                                 <tbody>
                                     <tr class="row">
-                                        <td class="column3">9.00am - 12.00pm</td>
+                                        <td class="column3 bold">9.00am - 12.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Intro to Javascript WebGIS</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Evans Library Lab</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Lab</a></p>
                                             <p><span class="bold info">Capacity</span>20 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                         </td>
@@ -338,13 +384,13 @@
                                             <p class="blue bold"><a href="#" class="fancyLink">Student GIS Poster Competition</a></p>
                                             <p><span class="bold info">Presenter</span>Miriam Olivares</p>
                                             <p><span class="bold info">Sponsor</span>APSG</p>
-                                            <p><span class="bold info">Location</span>Evans Library Atrium</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Atrium</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
                                         <td class="column4 prefix7">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Organization Exhibition</a></p>
                                             <p><span class="bold info">Presenter</span>Miriam Olivares</p>
-                                            <p><span class="bold info">Location</span>Evans Library Entrance</p>
+                                            <p><span class="bold info">Location</span><a href="">Evans Library Entrance</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
                                         <td class="column4 prefix7">
@@ -356,11 +402,11 @@
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">12.00pm - 1.30pm</td>
+                                        <td class="column3 bold">12.00pm - 1.30pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Industry Panel &amp; Lunch</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Memorial Student Center</p>
+                                            <p><span class="bold info">Location</span><a href="">Memorial Student Center</a></p>
                                             <p><span class="bold info">Capacity</span>40 People</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1.5 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -369,38 +415,38 @@
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Center Faculty Lunch &mdash; Infrastructure</a></p>
                                             <p><span class="bold info">Presenter</span>Andrew Klein</p>
                                             <p><span class="bold info">Sponsor</span>GIS Center</p>
-                                            <p><span class="bold info">Location</span>Nice Conference Room</p>
+                                            <p><span class="bold info">Location</span><a href="">Nice Conference Room</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1.5 Hours</p>
                                             <p class="attn">RSVP Required</p>
                                         </td>
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">2.00pm - 4.00pm</td>
+                                        <td class="column3 bold">2.00pm - 4.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Career Fair</a></p>
                                             <p><span class="bold info">Presenter</span>Miriam Olivares</p>
-                                            <p><span class="bold info">Location</span>Memorial Student Center</p>
+                                            <p><span class="bold info">Location</span><a href="">Memorial Student Center</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 2 Hours</p>
                                         </td>
                                     </tr>
                                     <tr class="row">
-                                        <td class="column3">4.00pm - 5.00pm</td>
+                                        <td class="column3 bold">4.00pm - 5.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">Oil &amp; Gas GIS Industry Panel</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Memorial Student Center</p>
+                                            <p><span class="bold info">Location</span><a href="">Memorial Student Center</a></p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 1 Hour</p>
                                         </td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="column3">5.00pm - 7.00pm</td>
+                                        <td class="column3 bold">5.00pm - 7.00pm</td>
                                         <td class="column4">
                                             <p class="blue bold"><a href="#" class="fancyLink">GIS Alumni &amp; Industry Reception &amp; Student Awards</a></p>
                                             <p><span class="bold info">Presenter</span>Daniel Goldberg</p>
-                                            <p><span class="bold info">Location</span>Faculty Club</p>
+                                            <p><span class="bold info">Location</span><a href="">Faculty Club</a></p>
                                             <p><span class="bold info">Capacity</span>40 Pepole</p>
                                             <p><i class="fa fa-clock-o fa-lg duration"></i> 3 Hours</p>
                                             <p class="attn">RSVP Required</p>
@@ -416,13 +462,24 @@
             </div> <!-- #main -->
             
         </div> <!-- #main-container -->
+    </div>
 
         
 <!--
-            <footer>
-                <div class="container12">
-                    <h3>footer</h3>
+            <footer class="full">
+                <div class="container12 alpha omega">
+                    <div class="column4">
+                        <h1 class="title column2 logo bg-image"></h1>
+                    </div>
+                    <div class="column4"></div>
+                    <div class="column4"></div>
+                    <h3>Footer</h3>
                 </div>
+                <div class="container12 alpha omega subfooter">
+                    <div class="column3 prefix3"><a href="#">Contact</a></div>
+                    <div class="column3"><a href="#">Legal</a></div>
+                    <div class="column3"><a href="#">Privacy Policy</a></div>
+                </div>                     
             </footer>
 -->
 

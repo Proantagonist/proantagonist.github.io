@@ -123,7 +123,7 @@ button.trigger::before {
 	color: #fff;
 	content: attr(data-info);
 	font-size: 0.35em;
-    font-family: ff-enzo-web;
+    font-family: 'Open Sans', sans-serif;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
