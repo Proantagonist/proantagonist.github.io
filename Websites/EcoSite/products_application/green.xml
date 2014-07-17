@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<items>
+<item title="Degreaser" price="$20" img="img/allcleansers.jpg"link="http://www.google.com/"/>
+<item title="All-in-1 Charger" price="$30" img="img/chrager.jpg" link="http://cg.tutsplus.com/"/>
+<item title="Mouse Pads" price="$7" img="img/mousepads.jpg" link="http://ae.tutsplus.com/"/>
+<item title="Detergent" price="$10" img="img/detergent.jpg" link="http://audio.tutsplus.com/"/>
+<item title="Water Clock" price="$30" img="img/waterclock.jpg" link="http://vector.tutsplus.com/"/>
+<item title="Paper Towels" price="$5" img="img/papertowels.jpg" link="http://net.tutsplus.com/"/>
+<item title="Power Cord" price="$15" img="img/usb.jpg" link="http://psd.tutsplus.com/"/>
+<item title="Recycle Bin " price="$20" img="img/recyclebin.jpg" link="http://tutsplus.com/"/>
+<item title="Green Travel Kit " price="$35" img="img/travlekit.jpg" link="http://flash.tutsplus.com/"/>
+</items>
