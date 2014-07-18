@@ -1,0 +1,199 @@
+
+html{
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+    height: 100%;
+    min-width: 800px;
+}
+
+body{
+    height: 100%;
+    background: #43BC9A;
+    position: relative;
+    z-index: -2;
+}
+
+i{
+    position: absolute;
+    top: 25%;
+    left: 27%;
+    -webkit-transition: all .5s ease;
+}
+
+i::before{
+    color: #FFFFFF;
+}
+
+a{
+    text-decoration: none;
+    color:#FFFFFF;
+    font-weight: 300;
+}
+
+header a{
+    display: block;
+}
+
+li{
+    font-weight: 100;
+    list-style: none;
+    color: #b1b1b1;
+    padding: .13em 0;
+    -webkit-transition: all .5s ease;
+}
+
+li:hover{
+    color: #dedede;
+    cursor: pointer;
+}
+
+.column2 a:first-child{
+    margin-bottom: .15em;
+    margin-top: 1em;
+}
+
+.column2 a ~ a{
+    margin-top: 2.5em;
+}
+
+.full{
+    width: 100%;
+    position: fixed;
+    background: #1f1f1f;
+    top: -27em;
+    -webkit-transition: all .5s ease;
+}
+
+.menu {
+    height:27em;
+    top: -27em;
+    color:#FFFFFF;
+    -webkit-transition: all .5s ease;
+}
+
+.trigger-area {
+    position:absolute;
+    top:0;
+    right:10%;
+    width: 2.5em;
+    height:2.3em;
+    background: #1f1f1f;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    z-index:1;
+    -webkit-transition: all .5s ease;    
+}
+
+.trigger {
+    position: absolute;
+    top:0;
+    right:10%;
+    margin:0;
+    width: 2.5em;
+    height: 2.3em;    
+    opacity: 0;
+    z-index:2;
+    -webkit-transition: all .5s ease;
+}
+
+.trigger:checked {
+    top:27em;
+}
+
+.trigger:checked + .trigger-area {
+    top:27em;
+}
+
+.trigger:checked ~ .full {
+    top:0;
+}
+
+.trigger:checked ~ .full > .menu {
+    top:0;
+}
+
+.trigger:checked + div > i{
+    top: 15%;
+    left: 20%;
+}
+
+.trigger:checked + div > i::before{
+    content: '\f106';
+    font-size: 2em;
+}
+
+.info{
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    z-index: -1;
+    letter-spacing: 3px;
+    color: #424242;
+}
+
+.fancyLink {
+  text-decoration: none;
+  position: relative;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.fancyLink::before {
+  position: absolute;
+  content: '[';
+  left: 1em;
+  opacity: 0;
+  bottom: -4%;
+  box-sizing: border-box;
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
+  transform: scale(0.9);
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.fancyLink::after {
+  position: absolute;
+  content: ']';
+  right: 1em;
+  opacity: 0;
+  bottom: -4%;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.fancyLink:hover::before,
+.fancyLink:focus::before {
+  opacity: 1;
+  left: -0.4em;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+.fancyLink:hover::after,
+.fancyLink:focus::after {
+  opacity: 1;
+  right: -0.5em;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
