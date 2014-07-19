@@ -1,7 +1,7 @@
 .transform(@string){
     -webkit-transform:   @string;
 	-moz-transform: 	 @string;
-	-ms-transform: 		 @string;
+//	-ms-transform: 		 @string;
 	-o-transform: 		 @string;
     transform:           @string;
 }
@@ -9,7 +9,7 @@
 .transform-origin (@string) {
 	-webkit-transform-origin: @string;
 	-moz-transform-origin:    @string;
-	-ms-transform-origin:     @string;
+//	-ms-transform-origin:     @string
 	-o-transform-origin:      @string;
     transform-origin:         @string;
 }
@@ -21,6 +21,13 @@
     animation:         @string;
 }
 
+.playstate (@string) {
+	-webkit-animation-play-state: @string;  
+	-moz-animation-play-state:    @string; 
+	-o-animation-play-state:      @string;
+    animation-play-state:         @string;
+}
+
 .transition (@string) {
 	-webkit-transition: @string;  
 	-moz-transition:    @string;
@@ -29,7 +36,16 @@
     transition:         @string;
 }
 
-.transition-multiple(@string, @string2){
+.transition-delay (@string) {
+	-webkit-transition-delay: @string;  
+	-moz-transition-delay:    @string;
+	-ms-transition-delay:     @string; 
+	-o-transition-delay:      @string;
+    transition-delay:         @string;
+}
+
+
+.transition-multiple (@string, @string2){
     -webkit-transition: @string, @string2;  
 	-moz-transition:    @string, @string2;
 	-ms-transition:     @string, @string2; 
@@ -37,13 +53,6 @@
     transition:         @string, @string2;
 }
 
-.transition-prefix (@string) {
-	-webkit-transition: -webkit-@string;  
-	-moz-transition:    -moz-@string;
-	-ms-transition:     -ms-@string; 
-	-o-transition:      -o-@string;
-    transition:         @string;
-}
 
 
 @font-stack1: 'Droid Sans', sans-serif;
@@ -121,6 +130,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
 i{
     .transition(all .5s ease);
 }
@@ -135,7 +145,7 @@ nav{
 
 nav li{
     display: inline-block;
-    padding-top: .8em;
+    padding: .8em 0;
 }
 
 nav a{
@@ -186,8 +196,8 @@ nav ul li:hover > i{
     padding-top: 0;
 }
 
-.dropdown-menu li:first-child{
-    padding-top: 1em;
+.dropdown-menu li:first-child a{
+    padding-top: 1.8em;
 }
 
 .dropdown-menu li a{
@@ -214,30 +224,50 @@ nav ul li:hover > i{
 
 .fancyLink {
   text-decoration: none;
-  color: #3CADF1;
+  color: #232323;
   position: relative;
+    .transition(all .3s ease);
 }
-.fancyLink:before {
+
+.fancyLink:hover{
+    color: #23A1D1;
+}
+
+.fancyLink::before {
   position: absolute;
-  content: '';
-  height: 1px;
-  width: 100%;
-  background: #3CADF1;
-  top: 90%;
-  display: block;
-  box-sizing: border-box;
-  -webkit-transition: -webkit-transform 0.3s;
-  -moz-transition: -moz-transform 0.3s;
-  transition: transform .3s;
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  transform: scale(0);
+  content: '[';
+    left: 1em;
+    opacity: 0;
+    bottom: -4%;
+    color: #23A1D1;
+    box-sizing: border-box;
+    .transform(scale(.9));
+    .transition(all .4s ease);
 }
+
+.fancyLink::after{
+    position: absolute;
+    content: ']';
+    right: 1em;
+    opacity: 0;
+    bottom: -4%;
+    color: #23A1D1;
+    .transform(scale(.8));
+    .transition(all .4s ease);
+}
+
 .fancyLink:hover::before,
-.fancyLink:focus::before {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  transform: scale(1);
+.fancyLink:focus::before{
+    opacity: 1;
+    left: -.40em;
+    .transform(scale(1));
+}
+
+.fancyLink:hover::after,
+.fancyLink:focus::after{
+    opacity: 1;
+    right: -.5em;
+    .transform(scale(1));
 }
 
 .white, .white::before, .white::after{
@@ -284,21 +314,42 @@ a{
     text-decoration: none;   
 }
 
-#hero{
-    background-image: url(/img/wind-hero.svg);
-    height: 25em;
+.hero-banner{
+    height: 28em;
+}
+
+#wind-hero{
+    background-image: url(/img/windhero.svg);
+}
+
+#shale-hero{
+    background-image: url(/img/shalehero.svg);   
+}
+
+#urban-ag-hero{
+    background-image: url(/img/urbanaghero.svg);   
 }
 
 .full{
     width: 100%;
 }
 
-.project-item img,
-.process-item img{
+.project-item svg{
     display: block;
     height: 10em;
     width: 10em;
     margin: 0 auto;
+}
+
+.process-item{
+    margin: 0 5%;
+}
+
+.process-item img{
+    display: block;
+    height: 10em;
+    width: 10em;
+    margin: .5em auto 2em auto;
 }
 
 #process{
@@ -323,8 +374,236 @@ h3{
     font-size: 1.5em;
 }
 
+.backdrop{
+    font-weight: 700;
+    font-size: 2.18em;
+    position: relative;
+    color: #232323;
+    z-index: 1;
+}
+
+.backdrop:before{
+    position: absolute;
+    content:attr(data);
+    color: #FFFFFF;
+    z-index: 0;
+    .transform(translate(3px,2px));
+}
+
 .content-container{
     padding: 2.5em 0;
+}
+
+
+///* ==========================================================================
+//   SVG ANIMATIONS
+//   ========================================================================== */
+
+//-----------------WINDMILL ANIMATION-----------------
+
+#Blades_1_{
+    .transform-origin(49% 66%);
+    .animation(spin 4s linear infinite);
+    .playstate(paused);
+}
+
+#animation1:hover > svg > g > #Blades_1_{ 
+    .playstate(running);
+}
+
+.spin{
+    100%{
+        .transform(rotate(360deg));
+    }
+}
+
+@-webkit-keyframes spin {.spin;}
+@-moz-keyframes spin {.spin;}
+@-ms-keyframes spin {.spin;}
+@-o-keyframes spin {.spin;}
+@keyframes spin {.spin;}
+
+//-----------------SHALE GAS ANIMATION-----------------
+
+#animation2 > svg{
+    .animation(gas 2s linear infinite);
+    .playstate(paused);
+}
+
+#animation2:hover > svg {
+    .playstate(running);
+}
+
+.gas{
+    0%{
+        .transform(scale(1));
+    }
+    
+    50%{
+        .transform(scale(.85));
+    }
+    
+    100%{
+        .transform(scale(1));
+    }
+}
+
+@-webkit-keyframes gas {.gas;}
+@-moz-keyframes gas {.gas;}
+@-ms-keyframes gas {.gas;}
+@-o-keyframes gas {.gas;}
+@keyframes gas {.gas;}
+
+//-----------------URBAN AG ANIMATION-----------------
+
+#animation3 path,
+#animation3 ellipse,
+#animation3 polygon,
+#animation3 circle{
+    .transition(all .5s ease);
+}
+
+#animation3 .flower{
+    .transform-origin(bottom center);
+}
+
+#animation3:hover #flower-left,
+#animation3:hover #flower-center,
+#animation3:hover #flower-right{
+    .playstate(running);
+}
+
+#animation3 #flower-left{
+    .animation(sway-left 5s ease infinite);
+    .playstate(paused);
+}
+
+#animation3 #flower-center{
+    .animation(sway-alternate 5s ease infinite);
+    .playstate(paused);
+}
+
+#animation3 #flower-right{
+    .animation(sway-right 5s ease infinite);
+    .playstate(paused);
+}
+
+#animation3:hover #pot{
+    fill: #89725B;
+}
+
+#animation3:hover .center{
+    fill:#FFD933;
+}
+
+#animation3:hover .petal{
+    fill:#FF530D;
+}
+
+#animation3:hover .leaf{
+    fill:#588F27;
+}
+
+#animation3:hover .stem{
+    fill:#588F27;
+}
+
+.sway-left{
+    50%{
+        .transform(rotate(-3deg));
+    }
+}
+
+.sway-right{
+    50%{
+        .transform(rotate(3deg));
+    }
+}
+
+.sway-alternate{
+    25%{
+        .transform(rotate(-1.5deg));
+    }
+    
+    75%{
+        .transform(rotate(1.5deg));
+    }
+}
+
+@-webkit-keyframes sway-left {.sway-left;}
+@-moz-keyframes sway-left {.sway-left;}
+@-ms-keyframes sway-left {.sway-left;}
+@-o-keyframes sway-left {.sway-left;}
+@keyframes sway-left {.sway-left;}
+
+@-webkit-keyframes sway-right {.sway-right;}
+@-moz-keyframes sway-right {.sway-right;}
+@-ms-keyframes sway-right {.sway-right;}
+@-o-keyframes sway-right {.sway-right;}
+@keyframes sway-right {.sway-right;}
+
+@-webkit-keyframes sway-alternate {.sway-alternate;}
+@-moz-keyframes sway-alternate {.sway-alternate;}
+@-ms-keyframes sway-alternate {.sway-alternate;}
+@-o-keyframes sway-alternate {.sway-alternate;}
+@keyframes sway-alternate {.sway-alternate;}
+
+//-----------------BRAZIL ANIMATION-----------------
+
+#animation4 > svg > g#backdrop{
+    opacity: 0;
+    .transition(all .8s ease);
+}
+
+#animation4:hover > svg > g#backdrop{
+    opacity: 1;
+}
+
+
+//-----------------WORLD CITIES SAMPLES-----------------
+
+#animation5 path{
+    .transition(all .5s ease);
+}
+
+#animation5:hover path#eiffel{
+    fill: #B8AE9C;
+}
+
+#animation5:hover path#burj{
+    fill: #B8AE9C;
+    .transition-delay(.15s);
+}
+
+#animation5:hover path#taipei{
+    fill: #B8AE9C;
+    .transition-delay(.3s);
+}
+
+//-----------------GEOPOLITICS-----------------
+
+#animation6 path,
+#animation6 line{
+    .transition(all .5s ease);
+}
+
+#animation6:hover path#google-g{
+    fill:#4385F5;
+}
+
+#animation6:hover g#group-a > line{
+    stroke:#109D59;
+    .transition-delay(.2s);
+}
+
+#animation6:hover g#group-b > line{
+    stroke:#DC4437;
+    .transition-delay(.4s);
+}
+
+#animation6:hover g#group-c > line{
+    stroke:#FCBE1F;
+    .transition-delay(.6s);
 }
 
 

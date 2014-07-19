@@ -11,11 +11,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/1140.css">
-<!--        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>-->
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Roboto:400,300' rel='stylesheet' type='text/css'>
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/owl.carousel.css">
+        <link rel="stylesheet" href="css/owl.theme.css">
         <link rel="stylesheet" href="css/index.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -31,12 +34,12 @@
                             <li><a href="./index.html">Home</a></li>
                             <li onclick="return true"><a href="#" class="with-dropdown-icon">Projects</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:void(0)">Wind Energy</a></li>
+                                    <li><a href="/module/index.html">Wind Energy</a></li>
                                     <li><a href="/module/index.html">Shale Gas</a></li>
-                                    <li><a href="javascript:void(0)">Urban Agriculture</a></li>
-                                    <li><a href="javascript:void(0)">Brazilian Livelihood</a></li>
-                                    <li><a href="javascript:void(0)">Word Cities</a></li>
-                                    <li><a href="javascript:void(0)">Google Maps</a></li>
+                                    <li><a href="/module/index.html">Urban Agriculture</a></li>
+                                    <li><a href="/module/index.html">Brazilian Livelihood</a></li>
+                                    <li><a href="/module/index.html">Word Cities</a></li>
+                                    <li><a href="/module/index.html">Google Maps</a></li>
                                 </ul>
                                 <i class="menu fa fa-angle-down"></i>
                             </li>
@@ -92,7 +95,11 @@
 
             <div class="clearfix">
                 
-                <div class="full bg-image hero-banner" id="hero"></div>
+                <div id="hero-slider" class="owl-carousel owl-theme">
+                    <div class="full bg-image hero-banner" id="wind-hero"></div>
+                    <div class="full bg-image hero-banner" id="urban-ag-hero"></div>
+                    <div class="full bg-image hero-banner" id="shale-hero"></div>
+                </div>
                 
                 <div class="container12 content-container" id="projects">
                     <div class="section-header row">
@@ -101,40 +108,41 @@
                     </div>
                     <div class="projects-showcase">
                         <div class="row">
-                            <div class="project-item column5 prefix1">
-                                <img src="img/windmill.svg">
-                                <h3>Wind Energy</h3>
+                            <div class="project-item column5 prefix1" id="animation1">
+                                <img class="svg" src="img/windmill.svg" id="turbine">
+                                <h3><a href="/module/index.html" class="fancyLink">Wind Energy</a></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                             </div>
-                            <div class="project-item column5 prefix1">
-                                <img src="img/shalegas.svg">
-                                <h3>Shale Gas</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="project-item column5 prefix1">
-                                <img src="img/urbanag.svg">
-                                <h3>Urban Agriculture</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
-                            </div>
-                            <div class="project-item column5 prefix1">
-                                <img src="img/brazillivelihood.svg">
-                                <h3>Brazilian Livelihood</h3>
+                            
+                            <div class="project-item column5 prefix1" id="animation2">
+                                <img class="svg" src="img/shalegas.svg">
+                                <h3><a href="./module/" class="fancyLink">Shale Gas</a></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                             </div>
                         </div>
                         
                         <div class="row">
-                            <div class="project-item column5 prefix1">
-                                <img src="img/wordcities.svg">
-                                <h3>World Cities Samples</h3>
+                            <div class="project-item column5 prefix1" id="animation3">
+                                <img class="svg" src="img/urbanag.svg">
+                                <h3><a href="/module/index.html" class="fancyLink">Urban Agriculture</a></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                             </div>
-                            <div class="project-item column5 prefix1">
-                                <img src="img/googlemaps.svg">
-                                <h3>Google Maps Case Study</h3>
+                            <div class="project-item column5 prefix1" id="animation4">
+                                <img class="svg" src="img/brazillivelihood-2.svg">
+                                <h3><a href="/module/index.html" class="fancyLink">Brazilian Livelihood</a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="project-item column5 prefix1" id="animation5">
+                                <img class="svg" src="img/wordcities.svg">
+                                <h3><a href="/module/index.html" class="fancyLink">World Cities Samples</a></h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
+                            </div>
+                            <div class="project-item column5 prefix1" id="animation6">
+                                <img class="svg" src="img/googlemaps.svg">
+                                <h3><a href="/module/index.html" class="fancyLink">Geopolitics of Google Earth</a></h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipsiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                             </div>
                         </div>
@@ -150,20 +158,20 @@
                         <h2>Learning by immersion</h2>
                     </div>
                     
-                    <div class="process-item column3 prefix1">
-                        <h3>Pick</h3>
+                    <div class="process-item column3">
+                        <h3 class="backdrop" data="Pick">Pick</h3>
                         <img src="img/hand.svg">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                     </div>
                     
-                    <div class="process-item column3 prefix1">
-                        <h3>Read</h3>
+                    <div class="process-item column3">
+                        <h3 class="backdrop" data="Read">Read</h3>
                         <img src="img/paper.svg">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                     </div>
                     
-                    <div class="process-item column3 prefix1">
-                        <h3>Explore</h3>
+                    <div class="process-item column3">
+                        <h3 class="backdrop" data="Explore">Explore</h3>
                         <img src="img/binoculars.svg">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia, nunc sit amet ultrices tempor, metus neque commodo urna, quis vestibulum.</p>
                     </div>
@@ -190,9 +198,9 @@
         
         </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-        <script src="js/main.js"></script>
+        <script src="js/index.js"></script>
 
     </body>
 </html>
