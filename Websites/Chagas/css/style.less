@@ -1,7 +1,7 @@
 //-------------LESS MIXINS-------------
 
 @maincolor:#ffcc00;
-@secondcolor:#463d34;
+@secondcolor:#333;
 @adminprimary: #3C3C3C;
 @white: #ffffff;
 @border: #DCDDDE;
@@ -12,7 +12,7 @@
 .transform(@string){
     -webkit-transform:   @string;
 	-moz-transform: 	 @string;
-	-ms-transform: 		 @string;
+//	-ms-transform: 		 @string;
 	-o-transform: 		 @string;
     transform:           @string;
 }
@@ -20,7 +20,7 @@
 .transform-origin (@string) {
 	-webkit-transform-origin: @string;
 	-moz-transform-origin:    @string;
-	-ms-transform-origin:     @string;
+//	-ms-transform-origin:     @string
 	-o-transform-origin:      @string;
     transform-origin:         @string;
 }
@@ -32,6 +32,13 @@
     animation:         @string;
 }
 
+.playstate (@string) {
+	-webkit-animation-play-state: @string;  
+	-moz-animation-play-state:    @string; 
+	-o-animation-play-state:      @string;
+    animation-play-state:         @string;
+}
+
 .transition (@string) {
 	-webkit-transition: @string;  
 	-moz-transition:    @string;
@@ -40,7 +47,16 @@
     transition:         @string;
 }
 
-.transition-multiple(@string, @string2){
+.transition-delay (@string) {
+	-webkit-transition-delay: @string;  
+	-moz-transition-delay:    @string;
+	-ms-transition-delay:     @string; 
+	-o-transition-delay:      @string;
+    transition-delay:         @string;
+}
+
+
+.transition-multiple (@string, @string2){
     -webkit-transition: @string, @string2;  
 	-moz-transition:    @string, @string2;
 	-ms-transition:     @string, @string2; 
@@ -48,43 +64,37 @@
     transition:         @string, @string2;
 }
 
-.transition-prefix (@string) {
-	-webkit-transition: -webkit-@string;  
-	-moz-transition:    -moz-@string;
-	-ms-transition:     -ms-@string; 
-	-o-transition:      -o-@string;
-    transition:         @string;
-}
-
 //-------------END LESS MIXINS-------------
 
-@import url(reset.css);
-@import url(component.css);
-
-html {
-  font-family: @lato;
-  font-size: 62.5%;
-  font-size: 1.5rem;
-  letter-spacing: 1px;
-  color: @secondcolor;
-  -webkit-font-smoothing: antialiased;
+html,body {
+    font-family: @opensans;
+    font-size: 1em;
+    letter-spacing: 1px;
+    height: 100%;
+    color: @secondcolor;
+    -webkit-font-smoothing: antialiased;
+}
+header{
+    height: 80%;
+    z-index: 0;
+    border-bottom: .5em solid #ffcc00;
 }
 
-.content {
-  overflow-x: hidden !important;
+.container{
+    min-height: 100%;
 }
+
+
 h1 {
-  font-family: @opensans;
     font-weight: 600;
 }
-h2 {
-  font-family: @opensans;
-  font-size: 3.2em;
+h1 {
+  font-size: 2.5em;
   letter-spacing: 6px;
   color: @secondcolor;
   font-weight: 600;
 }
-h2 span {
+h1 span {
   font-family: @lato;
   font-size: .6em;
   font-weight: 300;
@@ -93,177 +103,186 @@ h2 span {
   word-wrap: break-word;
   letter-spacing: 2px;
 }
-h3 {
-  font-family: @opensans;
-  font-weight: bold;
-  font-size: 1.5em !important;
-  letter-spacing: 2.3px;
-  font-variant: small-caps;
-  color: @secondcolor;
+
+h2 {
+    text-align: center;
+    margin: .25em 0;
+    font-size: 1.5em;
+    letter-spacing: 6px;
+    font-weight: 600;
 }
+
+h2 span {
+    font-family: @lato;
+    font-weight: 300;
+    font-style: italic;
+    display: inline-block;
+    word-wrap: break-word;
+    letter-spacing: 2px;
+}
+
+h1 span::before,
+h2 span::before{
+    content: '/';
+    display: inline;
+//    color: @maincolor;
+}
+
+p{
+    margin-bottom: 1.5em;
+}
+
 p,
 li {
-  font-size: .75em;
-  line-height: 31px;
-  letter-spacing: 1px;
+    font-size: 1em;
+    line-height: 31px;
+    letter-spacing: 1px;
 }
 article li {
   list-style: disc;
 }
+
+article > section{
+    padding: 3em 0 0 0;
+}
+
+* .container{
+    z-index: 10;
+    background: #FFFFFF;
+}
 em {
   font-style: italic;
 }
-.fancyLink {
-  text-decoration: none;
-  color: rgb(10, 112, 230);
-  display: inline-block;
-  position: relative;
-}
-.fancyLink:before{
-  position: absolute;
-  content: '';
-  height: 1px;
-  width: 100%;
-  background: rgb(10, 112, 230);
-  top: 90%;
-  display: block;
-  box-sizing: border-box; 
-    .transition-prefix(transform .3s);
-    .transform(scale(0));
+header{
+    background-image: url(/images/TxLandscape.jpg);
 }
 
-.fancyLink:hover::before,
-.fancyLink:focus::before {
-  .transform(scale(1));
+.main-content, header{
+    position: relative;
+    top: 3em;
 }
-nav {
-  padding: .4rem 0 .6rem 0;
+
+.main-content img{
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+figure{
+    width: 75%;
+    margin: 3em auto;
+}
+
+figcaption{
+    font-family: @lato;
+    text-align: center;
+}
+
+.bg-img{
+    background-size: cover;
+    background-position: center;
+}
+
+article nav {
   background: rgb(255, 255, 255);
   background: rgba(255, 255, 255, 0.3);
   width: 100%;
-  font-family: @opensans;
-  font-weight: bold;
-  font-size: .6em;
-  letter-spacing: 1.8px;
-  font-variant: small-caps;
+  font-size: 1em;
   position: fixed;
   z-index: 1001;
-  text-align: center;
   top: 0;
     .transition(bakcground .7s ease);
 }
 
-nav:hover{
+article nav:hover{
     background: rgba(255, 255, 255,1);
     .transition(background .7s ease);
 }
 
-nav a {
+article nav a {
     margin: 0 5%;
     display: inline-block;    
 }
-nav a {
+article nav a {
   text-decoration: none;
   color: @secondcolor;
   padding: .2rem 1rem;
     .transition(all 0.2s linear);
 }
-nav a:hover {
+article nav a:hover {
   background-color: @maincolor;
     .transition(all 0.2s linear);
 }
-nav .active {
+article nav active {
   color: @secondcolor;
   background-color: @maincolor;
 }
+
 .secondarynav {
-  font-family: @lato;
   font-style: italic;
-  font-size: .7em;
   width: 100%;
   position: relative;
   background: none;
   letter-spacing: 1.8px;
-  font-variant: small-caps;
   opacity: .9;
 }
-.secondarynav a {
-  margin: 0 0;
-}
-.title {
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 10em;
-  top: 25%;
-}
-.title h1 {
-  margin: 0 0;
-  position: relative;
-}
 
-[id^="part"]{
-    padding-right: 0;
+#title{
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    margin-left: -188px;
 }
-
 #part1 {
-  font-family: @opensans;
-  font-size: .7em;
+  font-size: 2.8em;
   font-weight: normal;
   letter-spacing: .075em;
   color: @white;
-  position: relative;
+  position: absolute;
   white-space: nowrap;
   overflow: hidden;
-  left: .7em;
-  bottom: 0.1em;
 }
 #part2 {
-  font-family: @opensans;
-  font-size: .7em;
+  font-size: 2.8em;
   font-weight: normal;
   letter-spacing: .075em;
   color: @white;
-  position: relative;
+  position: absolute;
   white-space: nowrap;
   overflow: hidden;
-  left: .7em;
-  bottom: 0.1em;
+  left: 7.7em;
   font-weight: bolder;
 }
 #part3 {
-  font-family: @opensans;
-  font-size: 1.4em;
+  font-size: 5.6em;
   letter-spacing: .18em;
   color: @maincolor;
   font-weight: normal;
-  position: relative;
-  top: 0.71em;
-  left: -4.4em;
+  position: absolute;
+  top: 0.3em;
+  left: -0.57em;
 }
 #part4 {
-  font-family: @opensans;
   font-weight: bold;
-  font-size: .55em;
+  font-size: 2.2em;
   letter-spacing: .075em;
   font-variant: small-caps;
   color: @secondcolor;
   background: @maincolor;
-  position: relative;
+  position: absolute;
   white-space: nowrap;
-  top: 3em;
-  left: -16.9em;
+  top: 3.75em;
+  left: -1.45em;
 }
 #bug {
-  background-image: url(../images/genericbug-compressor.svg);
+  background-image: url(../images/genericbug.svg);
   background-repeat: no-repeat;
   background-position: center;
   height: 50%;
   top: 8em;
-  left: 9em;
   position: relative;
 }
 #snail {
-//  background-image: url(../images/snail.svg);
   background-repeat: no-repeat;
   background-position: center;
   height: 3em;
@@ -370,41 +389,32 @@ nav .active {
   text-align: left;
   overflow: hidden;
 }
-.section {
-  margin: 4rem auto;
-}
-.sectionTitle {
-  width: 100%;
-  overflow: hidden;
-}
-.sectionDesc {
-  padding: .5rem 0;
-}
-.subsectionTitle {
-  text-align: center;
-  padding: 1.5rem 0;
-}
+
 .subline {
   top: 12em;
   position: absolute;
 }
+
 #speciesShowcase {
   height: 100%;
   width: 12rem;
   padding: 1rem 0 0 0;
   float: left;
 }
+
 #speciesShowcase .specimenCapsule {
   height: 4.5rem;
   width: 100%;
   display: block;
   padding: .5rem 0 .5rem 0;
 }
+
 #speciesShowcase .specimenImage img {
   height: 4.5em;
   background-size: 80%;
   background-repeat: no-repeat;
 }
+
 #speciesShowcase .specimenName {
   font-style: italic;
   font-size: .75em;
@@ -412,36 +422,33 @@ nav .active {
   left: 4.3rem;
   bottom: 2.5rem;
 }
-#speciesinfo {
-  padding-top: 2rem;
-}
-#speciesinfo article {
-  position: relative;
-  left: 2em;
-  padding-right: 2.5em;
-}
+
 #kissingbugmap {
-  min-height: 60%;
+  min-height: 50vh;
 }
 
+#teamTask{
+    margin-left: 3em;
+}
 
 .qacontainer {
   margin-bottom: 1.5rem;
 }
+
 .question {
-  font-family: @lato;
   font-weight: 600;
   letter-spacing: 1px;
   color: @secondcolor;
 }
+
 .answer {
-  font-family: @lato;
   letter-spacing: 1px;
   color: @secondcolor;
   border-left: 3px solid @maincolor;
   margin-left: .5em !important;
   padding-left: .5em;
 }
+
 input,
 textarea {
   border: 1px solid @maincolor;
@@ -450,16 +457,17 @@ textarea {
   padding: .5rem 0;
   text-align: center;
   color: @secondcolor;
-  font-size: .75em;
   font-family: @lato;
   margin: .7rem 0;
 }
+
 input:focus,
 textarea:focus {
   outline: 3px solid #c6bdb3;
   outline-style: solid;
   border-color: @white;
 }
+
 input[type="submit"],
 input[type="button"],
 button {
@@ -470,10 +478,10 @@ button {
   background: @maincolor;
   color: @secondcolor;
   font-family: @lato;
-  font-size: .75em;
   padding: .5rem 0;
     .transition(all 0.3s linear);
 }
+
 input[type="submit"]:hover,
 input[type="button"]:hover,
 button:hover {
@@ -481,64 +489,35 @@ button:hover {
   color: @maincolor;
     .transition(all 0.3s linear);
 }
+
 #alternatecontact {
   text-align: center;
 }
+
 #alternatecontact div {
   margin: 2rem 0;
 }
+
 #alternatecontact div p {
   line-height: .9em;
 }
+
 #smallfooter {
   bottom: -3.5rem;
   font-size: .7em;
-  font-family: @opensans;
   position: relative;
   text-align: center;
 }
+
 .half {
   width: 49%;
   display: inline-table;
 }
+
 .image-link {
   display: block;
   height: 100%;
   width: 100%;
-}
-.arrowContainer {
-  margin: 4rem auto;
-}
-.arrowContainer :before {
-  content: attr(title);
-}
-.downArrow {
-  height: 1.0rem;
-  width: 1.0rem;
-  margin: 0 auto;
-  border: 1px solid white;
-  border-top: 0;
-  border-left: 0;
-    .transform(rotate(45deg));
-    .transition(all 150ms linear);
-}
-.downArrow:hover {
-  border-color: @maincolor;
-    .transition(all 150ms linear);
-}
-.upArrow {
-  height: 1.0rem;
-  width: 1.0rem;
-  margin: 0 auto;
-  border: 1px solid white;
-  border-top: 0;
-  border-left: 0;
-    .transform(rotate(225deg));
-    .transition(all 150ms linear);
-}
-.upArrow:hover {
-  border-color: @maincolor;
-    .transition(all 150ms linear);
 }
 
 .floating-label-form-group label {
@@ -546,7 +525,6 @@ button:hover {
     position: relative;
     opacity: 0;
     z-index: 0;
-    font-size: .75em;
     color: #c6bdb3;
     vertical-align: middle;
     text-align: center;
@@ -554,13 +532,6 @@ button:hover {
     margin: 0;
     .transition-multiple(top 300ms ease, opacity 300ms ease);
 }
-
-.floating-label-form-group {
-//  border-left: 1px solid #ccc;
-//  padding-left: 14px;
-   
-}
-
 
 .floating-label-form-group-with-value label {
   top: 0;
@@ -579,12 +550,48 @@ form .row:first-child .floating-label-form-group {
     #kissingbugmap{
         height: 20em;
     }
-    
-
     article li {
         margin-left: 1em;
     }   
 
+}
+
+.fancyLink {
+  text-decoration: none;
+  color: rgb(10, 112, 230);
+  display: inline-block;
+  position: relative;
+}
+.fancyLink:before{
+  position: absolute;
+  content: '';
+  height: 1px;
+  width: 100%;
+  background: rgb(10, 112, 230);
+  top: 90%;
+  display: block;
+  box-sizing: border-box; 
+    .transition(all .3s);
+    .transform(scale(0));
+}
+
+.fancyLink:hover::before,
+.fancyLink:focus::before {
+  .transform(scale(1));
+}
+
+.info {
+    font-family: @opensans;
+    padding: .8em;
+    background: #FFFFFF;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+    font-size: initial
 }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>MEDIA QUERIES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -727,9 +734,6 @@ form .row:first-child .floating-label-form-group {
   button.trigger {
     bottom: 40px;
   }
-  .section {
-    padding: 0 1em !important;
-  }
   .secondarynav {
     font-size: 1em;
   }
@@ -746,9 +750,116 @@ form .row:first-child .floating-label-form-group {
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<MEDIA QUERIES<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+.animClass {
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+}
+
+nav{
+    
+    font-size: .85em;
+    background: #232323;
+    position: fixed;
+    width: 100%;
+    z-index: 11;
+    -webkit-box-shadow: 0 1px 5px 0px #232323;
+    -moz-box-shadow: 0 1px 5px 0px #232323;
+    box-shadow: 0 1px 5px 0px #232323;
+    
+    img{
+        height: 100%;
+        padding: .5em;
+    }
+    
+    div{
+        height: 3em;
+    }
+    
+    a{
+        text-decoration: none;
+        color: #FFFFFF;
+        padding: .9em;
+        display: inline-block;
+        .transition(all .3s linear);
+    }
+    ul{
+        float: right;
+    }
+    li{
+        display: inline-block;
+    }
+}
+
+.img-link{
+    display: inline;
+}
+
+nav a:hover{
+    color: @maincolor;
+}
+
+.with-dropdown-icon{
+    padding-right: .25em;
+}
+
+.fa.menu{
+    padding-right: .5em;
+}
+
+i::before{
+    color: #FFFFFF;
+}
+
+i{
+    .transition(all .5s ease);
+}
+
+nav ul ul{
+    z-index: 12;
+    display: block;
+    position: absolute;
+    background: #232323;
+    top: 4em;
+    max-height: 0;
+    overflow: hidden;
+    .transition(all .3s linear);
+}
+
+nav li:hover > ul {
+    max-height: 20em;
+}
+
+nav ul ul li{
+    display: block;
+    z-index:1;
+    position: relative;
+}
+
+.dropdown-menu li a{
+    display: block;
+    text-align: left;
+    padding: .8em 1em;
+}
+
+.dropdown-menu a:active{
+    background: #333;
+}
 
 
+nav ul li:hover > i::before{
+    color: @maincolor;
+}
 
+nav ul li:hover > i{
+    .transform(rotateX(180deg));
+}
 
+.dropdown-menu li{
+    padding-top: 0;
+}
+
+.dropdown-menu li a:hover{
+    color: @maincolor;
+}
 
 

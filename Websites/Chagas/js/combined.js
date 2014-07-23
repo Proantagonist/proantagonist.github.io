@@ -20,30 +20,30 @@
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END SMOOTH VERTICAL SCROLLING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN ACTIVE NAVIGATION TRACKING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-$("nav a").click( function() {
-  $(".active").removeClass("active");
-  $(this).parent("").addClass("active");
-});
-    
-    
-$(document).ready(function () {
-    menutoggle();
-});
-
-$(document).scroll(function (){
-    menutoggle();
-});
-
-function menutoggle(){
-    if (document.body.scrollTop > 400)
-        $('#mainnav').stop().animate({"opacity": '1'});
-      else
-        $('#mainnav').stop().animate({"opacity": '0'});
-}
-
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END ACTIVE NAVIGATION TRACKING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN ACTIVE NAVIGATION TRACKING>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//
+//$("nav a").click( function() {
+//  $(".active").removeClass("active");
+//  $(this).parent("").addClass("active");
+//});
+//    
+//    
+//$(document).ready(function () {
+//    menutoggle();
+//});
+//
+//$(document).scroll(function (){
+//    menutoggle();
+//});
+//
+//function menutoggle(){
+//    if (document.body.scrollTop > 400)
+//        $('#mainnav').stop().animate({"opacity": '1'});
+//      else
+//        $('#mainnav').stop().animate({"opacity": '0'});
+//}
+//
+////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END ACTIVE NAVIGATION TRACKING<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN FLOATING LABELS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -60,148 +60,128 @@ $(function() {
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END FLOATING LABELS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN KISSINGBUG MAP>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var map;
+var max;
+var info = L.control();
+var gGroup = L.layerGroup();
+var currentBug;
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BEGIN LANDING PAGE EFFECT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+$(document).ready(initialize);
 
-(function() {
+function initialize() {
+    func();
+    map = L.map('kissingbugmap');
+    L.tileLayer('http://{s}.tiles.mapbox.com/v3/atharmon91.il51emdn/{z}/{x}/{y}.png', {
+        maxZoom: 18
+    }).addTo(map);
+    map.setView([31.264, -99.152], 6);
+    var info = L.control();
 
-    // detect if IE : from http://stackoverflow.com/a/16657946		
-    var ie = (function(){
-        var undef,rv = -1; // Return value assumes failure.
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf('MSIE ');
-        var trident = ua.indexOf('Trident/');
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
 
-        if (msie > 0) {
-            // IE 10 or older => return version number
-            rv = parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-        } else if (trident > 0) {
-            // IE 11 (or newer) => return version number
-            var rvNum = ua.indexOf('rv:');
-            rv = parseInt(ua.substring(rvNum + 3, ua.indexOf('.', rvNum)), 10);
+    info.update = function (props) {
+        this._div.innerHTML = '<h4>Kissing Bugs</h4></br><h4>by county</h4>';
+    };
+
+    info.addTo(map);
+}
+
+function getData(table) {
+    var pathToREST = "REST/Shapes/GET/Default.aspx";
+    $.getJSON(pathToREST, {"table" : table})
+      .done(handleDone)
+      .fail(handleFail)
+}
+
+function handleDone(data, textStatus, jqXHR) {
+    var layer;
+    gGroup.clearLayers();
+    $.each(data.items, function (i, item) {
+        max = data.Max;
+        layer = omnivore.wkt.parse(item.WKT);
+        layer["NAME"] = item.NAME;
+        layer["Total"] = item.Total;
+        layer.setStyle({
+            color: setColor(layer, item.Total),
+            //stroke: false, 
+            fillOpacity: 0.4,
+            weight: 2
+        });
+
+        gGroup.addLayer(layer);
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: highlightFeature
+        });
+    });
+    gGroup.addTo(map);
+}
+
+function handleFail(data, textStatus, jqXHR) {
+    alert("Error loading WKT");
+}
+
+function setColor(layer, cases) {
+    return cases > (max * 0.85) ? '#800026' :
+            cases > (max * 0.60) ? '#BD0026' :
+            cases > (max * 0.45) ? '#E31A1C' :
+            cases > (max * 0.30) ? '#FC4E2A' :
+            cases > (max * 0.15) ? '#FEB24C' : '#FFEDA0';
+}
+
+function highlightFeature(e) {
+    var layer = e.target;
+    layer.setStyle({
+        weight: 4,
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+
+    $('.info').html("<h4>" + layer.NAME + "</h4></br><p>" + currentBug + ": " + layer.Total + "</p>");
+}
+
+function resetHighlight(e) {
+    var layer = e.target;
+    layer.setStyle({
+        fillOpacity: 0.4,
+        weight: 2
+    });
+    $('.info').html("<h4>Kissing Bugs</h4></br><h4>by county</h4>");
+}
+
+function func() {
+    $(".layerButton").click(function () {
+        switch (this.id) {
+            case "g":
+                getData("GerstaeckeriTotal");
+                currentBug = "Gerstaeckeri";
+                break;
+            case "i":
+                getData("IndictivaTotal");
+                currentBug = "Indictiva";
+                break;
+            case "l":
+                getData("LecticulariaTotal");
+                currentBug = "Lecticularia";
+                break;
+            case "s":
+                getData("SanguisugaTotal");
+                currentBug = "Sanguisuga";
+                break;
+            case "clear":
+                currentBug = "No species selected";
+                gGroup.clearLayers();
+                break;
         }
-
-        return ((rv > -1) ? rv : undef);
-    }());
-
-
-    // disable/enable scroll (mousewheel and keys) from http://stackoverflow.com/a/4770179					
-    // left: 37, up: 38, right: 39, down: 40,
-    // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-    var keys = [32, 37, 38, 39, 40], wheelIter = 0;
-
-    function preventDefault(e) {
-        e = e || window.event;
-        if (e.preventDefault)
-        e.preventDefault();
-        e.returnValue = false;  
-    }
-
-    function keydown(e) {
-        for (var i = keys.length; i--;) {
-            if (e.keyCode === keys[i]) {
-                preventDefault(e);
-                return;
-            }
-        }
-    }
-
-    function touchmove(e) {
-        preventDefault(e);
-    }
-
-    function wheel(e) {
-        // for IE 
-        //if( ie ) {
-            //preventDefault(e);
-        //}
-    }
-
-    function disable_scroll() {
-        window.onmousewheel = document.onmousewheel = wheel;
-        document.onkeydown = keydown;
-        document.body.ontouchmove = touchmove;
-    }
-
-    function enable_scroll() {
-        window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;  
-    }
-
-    var docElem = window.document.documentElement,
-        scrollVal,
-        isRevealed, 
-        noscroll, 
-        isAnimating,
-        container = document.getElementById( 'container' ),
-        trigger = container.querySelector( 'button.trigger' );
-
-    function scrollY() {
-        return window.pageYOffset || docElem.scrollTop;
-    }
-
-    function scrollPage() {
-        scrollVal = scrollY();
-
-        if( noscroll && !ie ) {
-            if( scrollVal < 0 ) return false;
-            // keep it that way
-            window.scrollTo( 0, 0 );
-        }
-
-        if( classie.has( container, 'notrans' ) ) {
-            classie.remove( container, 'notrans' );
-            return false;
-        }
-
-        if( isAnimating ) {
-            return false;
-        }
-
-        if( scrollVal <= 0 && isRevealed ) {
-            toggle(0);
-        }
-        else if( scrollVal > 0 && !isRevealed ){
-            toggle(1);
-        }
-    }
-
-    function toggle( reveal ) {
-        isAnimating = true;
-
-        if( reveal ) {
-            classie.add( container, 'modify' );
-        }
-        else {
-            noscroll = true;
-            disable_scroll();
-            classie.remove( container, 'modify' );
-        }
-
-        // simulating the end of the transition:
-        setTimeout( function() {
-            isRevealed = !isRevealed;
-            isAnimating = false;
-            if( reveal ) {
-                noscroll = false;
-                enable_scroll();
-            }
-        }, 600 );
-    }
-
-    // refreshing the page...
-    var pageScroll = scrollY();
-    noscroll = pageScroll === 0;
-
-    disable_scroll();
-
-    if( pageScroll ) {
-        isRevealed = true;
-        classie.add( container, 'notrans' );
-        classie.add( container, 'modify' );
-    }
-
-    window.addEventListener( 'scroll', scrollPage );
-    trigger.addEventListener( 'click', function() { toggle( 'reveal' ); } );
-})();
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>END LANDING PAGE EFFECT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    });
+}
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<END KISSINGBUG MAP<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
