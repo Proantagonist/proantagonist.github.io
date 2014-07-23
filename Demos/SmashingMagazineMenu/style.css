@@ -45,7 +45,8 @@ h1, p{
     background:#FFFFFF;
     position: fixed;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     top: 0;
 }
 
