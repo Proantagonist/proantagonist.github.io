@@ -4,23 +4,41 @@ body {
   position: relative;
 }
 body {
-  background: -webkit-linear-gradient(45deg, #607d8b, #03a9f4);
+  background: -webkit-linear-gradient(135deg, #0059a1, #f1c055);
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 0;
+  box-sizing: border-box;
+  padding: 1.5em 1em;
 }
 h1 {
   font-size: 1.9em;
   margin: .25em 0;
 }
 .nametag-container {
-  height: 252px;
-  width: 173px;
+  height: 337px;
+  width: 231px;
   background-image: url(../img/base.svg);
   display: inline-block;
-  margin: 1.5em;
+  margin: .5em .25em;
   overflow: hidden;
   position: relative;
+  -webkit-transition: all .3s;
+  opacity: 0;
+  -webkit-animation: animIn .3s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-direction: normal;
+}
+.nametag-container:hover > .delete {
+  opacity: 1;
+}
+.delete {
+  position: absolute;
+  right: .25em;
+  top: .25em;
+  z-index: 100;
+  opacity: 0;
+  -webkit-transition: all .5s ease;
 }
 .first-name,
 .last-name,
@@ -37,8 +55,8 @@ h1 {
 }
 .first-name,
 .last-name {
-  font-family: NimbusSansT-BoldCondensed;
-  font-size: 26pt;
+  font-family: NimbusSansT-BoldCondensed, NimbuSanTBolCon;
+  font-size: 27pt;
   position: absolute;
   letter-spacing: 1px;
 }
@@ -49,16 +67,16 @@ h1 {
   top: 39%;
 }
 .rank {
-  font-family: NimbusSansT-BoldCondensed;
-  font-size: 10pt;
+  font-family: NimbusSansT-BoldCondensed, NimbuSanTBolCon;
+  font-size: 15pt;
   position: absolute;
-  top: 152px;
+  top: 202px;
   letter-spacing: 3px;
   white-space: nowrap;
 }
 .sales-pitch {
-  font-family: BebasNeue;
-  font-size: 7pt;
+  font-family: BebasNeue, Bebas Neue;
+  font-size: 9.75pt;
   position: absolute;
   bottom: .5em;
   white-space: nowrap;
@@ -76,6 +94,8 @@ h1 {
   background: rgba(0, 0, 0, 0.4);
   z-index: 99;
   opacity: 1;
+  top: 0;
+  left: 0;
 }
 #prompt {
   font-family: Open Sans, sans-serif;
@@ -93,6 +113,7 @@ h1 {
   box-sizing: border-box;
   padding: 1.5em;
   box-shadow: 0 2px 5px #212121;
+  overflow: hidden;
 }
 #prompt label,
 #prompt input {
@@ -100,6 +121,14 @@ h1 {
   position: relative;
   margin: 1.75em auto;
   text-align: center;
+}
+#prompt span {
+  font-size: .55em;
+  font-style: italic;
+}
+#prompt span > a {
+  color: #03a9f4;
+  text-decoration: none;
 }
 input[type=number] {
   border: none;
@@ -113,6 +142,26 @@ input[type=submit] {
   color: white;
   width: 35%;
   border-radius: 3px;
+}
+#add-tag {
+  height: 3em;
+  width: 3em;
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
+  border-radius: 50%;
+  background: #8bc34a;
+  z-index: 50;
+  color: #FFF;
+  text-align: center;
+  font-size: 1em;
+}
+#add-tag > i {
+  -webkit-transform: translateY(25%);
+}
+#add-tag:hover {
+  background: #7fb540;
+  cursor: pointer;
 }
 #prompt.hide {
   -webkit-animation: hide .3s;
@@ -133,11 +182,38 @@ input[type=submit] {
   opacity: 0;
   -webkit-transition: all .3s;
 }
+.nametag-container.animOut {
+  -webkit-animation: animOut .3s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-direction: normal;
+}
+@-webkit-keyframes animOut {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale3d(1.5, 1.5, 1.5);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes animIn {
+  0% {
+    -webkit-transform: scale3d(0, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+}
 @media print {
   body {
     background: none;
   }
-  #prompt-bg {
+  #prompt-bg,
+  #add-tag,
+  .delete {
     display: none;
   }
 }
