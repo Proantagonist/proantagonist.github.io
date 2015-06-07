@@ -979,7 +979,7 @@ s .content-block {
     opacity: 0;
     z-index: inherit;
     border-radius: 100%;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(213, 210, 204, 0.85);
     transform-origin: center;
     -webkit-transition: opacity .8s;
     transition: opacity .8s;

@@ -11,10 +11,10 @@ function materialRipple() {
         var YCoord = (e.pageY - offset.top);
 
         $(this).append($("<div class='ripple ripple-active'></div>").css({
-            left: XCoord - 4.5,
-            top: YCoord - 2
+            left: XCoord - 35,
+            top: YCoord - 35
         })).on("mouseup", function () {
-            $(this).find('div.ripple').removeClass('ripple-active').on('webkitAnimationEnd oanimationend oAnimationEnd msAnimationEnd animationend', function () {
+            $(this).children().next('.ripple.ripple-active').removeClass('ripple-active').on('webkitAnimationEnd oanimationend oAnimationEnd msAnimationEnd animationend', function () {
                 $(this).remove();
                 console.log('deleted');
             });
