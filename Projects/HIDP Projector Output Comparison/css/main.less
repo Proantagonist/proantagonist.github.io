@@ -1,0 +1,635 @@
+// compress: true
+
+/* ==========================================================================
+    Main.less - Contains all front-end styles for the web application
+    Application: GeoInnovation Services Center
+    Author: Edgar Hernandez - TAMU GeoInnovation Services ©
+   ========================================================================== */
+
+
+/* =========== Contents ===========*/
+
+//    1. LESS Mixins
+//    2. Application Colors
+//    3. Typography
+//    4. Global
+//    5. Branding
+//    6. Navigation
+//    7. Grid Additions
+//    8. Landing Page Specific
+
+/* =========== END Contents ===========*/
+
+//  ==========================================================================
+//  ==========================================================================
+//  ====================>>>>>> 1. LESS Mixins <<<<<<==========================
+//  ==========================================================================
+//  ==========================================================================
+.animation (@string) {
+    -webkit-animation: @string;
+    -moz-animation: @string;
+    -o-animation: @string;
+    animation: @string;
+}
+
+.transform(@string) {
+    -webkit-transform: @string;
+    -moz-transform: @string;
+    -ms-transform: @string;
+    -o-transform: @string;
+    transform: @string;
+}
+
+.transform-origin (@string) {
+    -webkit-transform-origin: @string;
+    -moz-transform-origin: @string;
+    -ms-transform-origin: @string;
+    -o-transform-origin: @string;
+    transform-origin: @string;
+}
+
+.transition (@value1, @value2: X, ...) {
+    @value: ~`"@{arguments}".replace(/[\[\]]|\, \sX/g, '')`;
+    -webkit-transition: @value;
+    -moz-transition: @value;
+    -ms-transition: @value;
+    -o-transition: @value;
+    transition: @value;
+}
+
+.transition-prefix (@string) {
+    -webkit-transition: -webkit-@string;
+    -moz-transition: -moz-@string;
+    -ms-transition: -ms-@string;
+    -o-transition: -o-@string;
+    transition: @string;
+}
+
+// Flexbox display
+// flex or inline-flex
+.flex-display(@display: flex) {
+    display: ~"-webkit-@{display}";
+    display: ~"-moz-@{display}";
+    display: ~"-ms-@{display}box"; // IE10 uses -ms-flexbox
+    display: ~"-ms-@{display}"; // IE11
+    display: @display;
+}
+
+// The 'flex' shorthand
+// - applies to: flex items
+// <positive-number>, initial, auto, or none
+.flex(@columns: initial) {
+    -webkit-flex: @columns;
+    -moz-flex: @columns;
+    -ms-flex: @columns;
+    flex: @columns;
+}
+
+// Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse
+.flex-direction(@direction: row) {
+    -webkit-flex-direction: @direction;
+    -moz-flex-direction: @direction;
+    -ms-flex-direction: @direction;
+    flex-direction: @direction;
+}
+
+// Flex Line Wrapping
+// - applies to: flex containers
+// nowrap | wrap | wrap-reverse
+.flex-wrap(@wrap: nowrap) {
+    -webkit-flex-wrap: @wrap;
+    -moz-flex-wrap: @wrap;
+    -ms-flex-wrap: @wrap;
+    flex-wrap: @wrap;
+}
+
+// Flex Direction and Wrap
+// - applies to: flex containers
+// <flex-direction> || <flex-wrap>
+.flex-flow(@flow) {
+    -webkit-flex-flow: @flow;
+    -moz-flex-flow: @flow;
+    -ms-flex-flow: @flow;
+    flex-flow: @flow;
+}
+
+// Display Order
+// - applies to: flex items
+// <integer>
+.flex-order(@order: 0) {
+    -webkit-order: @order;
+    -moz-order: @order;
+    -ms-order: @order;
+    order: @order;
+}
+
+// Flex grow factor
+// - applies to: flex items
+// <number>
+.flex-grow(@grow: 0) {
+    -webkit-flex-grow: @grow;
+    -moz-flex-grow: @grow;
+    -ms-flex-grow: @grow;
+    flex-grow: @grow;
+}
+
+// Flex shrink
+// - applies to: flex item shrink factor
+// <number> 
+.flex-shrink(@shrink: 1) {
+    -webkit-flex-shrink: @shrink;
+    -moz-flex-shrink: @shrink;
+    -ms-flex-shrink: @shrink;
+    flex-shrink: @shrink;
+}
+
+// Flex basis
+// - the initial main size of the flex item
+// - applies to: flex itemsnitial main size of the flex item
+// <width> 
+.flex-basis(@width: auto) {
+    -webkit-flex-basis: @width;
+    -moz-flex-basis: @width;
+    -ms-flex-basis: @width;
+    flex-basis: @width;
+}
+
+// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around 
+.justify-content(@justify: flex-start) {
+    -webkit-justify-content: @justify;
+    -moz-justify-content: @justify;
+    -ms-justify-content: @justify;
+    justify-content: @justify;
+}
+
+// Packing Flex Lines
+// - applies to: multi-line flex containers
+// flex-start | flex-end | center | space-between | space-around | stretch 
+.align-content(@align: stretch) {
+    -webkit-align-content: @align;
+    -moz-align-content: @align;
+    -ms-align-content: @align;
+    align-content: @align;
+}
+
+// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch 
+.align-items(@align: stretch) {
+    -webkit-align-items: @align;
+    -moz-align-items: @align;
+    -ms-align-items: @align;
+    align-items: @align;
+}
+
+// Cross-axis Alignment
+// - applies to: flex items
+// auto | flex-start | flex-end | center | baseline | stretch 
+.align-self(@align: auto) {
+    -webkit-align-self: @align;
+    -moz-align-self: @align;
+    -ms-align-self: @align;
+    align-self: @align;
+}
+
+//  ==========================================================================
+//  ==========================================================================
+//  ====================>>>>>> 2. Application Colors <<<<<<===================
+//  ==========================================================================
+//  ==========================================================================
+@primary-blue: #2379B5;
+@secondary-blue: #2e8fc6;
+@background-grey: #fcfcfc;
+@support-grey: #9e9e9e;
+@secondary-support-grey: #757575;
+@terciary-support-grey: #e0e0e0;
+@text-primary: #616161;
+@text-secondary: #424242;
+@text-terciary: #bdbdbd;
+@text-quaternary: #f5f5f5;
+@link-blue: #4FC3F7;
+@warning: #ff9800;
+@alert: #e53935;
+@import "colors.less";
+::selection {
+    background: #9e9e9e;
+    color: #ffffff;
+}
+
+::-moz-selection {
+    background: #F5F5F5;
+}
+
+@raleway: 'Raleway',
+sans-serif;
+html {
+    color: @text-primary;
+    font-family: @raleway;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: .75px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    height: 100%
+}
+
+body {
+    height: inherit;
+}
+
+p {
+    font-size: 1.0625rem;
+    letter-spacing: inherit;
+    line-height: 1.75;
+    //    letter-spacing: .5px;
+    //    padding-top: .75rem;
+    padding-bottom: .75rem;
+    color: inherit;
+    position: inherit;
+    font-weight: inherit;
+    &.large {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: #616161;
+    }
+}
+
+li {
+    font-size: 1.15rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    color: inherit;
+    position: relative;
+}
+
+.section-heading {
+    font-size: 2.75rem;
+    margin-bottom: 1.25rem;
+    p {
+        color: @text-primary;
+        font-weight: 400;
+    }
+    &.center {
+        text-align: center;
+    }
+}
+
+.section-heading + div {
+    margin-top: 1.5rem !important;
+}
+
+.page-heading {
+    font-size: 2.75rem;
+    font-weight: 400;
+    &.center {
+        text-align: center;
+    }
+}
+
+.page-heading + div {
+    margin-top: 6rem !important;
+}
+
+#site-title {
+    font-size: 3.5rem;
+    margin-bottom: .5em;
+}
+
+#site-title-sub {
+    font-size: 1.75rem;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 3.0rem;
+    font-weight: 300;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-top: .4rem;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+h4 {
+    font-size: 1.35rem;
+    color: @text-secondary;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    border-bottom: 1px solid @text-quaternary;
+    &.no-border {
+        border-bottom: none;
+        margin-bottom: 1rem;
+    }
+}
+
+h5 {
+    font-size: 1.1rem;
+    color: @text-primary;
+    font-weight: 400;
+    border-bottom: 1px solid lighten(@text-secondary, 40%);
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+ul {
+    &.no-list {
+        list-style: none;
+        font-weight: 400;
+    }
+    padding-left: 1.25rem;
+}
+
+li {
+    list-style-position: inside;
+}
+
+a {
+    color: @secondary-blue;
+    position: relative;
+    text-decoration: none;
+    padding-bottom: .75rem;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        text-decoration: underline;
+    }
+    &.no-decoration {
+        text-decoration: none;
+    }
+}
+
+nav a {
+    //CAUTION: Heavy use overflow: hidden; !important declarations in this selector. Nav anchors will have their own style and cannot negate [nav a].
+    &::before,
+    &::after {
+        content: none;
+    }
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    &.double {
+        &>.child {
+            height: 100%;
+            width: 50%;
+        }
+    }
+    &.quadruple {
+        &>.child {
+            height: 50%;
+            width: 50%;
+        }
+    }
+    &>.child {
+        border: 2px solid @text-quaternary;
+        box-sizing: border-box;
+        background: @terciary-support-grey;
+        &>.image-container {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            .flex(1);
+        }
+    }
+}
+
+//  ==========================================================================
+//  ==========================================================================
+//  ======================>>>>>> 4. Global <<<<<<=============================
+//  ==========================================================================
+//  ==========================================================================
+html,
+body {
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+body {
+    background: @background-grey;
+}
+
+body > header {
+    background: @primary-blue;
+    box-sizing: border-box;
+    font-weight: 600;
+    position: relative;
+    color: @text-quaternary;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    &>h1 {
+        font-size: 2rem;
+        font-weight: 400;
+        margin: .75rem 0;
+    }
+}
+
+body > footer {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #616161;
+    position: relative;
+    h3 {
+        color: #616161;
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+    li {
+        list-style: none;
+        padding-bottom: .25rem;
+    }
+    .top-section {
+        background: #EEEEEE;
+        padding-top: 1rem;
+        padding-bottom: 3rem;
+        p,
+        a {
+            color: inherit;
+            text-decoration: inherit;
+            font-size: inherit;
+            padding-bottom: 0;
+        }
+    }
+    .bottom-section {
+        font-size: .8rem;
+        background-color: white;
+        .footer-copyright {
+            text-align: center;
+            p {
+                color: inherit;
+                font-size: inherit;
+                font-weight: inherit;
+            }
+        }
+    }
+    .quick-links {
+        text-align: right
+    }
+}
+
+section {
+    .align-items(center);
+    .flex-display(flex);
+    .flex-direction(column);
+    position: relative;
+    width: 100%;
+    &.pad-top {
+        padding-top: 5.125rem;
+    }
+    &.pad-bottom {
+        padding-bottom: 1rem;
+    }
+    &.pad-both {
+        padding: 2.5rem 0;
+    }
+}
+
+body section:first-child {
+    padding-top: 0;
+}
+
+section > .container16,
+section > .container12 {
+    .flex-display(flex);
+    .flex-direction(column);
+    .align-items(center);
+    &.align-left {
+        .align-items(flex-start);
+    }
+    &.align-right {
+        .align-items(flex-end);
+    }
+    & > * {
+        width: 100%;
+    }
+}
+
+figure {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    box-sizing: border-box;
+    figcaption {
+        font-style: italic;
+        font-size: 1.1rem;
+    }
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.ex-pad {
+    &.all {
+        padding: 0;
+    }
+    &.sides {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    &.ends {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.ex-margin {
+    &.all {
+        margin: 0;
+    }
+    &.sides {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    &.ends {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.center {
+    text-align: center;
+}
+
+//  =============================================================================
+//  =============================================================================
+// = ====================>>>>>> Flex Framework <<<<<<============================
+//  =============================================================================
+//  =============================================================================
+.flex {
+    .flex-display(flex);
+    .flex-wrap(wrap);
+    &.flex-column {
+        .flex-direction(column);
+    }
+    &.flex-row {
+        .flex-direction(row);
+        &.reverse {
+            .flex-direction(row-reverse);
+        }
+    }
+    &.align-items-center {
+        .align-items(center);
+    }
+    &.align-items-start {
+        .align-items(flex-start);
+    }
+    &.align-items-stretch {
+        .align-items(stretch);
+    }
+    &.align-content-center {
+        .align-content(center);
+    }
+    &.align-content-stretch {
+        .align-content(stretch);
+    }
+    &.justify-content-center {
+        .justify-content(center);
+    }
+    &.justify-content-between {
+        .justify-content(space-between);
+    }
+    &.justify-content-around {
+        .justify-content(space-around);
+    }
+    &.justify-content-start {
+        .justify-content(flex-start);
+    }
+    &.justify-content-end {
+        .justify-content(flex-end);
+    }
+    &.align-self-stretch {
+        .align-self(stretch);
+    }
+}
+
+//  =============================================================================
+//  =============================================================================
+// = ====================>>>>>> Input Styles <<<<<<============================
+//  =============================================================================
+//  =============================================================================
+select {
+    border: none;
+    border-radius: 0;
+    padding: 1rem;
+    -webkit-appearance: none;
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
