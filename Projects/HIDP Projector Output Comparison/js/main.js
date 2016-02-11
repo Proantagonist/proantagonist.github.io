@@ -83,7 +83,7 @@ function selectWatch() {
     $('select').change(function () {
             var inputValue = $(this).val();
 
-            var path = window.location.origin + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg';
+            var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg';
 
             function UrlExists(url) {
                 var http = new XMLHttpRequest();
