@@ -92,8 +92,8 @@ function selectWatch() {
     $('select').change(function () {
         var inputValue = $(this).val();
 
-        //        var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
-        var path = window.location.origin + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Local path. Comment before uploading
+                var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
+//        var path = window.location.origin + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Local path. Comment before uploading
 
         if (UrlExists(path)) {
             $(this).parent().find('.image-container').empty().css('background-image', 'url(' + path + ')');
