@@ -318,9 +318,9 @@ h2 {
 }
 
 h3 {
-    font-size: 1.75rem;
-    font-weight: 300;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
 }
 
 h4 {
@@ -437,6 +437,11 @@ body > header {
         font-weight: 400;
         margin: .75rem 0;
     }
+    .flex-display(flex);
+    .flex-direction(row);
+    .justify-content(space-between);
+    .align-items(center);
+    .flex-wrap(wrap);
 }
 
 body > footer {
@@ -631,5 +636,22 @@ select {
     &:active,
     &:focus {
         outline: none;
+    }
+}
+
+//  =============================================================================
+//  =============================================================================
+// = ====================>>>>>> Other <<<<<<============================
+//  =============================================================================
+//  =============================================================================
+.controls {
+    .flex-display(flex);
+    .flex-direction(row);
+    .justify-content(center);
+    i {
+        padding: .5rem;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
