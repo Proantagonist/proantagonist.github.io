@@ -81,20 +81,21 @@ function selectWatch() {
     var step = 1;
 
     $('select').change(function () {
-            var inputValue = $(this).val();
+        var inputValue = $(this).val();
 
-            var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg';
+//        var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
+        var path = window.location.origin + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Local path. Comment before uploading
 
-            function UrlExists(url) {
-                var http = new XMLHttpRequest();
-                http.open('HEAD', url, false);
-                http.send();
-                return http.status != 404;
-            }
+        function UrlExists(url) {
+            var http = new XMLHttpRequest();
+            http.open('HEAD', url, false);
+            http.send();
+            return http.status != 404;
+        }
 
-            if (UrlExists(path)) {
-                $(this).parent().find('.image-container').css('background-image', 'url(' + path + ')');
-                }
+        if (UrlExists(path)) {
+            $(this).parent().find('.image-container').empty().css('background-image', 'url(' + path + ')');
+        }
 
-            });
-    }
+    });
+}
