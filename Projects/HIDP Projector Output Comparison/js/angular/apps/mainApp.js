@@ -1,1 +1,1 @@
-var app = angular.module('mainApp', ['ngRoute','angular.filter', 'userRSVP']);
+var app = angular.module('mainApp', ['ngRoute']);
