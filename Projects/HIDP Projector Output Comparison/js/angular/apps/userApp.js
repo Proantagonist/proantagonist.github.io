@@ -1,1 +1,0 @@
-var user = angular.module('userApp', ['profClass', 'userClasses']);

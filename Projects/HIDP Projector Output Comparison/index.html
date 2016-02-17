@@ -16,9 +16,14 @@
 
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    <!--    IMPORT ANGULAR-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.5/angular-filter.min.js"></script>
 </head>
 
-<body class="flex flex-row justify-content-start align-items-stretch align-content-stretch">
+<body class="flex flex-row justify-content-start align-items-stretch align-content-stretch" ng-app="mainApp" ng-controller="mainController">
     <header>
         <h1>HIDP Projector Output Comparison</h1>
 
@@ -26,6 +31,7 @@
             <div id="manual-exposure">
                 <h3>Manual Exposure</h3>
                 <div class="controls">
+                   <i>value: {{exposure}}</i>
                     <i class="zmdi zmdi-neg-1 zmdi-hc-lg" alt="Decrease Exposure by 1 Step" id="minus" title="Decrease Exposure by 1 Step"></i>
                     <i class="zmdi zmdi-plus-1 zmdi-hc-lg" alt="Incrase Exposure by 1 Step" id="plus" title="Incrase Exposure by 1 Step"></i>
                 </div>
@@ -35,7 +41,7 @@
 
     <div class="container double flex flex-row align-items-stretch align-content-stretch justify-content-start">
         <div class="child flex flex-column">
-            <select>
+            <select ng-model="selected" ng-change="load(selected, this)">
                 <option>-- Select Projector --</option>
                 <option value="3G_TL">3G Tl</option>
                 <option value="4G_TL_Replica">4G TL Replica</option>
@@ -76,6 +82,16 @@
         </div>
 
     </div>
+
+    <!--    Modules    -->
+    <script src="./js/angular/apps/mainApp.js"></script>
+
+    <!--    Controllers    -->
+    <script src="./js/angular/controllers/mainController.js"></script>
+
+    <!--    Services    -->
+
+    <!--    Directives    -->
 </body>
 
 </html>
