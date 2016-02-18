@@ -8,7 +8,7 @@ app.controller('mainController', ['$scope', function ($scope) {
     }
 
     $scope.load = function (value, elem) {
-        var path = window.location.href + '/img/' + value + '/' + value + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
+        var path = window.location.href + '/img/' + value + '/' + value + '-' + $scope.step + '.jpg'; //Server path. Uncomment before uploading.
         //        var path = window.location.origin + '/img/' + value + '/' + value + '-' + $scope.step + '.jpg'; //Local path. Comment before uploading
 
         if (elem) {
