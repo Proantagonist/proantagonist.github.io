@@ -387,6 +387,7 @@ nav a {
         &>.child {
             height: 100%;
             width: 50%;
+            border-top: 0;
         }
     }
     &.quadruple {
@@ -396,15 +397,29 @@ nav a {
         }
     }
     &>.child {
-        border: 2px solid @text-quaternary;
+        border: 2px solid #424242;
         box-sizing: border-box;
-        background: @terciary-support-grey;
+//        background: @terciary-support-grey;
+        background: #212121;
         &>.image-container {
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             .flex(1);
         }
+    }
+}
+
+.full-flex-height-container{
+    .flex-display(flex);
+    .flex-direction(column);
+    
+    &>div{
+        .flex(1);
+    }
+    
+    &>header{
+      .flex(.1);  
     }
 }
 

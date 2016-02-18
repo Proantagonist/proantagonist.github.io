@@ -23,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.5/angular-filter.min.js"></script>
 </head>
 
-<body class="flex flex-row justify-content-start align-items-stretch align-content-stretch" ng-app="mainApp" ng-controller="mainController">
+<body class="full-flex-height-container" ng-app="mainApp" ng-controller="mainController">
     <header>
         <h1>HIDP Projector Output Comparison</h1>
 
@@ -39,7 +39,7 @@
         </div>
     </header>
 
-    <div class="container double flex flex-row align-items-stretch align-content-stretch justify-content-start">
+    <div class="container double flex flex-column">
         <div class="child flex flex-column">
             <select ng-model="selected" ng-change="load(selected)">
                 <option value="3G_TL">3G Tl</option>
