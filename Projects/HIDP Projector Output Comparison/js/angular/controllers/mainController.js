@@ -8,8 +8,8 @@ app.controller('mainController', ['$scope', function ($scope) {
     }
 
     $scope.load = function (value, elem) {
-                        var path = window.location.href + '/img/' + inputValue + '/' + inputValue + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
-//        var path = window.location.origin + '/img/' + value + '/' + value + '-' + $scope.step + '.jpg'; //Local path. Comment before uploading
+        var path = window.location.href + '/img/' + value + '/' + value + '-' + step + '.jpg'; //Server path. Uncomment before uploading.
+        //        var path = window.location.origin + '/img/' + value + '/' + value + '-' + $scope.step + '.jpg'; //Local path. Comment before uploading
 
         if (elem) {
             if ($scope.verifyUrl(path)) {
