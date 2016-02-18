@@ -28,20 +28,42 @@
         <h1>HIDP Projector Output Comparison</h1>
 
         <div class="image-controls">
-            <div id="manual-exposure">
-                <h3>Manual Exposure</h3>
+            <div id="preset-exposure">
                 <div class="controls">
-                   <i>value: {{exposure}}</i>
-                    <i class="zmdi zmdi-neg-1 zmdi-hc-lg" alt="Decrease Exposure by 1 Step" id="minus" title="Decrease Exposure by 1 Step"></i>
-                    <i class="zmdi zmdi-plus-1 zmdi-hc-lg" alt="Incrase Exposure by 1 Step" id="plus" title="Incrase Exposure by 1 Step"></i>
+                    <i class="zmdi zmdi-zero zmdi-hc-lg" ng-click="step = 2"></i>
+                    <i class="zmdi zmdi-neg-1 zmdi-hc-lg" ng-click="step = 3"></i>
+                    <i class="zmdi zmdi-neg-2 zmdi-hc-lg" ng-click="step = 4"></i>
                 </div>
+                <h3>Preset Exposures</h3>
+            </div>
+
+            <div id="high-beam-toggle">
+                <div class="controls">
+                    <i class="custom-icon" title="High beam shot for those that have it" style="background-image: url(./img/icons/high-beam.svg); //Full Beam Light by Lloyd Humphreys from the Noun Project" ng-click="step = 5"></i>
+                </div>
+                <h3>High Beam</h3>
+            </div>
+
+            <div id="distance-toggle">
+                <div class="controls">
+                    <i class="zmdi zmdi-looks zmdi-hc-lg" ng-click="step = 6" title="Distance shots at 150ft"></i>
+                </div>
+                <h3>Distance Shot</h3>
+            </div>
+
+            <div id="distance-toggle">
+                <div class="controls">
+                    <i class="zmdi zmdi-tonality zmdi-hc-lg" title="Toggle color nversion" ng-click="invert()"></i>
+                </div>
+                <h3>Color Analysis</h3>
             </div>
         </div>
     </header>
 
     <div class="container double flex flex-column">
         <div class="child flex flex-column">
-            <select ng-model="selected" ng-change="load(selected)">
+            <select ng-model="selected1" ng-change="load(selected1)">
+                <option value="">-- Select Projector --</option>
                 <option value="3G_TL">3G Tl</option>
                 <option value="4G_TL_Replica">4G TL Replica</option>
                 <option value="Mini_H4">Chinese Mini H4</option>
@@ -81,7 +103,8 @@
             </div>
         </div>
         <div class="child flex flex-column">
-            <select ng-model="selected" ng-change="load(selected)">
+            <select ng-model="selected2" ng-change="load(selected2)">
+                <option value="">-- Select Projector --</option>
                 <option value="3G_TL">3G Tl</option>
                 <option value="4G_TL_Replica">4G TL Replica</option>
                 <option value="Mini_H4">Chinese Mini H4</option>
@@ -132,6 +155,23 @@
     <!--    Services    -->
 
     <!--    Directives    -->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-64909910-2', 'auto');
+        ga('send', 'pageview');
+    </script>
 </body>
 
 </html>

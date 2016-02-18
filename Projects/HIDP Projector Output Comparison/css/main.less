@@ -399,7 +399,7 @@ nav a {
     &>.child {
         border: 2px solid #424242;
         box-sizing: border-box;
-//        background: @terciary-support-grey;
+        //        background: @terciary-support-grey;
         background: #212121;
         &>.image-container {
             background-size: contain;
@@ -410,17 +410,44 @@ nav a {
     }
 }
 
-.full-flex-height-container{
+.full-flex-height-container {
     .flex-display(flex);
     .flex-direction(column);
-    
-    &>div{
+    &>div {
         .flex(1);
     }
-    
-    &>header{
-      .flex(.1);  
+    &>header {
+        .flex(.1);
     }
+}
+
+.image-controls {
+    .flex-display(flex);
+    .flex-direction(row);
+    .align-items(center);
+    h3 {
+        font-size: .75rem;
+        text-align: center;
+    }
+    &>div {
+        padding: 0 1rem;
+    }
+}
+
+.custom-icon {
+    height: 15px;
+    width: 14px;
+    margin-bottom: .1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    //SVG Must be 24.15px tall
+    //Canvas must be 44px x 44px
+}
+
+.invert {
+    -webkit-filter: invert(1);
+    filter: invert(1);
 }
 
 //  ==========================================================================
@@ -440,7 +467,8 @@ body {
 }
 
 body > header {
-    background: @primary-blue;
+    //    background: @primary-blue;
+    background: #3F51B5;
     box-sizing: border-box;
     font-weight: 600;
     position: relative;
@@ -648,6 +676,8 @@ select {
     border-radius: 0;
     padding: 1rem;
     -webkit-appearance: none;
+    background: #5C6BC0;
+    color: #e0e0e0;
     &:active,
     &:focus {
         outline: none;
@@ -664,7 +694,8 @@ select {
     .flex-direction(row);
     .justify-content(center);
     i {
-        padding: .5rem;
+        padding: .5rem .75rem;
+        font-weight: 500;
         &:hover {
             cursor: pointer;
         }
