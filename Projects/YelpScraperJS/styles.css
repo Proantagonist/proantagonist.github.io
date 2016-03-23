@@ -1,0 +1,11 @@
+#scraper-gui{
+    position: fixed;
+    height: 200px;
+    width: 500px;
+    right: 0;
+    bottom: 0;
+    background: #F5F5F5;
+    border-top-left-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    padding: 1rem;
+}
