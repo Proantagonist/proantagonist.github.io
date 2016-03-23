@@ -1,6 +1,7 @@
+var jsonString = [];
+
 getBusinesses();
 
-var jsonString = [];
 
 function getBusinesses() {
     var businesses = [$('.regular-search-result')];
