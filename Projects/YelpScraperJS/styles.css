@@ -1,6 +1,6 @@
 #scraper-gui{
     position: fixed;
-    height: 200px;
+    height: 175px;
     width: 500px;
     right: 0;
     bottom: 0;
@@ -8,4 +8,36 @@
     border-top-left-radius: 5px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
     padding: 1rem;
+    z-index: 99999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#scraper-gui > div{
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+#scraper-gui > div button{
+    width: 90%;
+    background: none;
+    outline: none;
+    border: none;
+    padding: .75rem;
+    background: #3F51B5;
+    border-radius: 3px;
+    color: #ffffff;
+    position: relative;
+}
+
+#scraper-gui > div button:active{
+    background: #5E35B1;
+}
+
+#obj-counter{
+    font-weight: bold;
+    font-weight: 20px;
 }
