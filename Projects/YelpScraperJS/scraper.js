@@ -29,7 +29,7 @@ function initialize() {
 }
 
 function createGUI() {
-    $('body').append('<div id="scraper-gui"><div><p>When the first page is fully loaded, begin by pressing "Collect". Only press once per page, there may be a slight delay in the counter due to geocoding processing requests being done.</p><button id="start">Collect</button></div><div><p>Records collected:</p><p id="obj-counter">--</p><button id="export">Export</button></div></div>');
+    $('body').append('<div id="scraper-gui"><div><p>When the first page is fully loaded, begin by pressing "Collect". Only press once per page, there may be a slight delay in the counter due to geocoding processing requests being made.</p><button id="start">Collect</button></div><div><p>Records collected:</p><p id="obj-counter">--</p><button id="export">Export</button></div></div>');
 
     setup();
 }

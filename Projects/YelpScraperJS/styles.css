@@ -1,3 +1,34 @@
+html{
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 100%;
+}
+
+body{
+    width: 960px;
+    text-align: center;
+    margin: 0 auto;
+    height: 100%;
+    background: #F5F5F5;
+}
+
+p{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #757575;
+}
+
+h1{
+    font-weight: 400;
+    font-size: 3rem;
+    margin: 1.5rem;
+}
+
+h1, p, .button{
+    margin: 1rem auto;
+}
+
 #scraper-gui{
     position: fixed;
     height: 175px;
@@ -40,4 +71,24 @@
 #obj-counter{
     font-weight: bold;
     font-weight: 20px;
+}
+
+#landing-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    padding: 1rem 2.5rem;
+    background: #3F51B5;
+    border-radius: 3px;
+    max-width: 25%;
+}
+
+.button:hover{
+    background: #3949AB;
 }
