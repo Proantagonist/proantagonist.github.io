@@ -14,8 +14,8 @@ function initialize() {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        //        link.href = 'http://proantagonist.github.io/Projects/YelpScraperJS/styles.css';
-        link.href = './styles.css';
+        link.href = 'https://proantagonist.github.io/Projects/YelpScraperJS/styles.css';
+        //        link.href = './styles.css';
         link.media = 'all';
         head.appendChild(link);
 
