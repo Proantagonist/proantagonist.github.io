@@ -8,17 +8,60 @@
 </head>
 
 
-<body id="landing-main">
+<body>
     <div class="x-large-partition">
-        <h1>Yelp ScraperJS</h1>
-        <p>The Yelp Scraper was developed and tested on the latest Chrome. To use, drag the button below to your bookmarks bar. Then, click on the bookmark while viewing Yelp listings to lauch the script.</p>
+        <div class="container" id="landing">
+            <img class="logo" src="img/logo.png">
+            <h1>Yelp ScraperJS</h1>
+            <p>Yelp ScraperJS was developed and tested on the latest Chrome. To use, drag the button below to your bookmarks bar to create a launcher. Then, click on the created bookmark to inject the script.</p>
 
-        <a class="button" href="javascript:(function(){javascript:var s=document.createElement('script');s.setAttribute('src','https://proantagonist.github.io/Projects/YelpScraperJS/scraper.js');document.body.appendChild(s);})();">Yelp Scraper</a>
+            <a class="button" href="javascript:(function(){javascript:var s=document.createElement('script');s.setAttribute('src','https://proantagonist.github.io/Projects/YelpScraperJS/scraper.js');document.body.appendChild(s);})();">Yelp Scraper</a>
+
+            <p class="prompt">Don't have Google Chrome installed? Get it <a href="https://www.google.com/chrome/browser/desktop/index.html" target="_blank">here</a>.</p>
+        </div>
     </div>
-    
-    <div class="large-partition">
-        <h2>What does this script do?</h2>
-        <p>The Yelp Scraper was developed and tested on the latest Chrome. To use, drag the button below to your bookmarks bar. Then, click on the bookmark while viewing Yelp listings to lauch the script.</p>
+
+    <div class="large-partition" style="background: #ffffff">
+        <div class="container">
+            <h2>Usage</h2>
+            <div>
+                <p>Here's what to do after you've added the launcher to your bookmarks bar.</p>
+                <p><strong>Step 1:</strong> Generate a list of businesses for either <i>Bryan</i> or <i>College Station</i>. We will need both cities, so pick one to start with. Then filter those results by <strong>Food</strong>.</p>
+                <p>Example:</p>
+                <img src="img/yelp.PNG">
+            </div>
+            <div>
+                <p><strong>Step 2:</strong> Click on the bookmark you crated to run the script. You MUST be on a listings page else the script will not run. You will be presented with a GUI on the bottom right corner of the screen that looks like this:</p>
+
+                <img src="img/yelp2.PNG">
+
+                <p>Once the page has fully rendered the results, press the "Collect" button to scrape the page results. There may be a slight delay before the counter starts reflecting the number of objects collected due to geolocation requests being done to a remote server, so only one press per page is needed otherwise it may lead to mass duplicates.</p>
+
+                <p>The counter on the right side of the GUI will reflect the total number of objects scraped. Since there are 10 results per page, we can expect a maximum of 10 scraped objects per page. It's possible to get a number that is less than 10 even if there are 10 results on the page. This is a rare bug, but not one that is too important since we'll be merging datasets.</p>
+
+                <img src="img/yelp3.PNG">
+
+                <p>Once the page has been scraped, find the pagination element and continue to the next page and repeat until all objects have been scraped.</p>
+                <p>Reference pagination element:</p>
+                <img src="img/yelp4.PNG">
+
+                <p>Since Yelp does not refresh the entire page to fetch the next set of results, we can exploit this to keep the scraper GUI live accross result pages. <i>However, this also means you should not refresh or close the page since the objects are stored in a temporary local cache that exists only for the duration of the session. Should the page be refreshed, scraping will have to begin from page 1 again.</i></p>
+            </div>
+            <div>
+                <p><strong>Step 3:</strong> Once all objects have been scraped, it's time to export the data set. Click on the "Export" button. It should open a tab with a bunch of unformatted inline text that looks similar to this:</p>
+
+                <img src="img/yelp5.PNG">
+
+                <p>Select all of the text using Crl + A (Windows) or Cmd + A (OSX), copy using Crl + C (Windows) or Cmd + C (OSX), and paste into the <a href="http://jsonlint.com/" target="_blank">JSONLint tool</a> input box. Then, click on the "Validate JSON" button to validate and format the markup. Focus the input box by clicking on it and select all of the formatted text.</p>
+
+                <img src="img/yelp7.PNG">
+
+                <p>Open Wordpad (not Notepad. Notepad is a rich text editor which preserves formatting special characters and we don't need them) or TextEdit (OSX) and paste the formatted text. Save the data as a plain text file with the extension <strong>.txt</strong></p>
+                
+                <img src="img/yelp8.PNG">
+                
+            </div>
+        </div>
     </div>
 </body>
 

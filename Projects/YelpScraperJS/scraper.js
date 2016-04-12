@@ -14,8 +14,8 @@ function initialize() {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'https://proantagonist.github.io/Projects/YelpScraperJS/styles.css';
-        //        link.href = './styles.css';
+        link.href = 'https://proantagonist.github.io/Projects/YelpScraperJS/scraper.css';
+//                link.href = './scraper.css';
         link.media = 'all';
         head.appendChild(link);
 
@@ -29,7 +29,7 @@ function initialize() {
 }
 
 function createGUI() {
-    $('body').append('<div id="scraper-gui"><div><p>When the first page is fully loaded, begin by pressing "Collect". Only press once per page, there may be a slight delay in the counter due to geocoding processing requests being made.</p><button id="start">Collect</button></div><div><p>Records collected:</p><p id="obj-counter">--</p><button id="export">Export</button></div></div>');
+    $('body').append('<div id="scraper-gui"><div><p>Press "Collect" to scrape the page results.</p><button id="start">Collect</button></div><div><p>Records collected:</p><p id="obj-counter">--</p><button id="export">Export</button></div></div>');
 
     setup();
 }

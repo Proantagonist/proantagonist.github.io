@@ -1,99 +1,89 @@
-html{
+html {
     font-family: 'Raleway', sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    height: 100%;
 }
 
-body{
-    width: 960px;
-    text-align: center;
-    margin: 0 auto;
-    height: 100%;
-    background: #F5F5F5;
-    
+body {
+/*    text-align: center;*/
+    background: #FAFAFA;
     display: flex;
     flex-direction: column;
-/*    justify-content: center;*/
 }
 
-p{
-    font-size: 1.2rem;
+p {
+    font-size: 1.05rem;
     font-weight: 400;
     color: #757575;
+    line-height: 1.75;
+    letter-spacing: .25px;
 }
 
-h1{
+h1 {
     font-weight: 400;
     font-size: 3rem;
     margin: 1.5rem;
     color: #424242;
 }
 
-h2{
+h2 {
     font-weight: 300;
     font-size: 2.5rem;
     margin: 1.5rem;
     color: #424242;
 }
 
-h1, p, .button{
+h1, h2{
+    text-align: center;
+}
+
+h1,
+p,
+.button {
     margin: 1rem auto;
 }
 
-#scraper-gui{
-    position: fixed;
-    height: 175px;
-    width: 500px;
-    right: 0;
-    bottom: 0;
-    background: #F5F5F5;
-    border-top-left-radius: 5px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
-    padding: 1rem;
-    z-index: 99999;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+img {
+    display: block;
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    border-radius: 5px;
 }
 
-#scraper-gui > div{
-    width: 50%;
+a{
+    text-decoration: none;
+    font-weight: 600;
+    color: #5C6BC0;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+#landing{
     text-align: center;
-    box-sizing: border-box;
 }
 
-
-#scraper-gui > div button{
-    width: 90%;
-    background: none;
-    outline: none;
-    border: none;
-    padding: .75rem;
-    background: #3F51B5;
-    border-radius: 3px;
-    color: #ffffff;
-    position: relative;
+.logo{
+    height: 5rem;
+    width: 5rem;
+    margin: 2rem auto;
 }
 
-#scraper-gui > div button:active{
-    background: #5E35B1;
+.container {
+    width: 800px;
+    display: inherit;
+    flex-direction: inherit;
+    margin: 0 auto;
+}
+.prompt{
+    font-size: .9rem;
 }
 
-#obj-counter{
-    font-weight: bold;
-    font-weight: 20px;
-}
-
-/*
-#landing-main{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-*/
-
-.button{
+.button {
     text-decoration: none;
     color: #ffffff;
     font-size: 1.25rem;
@@ -101,20 +91,24 @@ h1, p, .button{
     background: #3F51B5;
     border-radius: 3px;
     max-width: 25%;
+    font-weight: 400;
 }
 
-.button:hover{
+.button:hover {
     background: #3949AB;
 }
 
-.x-large-partition,.large-partition,.medium-partition,.small-partition,.no-pad-partition {
+.x-large-partition,
+.large-partition,
+.medium-partition,
+.small-partition,
+.no-pad-partition {
     width: 100%;
     position: relative;
     font-weight: 300;
     line-height: normal;
     box-sizing: border-box
 }
-
 
 .x-large-partition {
     padding-top: 15rem;
