@@ -61,7 +61,12 @@ function getBusinesses() {
 function getPropertiesForBusinesses(data) {
     $.each(data[0], function (key, val) {
         var bizName = $(val).find('.biz-name span').text();
-        var bizFullAddress = $(val).find('.secondary-attributes address').html();
+
+        if ($(val).find('.secondary-attributes address').html() !== "") {
+            var bizFullAddress = $(val).find('.secondary-attributes address').html();
+        } else {
+            var bizFullAddress = null;
+        }
 
         if ($(val).find('.rating-large i').attr('title') !== undefined) {
             //Check if there are any reviews for this business
@@ -93,10 +98,16 @@ function getPropertiesForBusinesses(data) {
         var trimmedSplitAddress = $.trim(bizFullAddress).split(',');
 
         if (trimmedSplitAddress[0].indexOf('<') === -1) {
-            var streetAddress = 'null'
-            var city = trimmedSplitAddress[0];
-            var state = trimmedSplitAddress[1].trim().split(' ')[0];
-            var zip = trimmedSplitAddress[1].trim().split(' ')[1];
+            var streetAddress = null;
+            if (trimmedSplitAddress[0] === "") {
+                var city = null;
+                var state = null;
+                var zip = null;
+            } else {
+                var city = trimmedSplitAddress[0];
+                var state = trimmedSplitAddress[1].trim().split(' ')[0];
+                var zip = trimmedSplitAddress[1].trim().split(' ')[1];
+            }
             shouldGeocode = false;
         } else {
             //            var streetAddress = $.trim(bizFullAddress).split('<br>')[0];
