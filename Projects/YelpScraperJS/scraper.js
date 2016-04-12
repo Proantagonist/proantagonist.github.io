@@ -15,7 +15,7 @@ function initialize() {
         link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = 'https://proantagonist.github.io/Projects/YelpScraperJS/scraper.css';
-//                link.href = './scraper.css';
+        //                link.href = './scraper.css';
         link.media = 'all';
         head.appendChild(link);
 
@@ -79,7 +79,10 @@ function getPropertiesForBusinesses(data) {
 
         //-------------------GEOCODE
 
-        var newPathGeocode = "https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderWebServiceHttpNonParsed_V04_01.aspx?streetAddress=" + streetAddress.replace(/ /g, "%20") + "&city=" + city.replace(/ /g, "%20") + "&state=" + state.replace(/ /g, "%20") + "&zip=" + zip.replace(/ /g, "%20") + "&apikey=f4db442a16d44ab7b9acbff707340245&format=json&census=true&censusYear=2000|2010&notStore=false&version=4.01"
+        var newPathGeocode = "https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderWebServiceHttpNonParsed_V04_01.aspx?streetAddress=" + streetAddress.replace(/ /g, "%20") + "&city=" + city.replace(/ /g, "%20") + "&state=" + state.replace(/ /g, "%20") + "&zip=" + zip.replace(/ /g, "%20") + "&apikey=demo&format=json&census=true&censusYear=2000|2010&notStore=false&version=4.01"
+
+//
+//        var newPathGeocode = "https://geoservices.tamu.edu/Services/Geocode/WebService/GeocoderWebServiceHttpNonParsed_V04_01.aspx?streetAddress=" + streetAddress.replace(/ /g, "%20") + "&city=" + city.replace(/ /g, "%20") + "&state=" + state.replace(/ /g, "%20") + "&zip=" + zip.replace(/ /g, "%20") + "&apikey=f4db442a16d44ab7b9acbff707340245&format=json&census=true&censusYear=2000|2010&notStore=false&version=4.01"
 
         $.ajax({
             url: newPathGeocode
