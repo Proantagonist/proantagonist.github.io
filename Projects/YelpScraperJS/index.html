@@ -41,14 +41,14 @@
 
                 <img src="img/yelp3.PNG">
 
-                <p>Once the page has been scraped, find the pagination element and continue to the next page and repeat until all objects have been scraped.</p>
+                <p>Once the page has been scraped, find the pagination element and continue to the next page and repeat until all pages have been scraped.</p>
                 <p>Reference pagination element:</p>
                 <img src="img/yelp4.PNG">
 
-                <p>Since Yelp does not refresh the entire page to fetch the next set of results, we can exploit this to keep the scraper GUI live accross result pages. <i>However, this also means you should not refresh or close the page since the objects are stored in a temporary local cache that exists only for the duration of the session. Should the page be refreshed, scraping will have to begin from page 1 again.</i></p>
+                <p>Since Yelp does not refresh the entire page to fetch the next set of results, we can exploit this to keep the scraper GUI live accross result pages. <i>However, this also means you should not refresh or close the page since the objects are stored in a temporary local cache that exists only for the duration of the session. Should the page be refreshed or closed, scraping will have to begin from page 1 again.</i></p>
             </div>
             <div>
-                <p><strong>Step 3:</strong> Once all objects have been scraped, it's time to export the data set. Click on the "Export" button. It should open a tab with a bunch of unformatted inline text that looks similar to this:</p>
+                <p><strong>Step 3:</strong> Once all pages are scraped, it's time to export the data set. Click on the "Export" button. It should open a tab with a bunch of unformatted inline text that looks similar to this:</p>
 
                 <img src="img/yelp5.PNG">
 
