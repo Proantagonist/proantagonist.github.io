@@ -8,8 +8,8 @@
 
     <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="./js/main.js "></script>
-    <script src="./js/fastclick.js"></script>
+    <script src="../js/main.js "></script>
+    <script src="../js/fastclick.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -258,7 +258,7 @@
         function initMap(latitude, longitude, zoom) {
 
             var userIcon = L.icon({
-                iconUrl: baseUrl + 'img/circle-user.svg'
+                iconUrl: '../img/circle-user.svg'
                 , iconSize: [15, 15], // size of the icon
             });
 
@@ -266,7 +266,7 @@
                 map = L.map('map').setView([latitude, longitude], zoom);
                 var marker = L.marker([latitude, longitude], {
                     icon: userIcon
-                }).addTo(map).bindPopup("Your location");
+                }).addTo(map).bindPopup("Current Location");
             } else {
                 map = L.map('map').setView([39.87, -98.77], 5);
             }
@@ -280,7 +280,7 @@
             var layerLabels;
 
             clearIcon = L.icon({
-                iconUrl: baseUrl + 'img/circle-point.svg'
+                iconUrl: '../img/circle-point.svg'
                 , iconSize: [10, 10], // size of the icon
             });
 
@@ -301,8 +301,6 @@
                 }
             }
 
-            selectedGuid = $('#ctl00_ContentPlaceHolderBody_txtUserGuid').val();
-            //                LoadData(selectedGuid);
             LoadData();
 
             map.on("click", function (e) {
@@ -413,55 +411,18 @@
             notification("failed", textStatus)
         }
 
-        //        function addFenceInit() {
-        //            FreeDrawLayer = new L.FreeDraw({
-        //                mode: L.FreeDraw.MODES.CREATE
-        //            });
-        //            map.addLayer(FreeDrawLayer);
-        //
-        //            FreeDrawLayer.on("markers", function getMakers(eventData) {
-        //                polygonCoords = eventData.latLngs;
-        //                var pathToRESTFence = baseRestUrl + "Submissions/Push/SubmitFence/";
-        //                var wktString = '';
-        //                var JSONString = '';
-        //                wktString += 'POLYGON((';
-        //
-        //                $.each(polygonCoords[0], function (i, item) {
-        //                    if (i > 0) {
-        //                        wktString += ',';
-        //                    }
-        //                    wktString += item.lng + ' ' + item.lat;
-        //                });
-        //                wktString += '))';
-        //
-        //                JSONString += '{';
-        //                JSONString += '"appId" : "' + appId + '",';
-        //                JSONString += '"userGuid" : "' + $('#ctl00_ContentPlaceHolderBody_txtUserGuid').val() + '",';
-        //                JSONString += '"WKT" : "' + wktString + '"';
-        //                JSONString += '} ';
-        //
-        //                $.ajax({
-        //                    url: pathToRESTFence
-        //                    , type: 'POST'
-        //                    , dataType: "json"
-        //                    , contentType: "application/json"
-        //                    , data: JSONString
-        //                    , success: resetTool
-        //                });
-        //            });
-        //        }
 
         function LoadData(userGuid) {
             //LOADS CATS BY GUID
             if (userGuid) {
-                var pathToRESTDetails = "./testData.json";
+                var pathToRESTDetails = "../mergedData.json";
                 $.getJSON(pathToRESTDetails, {})
                     .done(handleDoneData)
                     .fail(handleFailData);
                 //                    loadUserFences(appId, userGuid);
             } else {
                 //IF NO GUID OF FALSE GUIDE, LOAD ALL CATS
-                var pathToRESTDetails = "./testData.json";
+                var pathToRESTDetails = "../mergedData.json";
                 $.getJSON(pathToRESTDetails, {})
                     .done(handleDoneData)
                     .fail(handleFailData);
@@ -486,10 +447,8 @@
 
                     markerCat.on("click", function () {
 
-                        var pathToSubPhoto = baseRestUrl + "Submissions/GetPhoto/?subId=" + item.subId;
-                        $.getJSON(pathToSubPhoto, {})
-                            .done(handleDonePhoto)
-                            .fail(handleFailPhoto);
+
+                        handleDonePhoto();
 
                         var photoItem = "";
 
@@ -497,48 +456,21 @@
 
                         function handleDonePhoto(data, textStatus, jqXHR) {
 
-                            $.each(data.items, function (a, blob) {
-                                photoItem += "<div class='card-list-item'><img src='" + baseRestUrl + "UploadedImages/" + blob.photoGuid + ".jpg" + "'></div>";
-                            });
-
 
                             var card = $('#info-card');
                             content = "";
                             content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
-                            content += "<h2>Report Details</h2>";
-                            content += photoItem;
-                            content += "<div class='card-list-item'><p>Date Added</p><p>" + item.added + "</p></div>";
-                            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.loc.lat + "</p></div>";
-                            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.loc.lon + "</p></div>";
-                            content += "<h3>Survey Questions</h3>";
-                            content += "<div id='divQuestions'></div>";
+                            content += "<h2>Establishment Details</h2>";
+                            content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
+                            content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
+                            content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
+                            content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
+                            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                            content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
+                            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
+                            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
 
-
-                            content += "<h3>Items</h3>";
-                            content += "<table id='FridgeItemsContainer'>";
-                            content += "<thead>";
-                            content += "<tr>";
-                            content += "<th>Food Group </th>";
-                            content += "<th>Product Name </th>";
-                            content += "</tr>";
-                            content += "</thead>";
-                            content += "<tbody>";
-                            content += "</tbody>";
-                            content += "</table>";
-
-
-                            content += "<h3>Restaurants</h3>";
-                            content += "<table id='RestaurantsItemsContainer'>";
-                            content += "<thead>";
-                            content += "<tr>";
-                            content += "<th>Name</th>";
-                            content += "<th>Address</th>";
-                            content += "<th>Date Eaten</th>";
-                            content += "</tr>";
-                            content += "</thead>";
-                            content += "<tbody>";
-                            content += "</tbody>";
-                            content += "</table>";
 
                             card.addClass('active');
                             card.html(content);
@@ -547,7 +479,7 @@
                                 card.removeClass('active');
                             });
 
-                            ModalInit(item.subId);
+                            //                            ModalInit(item.subId);
                         }
                     });
                 }
@@ -1113,13 +1045,13 @@
             });
 
         }
-
-        function randomIntFromInterval(min, max) {
-
-            var rand = Math.random();
-            var ret = rand / 1000.00;
-            return ret;
-        }
+//
+//        function randomIntFromInterval(min, max) {
+//
+//            var rand = Math.random();
+//            var ret = rand / 1000.00;
+//            return ret;
+//        }
     </script>
 
     <style>
@@ -1157,11 +1089,10 @@
     <meta id="ctl00_meta_referrer" name="referrer" content="default" />
     <meta http-equiv="content-script-type" content="text/javascript" />
 
-    <link rel="shortcut icon" href="/stomachflu.tamu.edu/favicon.ico ">
-    <link rel="stylesheet" href="./css/normalize.css ">
-    <link rel="stylesheet" href="./css/1140.css ">
-    <link rel="stylesheet" href="./css/main.css ">
-    <link rel="stylesheet" href="./css/mobile.css" />
+    <link rel="stylesheet" href="../css/normalize.css ">
+    <link rel="stylesheet" href="../css/1140.css ">
+    <link rel="stylesheet" href="../css/main.css ">
+    <link rel="stylesheet" href="../css/mobile.css" />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
@@ -1170,11 +1101,11 @@
     <!-- Load Leaflet from CDN-->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
     <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
-    <script src="./js/leaflet.markercluster.js"></script>
+    <script src="../js/leaflet.markercluster.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="./js/clipper.js"></script>
-    <script src="./js/concavehull.js"></script>
-    <script src="./js/leaflet.freedraw.js"></script>
+    <script src="../js/clipper.js"></script>
+    <script src="../js/concavehull.js"></script>
+    <script src="../js/leaflet.freedraw.js"></script>
 
     <!-- Load Omnivore plugin (WKT parsing) from CDN -->
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
@@ -1204,6 +1135,7 @@
 
 <body class="map-container">
 
+    <!--
     <nav id="off-canvas-menu">
         <div id="ctl00_linksBasic">
             <ul>
@@ -1267,6 +1199,7 @@
             </div>
         </nav>
     </header>
+-->
 
     <form name="aspnetForm" method="post" action="./" id="aspnetForm">
         <div>
@@ -1309,6 +1242,7 @@
 
 
 
+<!--
         <div id="ctl00_actionContainer" class="action-container">
             <div class="fab-container main-action">
                 <div class="fab data" id="root"><span></span>
@@ -1327,6 +1261,7 @@
                 </div>
             </div>
         </div>
+-->
 
 
         <div>

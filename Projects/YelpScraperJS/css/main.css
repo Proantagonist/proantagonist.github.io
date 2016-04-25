@@ -133,7 +133,7 @@ body > header {
   transform: translateY(-50%);
 }
 #site-logo div {
-  background-image: url(./img/logo.svg);
+/*  background-image: url(./img/logo.svg);*/
   height: 1.5em;
   width: 10em;
   background-size: contain;

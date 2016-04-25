@@ -5,6 +5,33 @@
     <title>Yelp ScraperJS</title>
     <link rel="stylesheet" href="./styles.css" />
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+
+    <script>
+        function merge() {
+            path1 = "./testData.json";
+            path2 = "./testData.json";
+            var data1, data2;
+            $.when(
+                $.getJSON(path1, function (data) {
+                    data1 = data;
+                })
+                , $.getJSON(path2, function (data) {
+                    data2 = data;
+                })
+            ).then(function () {
+                if (data1 && data2) {
+                    $.each(data1, function(key, val){
+                       
+                    });
+                }
+            });
+
+
+        }
+    </script>
 </head>
 
 
@@ -16,6 +43,9 @@
             <p>Yelp ScraperJS was developed and tested on the latest Chrome. To use, drag the button below to your bookmarks bar to create a launcher. Then, click on the created bookmark to inject the script.</p>
 
             <a class="button" href="javascript:(function(){javascript:var s=document.createElement('script');s.setAttribute('src','https://proantagonist.github.io/Projects/YelpScraperJS/scraper.js');document.body.appendChild(s);})();">Yelp Scraper</a>
+
+
+            <a class="button" onClick="merge()">Run</a>
 
             <p class="prompt">Don't have Google Chrome installed? Get it <a href="https://www.google.com/chrome/browser/desktop/index.html" target="_blank">here</a>.</p>
         </div>
@@ -57,9 +87,9 @@
                 <img src="img/yelp7.PNG">
 
                 <p>Open Wordpad (not Notepad. Notepad is a rich text editor which preserves formatting special characters and we don't need them) or TextEdit (OSX) and paste the formatted text. Save the data as a plain text file with the extension <strong>.txt</strong></p>
-                
+
                 <img src="img/yelp8.PNG">
-                
+
             </div>
         </div>
     </div>
