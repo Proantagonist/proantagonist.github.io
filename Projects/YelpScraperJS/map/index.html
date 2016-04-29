@@ -779,73 +779,6 @@
             notification("failed", textStatus)
         }
 
-        function postFormSubmission() {
-
-            //compiles JSON object string object for each and every form item answered
-
-            var pathToRESTSubmission = baseRestUrl + "Submissions/Push/SubmitForm/";
-
-            //JSONString has to be wrapped by SINGLE QUOTES. Attributes used DOUBLE QUOTES, otherwise invalid JSON
-            var counter = 0;
-            var JSONString = '';
-
-            JSONString += '{';
-            JSONString += '"answers": [';
-
-            $.each($(".form-input"), function (index, item) {
-                if ($(item).attr("type") === "YesNoMaybe") {
-                    if ($(item).find("input").is(":checked")) {
-                        if (index > 0 && counter > 0) {
-                            JSONString += ',';
-                        }
-                        JSONString += '{ "answer": "' + $(item).find(':checked').val() + '", "questionId": "' + $(this).attr('questionId') + '" }';
-                        counter++;
-                    }
-                }
-                if ($(item).attr("type") === "Spinner") {
-                    if ($(item).find("select").val() !== "null") {
-                        if (index > 0 && counter > 0) {
-                            JSONString += ',';
-                        }
-                        JSONString += '{ "answer": "' + $(item).find('select').val() + '", "questionId": "' + $(this).attr('questionId') + '" }';
-                        counter++;
-                    }
-                }
-                if ($(item).attr("type") === "Stepper") {
-                    if (index > 0 && counter > 0) {
-                        JSONString += ',';
-                    }
-                    JSONString += '{ "answer": "' + $(item).find('input').val() + '", "questionId": "' + $(this).attr('questionId') + '" }';
-                    counter++;
-                }
-            });
-
-            JSONString += '],';
-            JSONString += '"appId": "' + appId + '",';
-
-            if (addPoint === true) {
-                JSONString += '"loc": { "lat": ' + lat + ', "lon": ' + lon + '}';
-            } else {
-                lat = lat + randomIntFromInterval(.0001, .0005);
-                lon = lon + randomIntFromInterval(.0001, .0005);
-                JSONString += '"loc": { "lat": ' + lat + ', "lon": ' + lon + '}';
-            }
-
-            JSONString += '}';
-
-            $.ajax({
-                url: pathToRESTSubmission
-                , type: 'POST'
-                , dataType: "json"
-                , contentType: "application/json"
-                , data: JSONString
-                , success: refreshPointsRemoveModal
-                , error: function (data, status, jqHXR) {
-                    notification('', 'Error: ' + status)
-                }
-            });
-        }
-
         function getNextModalContent() {
             $('html').delegate('#info-modal .button', 'click', function () {
 
@@ -938,113 +871,6 @@
             });
         }
 
-        function postFridgeItemsSubmission() {
-            postFridgeSubmission();
-        }
-
-        function postFridgeSubmission() {
-
-            var pathToRESTSubmission = baseRestUrl + "Fridges/Push/";
-
-            var formData = new FormData();
-            formData.append("submissionGuid", currentSubmisisonGuid);
-
-            $.ajax({
-                url: pathToRESTSubmission
-                , type: 'POST'
-                , data: formData
-                , cache: false
-                , contentType: false
-                , processData: false
-                , success: postFridgeSubmissionDone
-                , error: function (data, status, jqHXR) {
-                    notification('', 'Error: ' + status)
-                }
-            });
-        }
-
-        function postFridgeSubmissionDone(data, status, jqHXR) {
-            var fridge = jQuery.parseJSON(data);
-
-            if (fridge.FridgeGuid) {
-                var table = $("#tableFridgeItemsContainer");
-                var tableBody = $("#tableFridgeItemsContainer tbody");
-
-                $.each($("#tableFridgeItemsContainer tbody tr"), function (index, item) {
-                    postFridgeItemSubmission(fridge.FridgeGuid, item);
-                });
-            }
-
-            var nextCard = 'modal-next4';
-            next(nextCard);
-
-        }
-
-        function postFridgeItemSubmission(fridgeGuid, item) {
-
-            //compiles JSON object string object for each and every form item answered
-
-            var pathToRESTSubmission = baseRestUrl + "FridgeItems/PushWithImages/";
-
-            var fileVal = $(item.children[3]).find("input");
-            var fileItem = fileVal[0].files[0];
-
-            var formData = new FormData();
-            formData.append("fridgeGuid", fridgeGuid);
-            formData.append("ProductName", $(item.children[0]).find("input").val());
-            formData.append("FoodGroup", $(item.children[1]).find("input").val());
-            formData.append("BarCode", $(item.children[2]).find("input").val());
-            formData.append("userFile", fileItem);
-
-            $.ajax({
-                url: pathToRESTSubmission
-                , type: 'POST'
-                , data: formData
-                , cache: false
-                , contentType: false
-                , processData: false
-                , success: postItemImages
-                , error: function (data, status, jqHXR) {
-                    notification('', 'Error: ' + status)
-                }
-            });
-        }
-
-        function postItemImages(data, status, jqHXR) {
-            //debugger;
-        }
-
-        function postRestaurantsSubmission() {
-            $.each($("#tableRestaurantItemsContainer tbody tr"), function (index, item) {
-                postRestaurantSubmission(item);
-            });
-        }
-
-        function postRestaurantSubmission(item) {
-
-            //compiles JSON object string object for each and every form item answered
-
-            var pathToRESTSubmission = baseRestUrl + "Restaurants/Push/";
-
-            var formData = new FormData();
-            formData.append("submissionGuid", currentSubmisisonGuid);
-            formData.append("name", $(item.children[0]).find("input").val());
-            formData.append("address", $(item.children[1]).find("input").val());
-            formData.append("dateEaten", $(item.children[2]).find("input").val());
-
-            $.ajax({
-                url: pathToRESTSubmission
-                , type: 'POST'
-                , data: formData
-                , cache: false
-                , contentType: false
-                , processData: false
-                , error: function (data, status, jqHXR) {
-                    notification('', 'Error: ' + status)
-                }
-            });
-
-        }
 //
 //        function randomIntFromInterval(min, max) {
 //
@@ -1135,72 +961,6 @@
 
 <body class="map-container">
 
-    <!--
-    <nav id="off-canvas-menu">
-        <div id="ctl00_linksBasic">
-            <ul>
-                <li><a href="/stomachflu.tamu.edu/ "><span class="fa fa-fw fa-home"></span>Home</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/# "><span class="fa fa-fw fa-question"></span>About</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/map "><span class="fa fa-fw fa-map-marker"></span>Map</a>
-                </li>
-                <li id="ctl00_liData"><a href="/stomachflu.tamu.edu/data "><span class="fa fa-fw fa-bar-chart"></span>Data</a>
-                </li>
-                <li id="ctl00_liUser"><a href="/stomachflu.tamu.edu/UserServices/ "><span class="fa fa-fw fa-user"></span>My Profile</a>
-                </li>
-
-            </ul>
-        </div>
-
-        <div id="ctl00_linksAdmin">
-            <ul>
-                <li class="nav-divider"><span class="divider-tag">Admin</span>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/SurveyAnswers/Responses "><span class="fa fa-fw fa-database"></span>Survey Answers</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/SurveyDesign/Forms "><span class="fa fa-fw fa-question"></span>Survey Design</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/Configurations/Levels/ "><span class="fa fa-fw fa-cogs"></span>Configurations</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/Diagnostics/Errors/ "><span class="fa fa-fw fa-heartbeat"></span>Diagnostics</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/Emails/Sent/ "><span class="fa fa-fw fa-envelope"></span>Emails</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/Security/BannedIPs/ "><span class="fa fa-fw fa-shield"></span>Security</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/Users/Accounts/ "><span class="fa fa-fw fa-users"></span>Users</a>
-                </li>
-                <li><a href="/stomachflu.tamu.edu/Admin/InappropriateSystem/InappropriateSubmission/ "><span class="fa fa-fw fa-ban"></span>Inappropriate System</a>
-                </li>
-            </ul>
-        </div>
-
-
-        <div id="ctl00_linksAccess">
-            <ul>
-
-                <li id="ctl00_liLogOut"><a href="/stomachflu.tamu.edu/logout "><span class="fa fa-fw fa-sign-in"></span>Log Out</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <header class="fixed-to-relative">
-        <nav id="main-menu" class="container12">
-            <div id="site-logo">
-                <a href="/stomachflu.tamu.edu/ " id="main-logo-container">
-                    <div class="bg-image"></div>
-                </a>
-            </div>
-
-            <div id="menu-button-container">
-                <div id="menu-button"></div>
-            </div>
-        </nav>
-    </header>
--->
-
     <form name="aspnetForm" method="post" action="./" id="aspnetForm">
         <div>
 
@@ -1209,7 +969,9 @@
 
 
         <input type="hidden" name="ctl00$ContentPlaceHolderBody$txtUserGuid" id="ctl00_ContentPlaceHolderBody_txtUserGuid" value="f65e67d0-62f3-4cb3-8732-f5985decb2f1" />
-
+        
+        
+        <iframe id="racialMap" src="http://demographics.coopercenter.org/DotMap/index.html"></iframe>
         <div id="map" class="map"></div>
         <div id="ctl00_ContentPlaceHolderBody_layerToggle" class="layerToggle"></div>
         <div id="ctl00_ContentPlaceHolderBody_layerControls" class="layers card">

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GEOG 380 Project</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        var map, lat, lon;
+
+        function getCurrentGeoLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getPosition, positionError)
+            } else {
+                notification('failed', 'Geolocation is not supported!');
+            }
+
+            function getPosition(position) {
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
+                initMap(lat, lon);
+            }
+
+            function positionError(error) {
+                switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    initMap()
+                    notification('failed', 'Error: Geolocation denied!')
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    initMap()
+                    notification('failed', 'Error: Position is not available!')
+                    break;
+                case error.TIMEOUT:
+                    initMap()
+                    notification('failed', 'Error: Position request timed out!')
+                    break;
+                case error.UNKNOWN_ERROR:
+                    notification('failed', 'Error: Unkown location error')
+                    initMap()
+                    break;
+                }
+            }
+
+        }
+    </script>
+
+
+    <style>
+        html,
+        body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            height: 100%;
+        }
+        
+        iframe{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+
+    <script>
+        var map;
+
+        function initMap(lat, lon) {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: lat,
+                    lng: lon
+                },
+//                zoom: 12
+                zoom: 13,
+                maxZoom: 13
+            });
+
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: lat,
+                    lng: lon
+                },
+                map: map,
+                title: 'Current Position'
+            });
+
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+    <iframe src="http://demographics.coopercenter.org/DotMap/index.html#lat=30.616559&lon=-96.31197429999999&z=13"></iframe>
+    
+    <div id="map" onload="getCurrentGeoLocation()"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjPVsUzrehA8OnJimLrQb2myO8KXXRvlg&callback=getCurrentGeoLocation" async defer></script>
+</body>
+
+
+</html>
