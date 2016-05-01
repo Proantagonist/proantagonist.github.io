@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GEOG 380 Project</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/1140.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700' rel='stylesheet' type='text/css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        var map, lat, lon;
+        var modified = false;
+        var markers = [];
+        var marker;
+        var origData;
+        var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
+        var content; // Content for the info pane
+        var categories = []; // Array to store the restaurant categories
+
+        function getCurrentGeoLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getPosition, positionError)
+            } else {
+                notification('failed', 'Geolocation is not supported!');
+            }
+
+            function getPosition(position) {
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
+                initMap(lat, lon);
+            }
+
+            function positionError(error) {
+                switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    initMap()
+                    notification('failed', 'Error: Geolocation denied!')
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    initMap()
+                    notification('failed', 'Error: Position is not available!')
+                    break;
+                case error.TIMEOUT:
+                    initMap()
+                    notification('failed', 'Error: Position request timed out!')
+                    break;
+                case error.UNKNOWN_ERROR:
+                    notification('failed', 'Error: Unkown location error')
+                    initMap()
+                    break;
+                }
+            }
+
+        }
+
+        function LoadData() {
+
+            var pathToRESTDetails = "../mergedData.json";
+            $.getJSON(pathToRESTDetails, {})
+                .done(handleDoneData)
+                .fail(handleFailData);
+
+        }
+
+        function loadSurveyData() {
+
+            var pathToRESTDetails = "../surveyData.json";
+            $.getJSON(pathToRESTDetails, {})
+                .done(handleDoneSurveyData)
+                .fail(handleFailSurveyData);
+
+        }
+
+        function handleDoneData(data, textStatus, jqXHR) {
+            origData = data;
+
+            for (item of data) {
+                mapItem(item);
+            }
+
+            if (filtered !== true) {
+                // Sort the categories only once
+                categories.sort();
+                buildCategoriesGUI(categories);
+            }
+
+
+        }
+
+        function handleFailData(data, status, jqHXR) {
+            notification('failed', 'Error: ' + status);
+        }
+
+        function handleDoneSurveyData(data, textStatus, jqXHR) {
+            surveyData = data;
+            debugger;
+
+
+        }
+
+        function handleFailSurveyData(data, status, jqHXR) {
+            notification('failed', 'Error: ' + status);
+        }
+
+        function addDotMap(lat, lon) {
+
+            var dotMapElem = document.createElement("iframe");
+            dotMapElem.src = "http://demographics.coopercenter.org/DotMap/index.html#lat=" + lat + "&lon=" + lon + "&z=13";
+            dotMapElem.id = 'racialMap';
+            dotMapElem.name = 'racialDotMap';
+            dotMapElem.style = '.cssButton{display:none}'
+            document.body.insertBefore(dotMapElem, document.getElementById(map));
+        }
+
+        function buildCategoriesGUI(categories) {
+            var categoriesElems = "";
+
+            for (item of categories) {
+                categoriesElems += "<div class='input-item'><div class='input-control'><input type='checkbox' category='" + item + "' checked><i></i></div><span>" + item + "</span></div>";
+            }
+
+            var pasteTo = document.getElementById('options');
+            pasteTo.innerHTML = categoriesElems;
+
+            $('.input-item input').click(function () {
+                if (modified !== true) {
+                    modified = true;
+                    $('.button-container .button.action').removeClass('disabled');
+                }
+            });
+
+            $('.button-container .button.close').click(function () {
+                modified = false;
+                $('.button-container .button.action').addClass('disabled');
+
+                $('#options-container input').prop('checked', true);
+            });
+
+            $('.button-container .button.action').click(function () {
+                if (!$(this).hasClass('disabled')) {
+                    filtered = true;
+                }
+            });
+
+            $('#selectAll').click(function () {
+                $('#options input').prop('checked', false);
+                $('.button-container .button.action').removeClass('disabled');
+            });
+        }
+
+
+        function filter(elem) {
+            if (!$(elem).hasClass('disabled')) {
+                var excludeElems = $('input:checkbox:not(:checked)');
+                var excludeList = [];
+
+                for (item of excludeElems) {
+                    excludeList.push($(item).attr('category'));
+                }
+
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                markers = [];
+
+                for (item of origData) {
+                    if (item.type) {
+                        for (type of(item.type.split(','))) {
+                            var isInArray = excludeList.indexOf(type.trim());
+
+                            if (isInArray !== -1) {
+                                break;
+                            } else {
+                                mapItem(item);
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                $('#options-container').removeClass('active');
+
+            }
+        }
+
+        function mapItem(item) {
+            marker = new google.maps.Circle({
+                strokeColor: '#2196F3',
+                strokeOpacity: 0,
+                strokeWeight: 0,
+                fillColor: '#1565C0',
+                fillOpacity: .5,
+                map: map,
+                center: {
+                    lat: parseFloat(item.lat),
+                    lng: parseFloat(item.lon)
+                },
+                radius: (item.reviews / item.rating) * 5
+            });
+
+            content = "";
+            content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
+            content += "<h2>Establishment Details</h2>";
+            content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
+            content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
+            content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
+            content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
+            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+            content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
+            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
+            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
+
+
+            google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                return function () {
+
+                    check = false;
+
+                    var card = $('#info-card');
+
+
+                    card.addClass('active');
+                    card.html(content);
+
+                }
+            })(marker, content));
+
+            if (filtered !== true) {
+                // Generate the categories list only once, if the categories have not been filtered.
+                if (item.type) {
+                    for (restaurant of(item.type.split(','))) {
+                        var isInArray = categories.indexOf(restaurant.trim());
+
+                        if (isInArray < 0) {
+                            categories.push(restaurant.trim());
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            markers.push(marker);
+        }
+    </script>
+
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #ffffff;
+        }
+        
+        #map {
+            height: 100%;
+        }
+        
+        iframe {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+
+    <script>
+        var map, check;
+
+        var mapStyles = [{
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "administrative",
+            "elementType": "all",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": 0
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "water",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road.local",
+            "elementType": "all",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "transit",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": 0
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "landscape",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [{
+                "hue": "#bbbbbb"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 26
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [{
+                "hue": "#dddddd"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -3
+            }, {
+                "visibility": "on"
+            }]
+        }]
+
+        function initMap(lat, lon) {
+
+            if (lat && lon !== undefined) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: lat,
+                        lng: lon
+                    },
+                    zoom: 13,
+                    maxZoom: 16,
+                    styles: mapStyles
+                });
+
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: lat,
+                        lng: lon
+                    },
+                    map: map,
+                    title: 'Current Position',
+                    icon: '../img/circle-user.svg'
+                });
+
+                addDotMap(lat, lon);
+            } else {
+
+                lat = 30.6187;
+                lon = -96.3365;
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: lat,
+                        lng: lon
+                    },
+                    zoom: 13,
+                    maxZoom: 13,
+                    styles: mapStyles,
+                    streetViewControl: false
+                });
+
+                addDotMap(lat, lon);
+            }
+
+            LoadData();
+
+            map.addListener('click', function () {
+
+                check = true;
+
+                var passiveText = "Click on a point to see details.";
+                $('body').find('#info-card.active').removeClass('active').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
+                    if (check == true) {
+                        $("#info-card").html(passiveText);
+                    }
+                });
+            })
+
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+    <div class="layerToggle" onclick="$('#options-container').addClass('active'); $('html, body').addClass('modal-bg-open');" title="Filters"></div>
+
+    <div class="dotToggle" onclick="$('iframe').toggleClass('active')" title="Dot Map Overlay"></div>
+    
+    <div class="surveyToggle" onclick="loadSurveyData()" title="Toggle Survey Data"></div>
+
+    <div id="map" onload="getCurrentGeoLocation()"></div>
+
+    <div class="card column6" id="info-card">Click on a point to see details.</div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjPVsUzrehA8OnJimLrQb2myO8KXXRvlg&callback=getCurrentGeoLocation" async defer></script>
+
+    <div id="options-container">
+        <div class="container12">
+            <h1>Categories</h1>
+            <div class="button-container">
+                <div id="selectAll"><a>Deselect All</a></div>
+                <div class="button disabled action" onclick="filter(this);">Apply</div>
+                <div class="button close" onclick="$('#options-container').removeClass('active'); $('html, body').removeClass('modal-bg-open');">Cancel</div>
+            </div>
+            <div id="options">
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
