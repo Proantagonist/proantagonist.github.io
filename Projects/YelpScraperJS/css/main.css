@@ -1577,12 +1577,27 @@ s .content-block {
     width: 26px;
     position: absolute;
     background: #fff;
-    background-image: url(../img/Layers.svg);
+    background-image: url(../img/ic_group_work_black_24px.svg);
     background-size: 75%;
     background-position: center;
     background-repeat: no-repeat;
     left: 10px;
     top: 5.75em;
+    border-radius: 4px;
+    z-index: 100;
+}
+
+.surveyToggle {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    background: #fff;
+    background-image: url(../img/ic_playlist_add_check_black_24px.svg);
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+    left: 10px;
+    top: 8em;
     border-radius: 4px;
     z-index: 100;
 }

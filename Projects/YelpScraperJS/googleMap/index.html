@@ -65,6 +65,15 @@
 
         }
 
+        function loadSurveyData() {
+
+            var pathToRESTDetails = "../surveyData.json";
+            $.getJSON(pathToRESTDetails, {})
+                .done(handleDoneSurveyData)
+                .fail(handleFailSurveyData);
+
+        }
+
         function handleDoneData(data, textStatus, jqXHR) {
             origData = data;
 
@@ -85,13 +94,25 @@
             notification('failed', 'Error: ' + status);
         }
 
+        function handleDoneSurveyData(data, textStatus, jqXHR) {
+            surveyData = data;
+            debugger;
+
+
+        }
+
+        function handleFailSurveyData(data, status, jqHXR) {
+            notification('failed', 'Error: ' + status);
+        }
+
         function addDotMap(lat, lon) {
 
             var dotMapElem = document.createElement("iframe");
             dotMapElem.src = "http://demographics.coopercenter.org/DotMap/index.html#lat=" + lat + "&lon=" + lon + "&z=13";
             dotMapElem.id = 'racialMap';
+            dotMapElem.name = 'racialDotMap';
+            dotMapElem.style = '.cssButton{display:none}'
             document.body.insertBefore(dotMapElem, document.getElementById(map));
-
         }
 
         function buildCategoriesGUI(categories) {
@@ -124,7 +145,7 @@
                 }
             });
 
-            $('#selectAll').click(function(){
+            $('#selectAll').click(function () {
                 $('#options input').prop('checked', false);
                 $('.button-container .button.action').removeClass('disabled');
             });
@@ -169,17 +190,17 @@
 
         function mapItem(item) {
             marker = new google.maps.Circle({
-                strokeColor: '#2196F3'
-                , strokeOpacity: 0
-                , strokeWeight: 0
-                , fillColor: '#1565C0'
-                , fillOpacity: .5
-                , map: map
-                , center: {
-                    lat: parseFloat(item.lat)
-                    , lng: parseFloat(item.lon)
-                }
-                , radius: (item.reviews / item.rating) * 5
+                strokeColor: '#2196F3',
+                strokeOpacity: 0,
+                strokeWeight: 0,
+                fillColor: '#1565C0',
+                fillOpacity: .5,
+                map: map,
+                center: {
+                    lat: parseFloat(item.lat),
+                    lng: parseFloat(item.lon)
+                },
+                radius: (item.reviews / item.rating) * 5
             });
 
             content = "";
@@ -258,9 +279,9 @@
         var map, check;
 
         var mapStyles = [{
-            "featureType": "poi"
-            , "elementType": "all"
-            , "stylers": [{
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [{
                 "hue": "#000000"
             }, {
                 "saturation": -100
@@ -270,9 +291,9 @@
                 "visibility": "off"
             }]
         }, {
-            "featureType": "poi"
-            , "elementType": "all"
-            , "stylers": [{
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [{
                 "hue": "#000000"
             }, {
                 "saturation": -100
@@ -282,69 +303,9 @@
                 "visibility": "off"
             }]
         }, {
-            "featureType": "administrative"
-            , "elementType": "all"
-            , "stylers": [{
-                "hue": "#000000"
-            }, {
-                "saturation": 0
-            }, {
-                "lightness": -100
-            }, {
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "road"
-            , "elementType": "labels"
-            , "stylers": [{
-                "hue": "#ffffff"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": 100
-            }, {
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "water"
-            , "elementType": "labels"
-            , "stylers": [{
-                "hue": "#000000"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": -100
-            }, {
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "road.local"
-            , "elementType": "all"
-            , "stylers": [{
-                "hue": "#ffffff"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": 100
-            }, {
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "water"
-            , "elementType": "geometry"
-            , "stylers": [{
-                "hue": "#ffffff"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": 100
-            }, {
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "transit"
-            , "elementType": "labels"
-            , "stylers": [{
+            "featureType": "administrative",
+            "elementType": "all",
+            "stylers": [{
                 "hue": "#000000"
             }, {
                 "saturation": 0
@@ -354,9 +315,21 @@
                 "visibility": "off"
             }]
         }, {
-            "featureType": "landscape"
-            , "elementType": "labels"
-            , "stylers": [{
+            "featureType": "road",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "water",
+            "elementType": "labels",
+            "stylers": [{
                 "hue": "#000000"
             }, {
                 "saturation": -100
@@ -366,9 +339,57 @@
                 "visibility": "off"
             }]
         }, {
-            "featureType": "road"
-            , "elementType": "geometry"
-            , "stylers": [{
+            "featureType": "road.local",
+            "elementType": "all",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "transit",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": 0
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "landscape",
+            "elementType": "labels",
+            "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [{
                 "hue": "#bbbbbb"
             }, {
                 "saturation": -100
@@ -378,9 +399,9 @@
                 "visibility": "on"
             }]
         }, {
-            "featureType": "landscape"
-            , "elementType": "geometry"
-            , "stylers": [{
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [{
                 "hue": "#dddddd"
             }, {
                 "saturation": -100
@@ -396,22 +417,22 @@
             if (lat && lon !== undefined) {
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: {
-                        lat: lat
-                        , lng: lon
-                    }
-                    , zoom: 13
-                    , maxZoom: 16
-                    , styles: mapStyles
+                        lat: lat,
+                        lng: lon
+                    },
+                    zoom: 13,
+                    maxZoom: 16,
+                    styles: mapStyles
                 });
 
                 var marker = new google.maps.Marker({
                     position: {
-                        lat: lat
-                        , lng: lon
-                    }
-                    , map: map
-                    , title: 'Current Position'
-                    , icon: '../img/circle-user.svg'
+                        lat: lat,
+                        lng: lon
+                    },
+                    map: map,
+                    title: 'Current Position',
+                    icon: '../img/circle-user.svg'
                 });
 
                 addDotMap(lat, lon);
@@ -422,13 +443,13 @@
 
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: {
-                        lat: lat
-                        , lng: lon
-                    }
-                    , zoom: 13
-                    , maxZoom: 13
-                    , styles: mapStyles
-                    , streetViewControl: false
+                        lat: lat,
+                        lng: lon
+                    },
+                    zoom: 13,
+                    maxZoom: 13,
+                    styles: mapStyles,
+                    streetViewControl: false
                 });
 
                 addDotMap(lat, lon);
@@ -457,8 +478,10 @@
 <body>
 
     <div class="layerToggle" onclick="$('#options-container').addClass('active'); $('html, body').addClass('modal-bg-open');" title="Filters"></div>
-    
+
     <div class="dotToggle" onclick="$('iframe').toggleClass('active')" title="Dot Map Overlay"></div>
+    
+    <div class="surveyToggle" onclick="loadSurveyData()" title="Toggle Survey Data"></div>
 
     <div id="map" onload="getCurrentGeoLocation()"></div>
 
