@@ -15,6 +15,10 @@
         var modified = false;
         var markers = [];
         var marker;
+        var origData;
+        var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
+        var content; // Content for the info pane
+        var categories = []; // Array to store the restaurant categories
 
         function getCurrentGeoLocation() {
             if (navigator.geolocation) {
@@ -62,81 +66,19 @@
         }
 
         function handleDoneData(data, textStatus, jqXHR) {
-            var content; // Content for the info pane
-            var categories = []; // Array to store the restaurant categories
-            var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
-
+            origData = data;
 
             for (item of data) {
-                marker = new google.maps.Circle({
-                    strokeColor: '#2196F3'
-                    , strokeOpacity: 0.5
-                    , strokeWeight: 1
-                    , fillColor: '#1565C0'
-                    , fillOpacity: 0.35
-                    , map: map
-                    , center: {
-                        lat: parseFloat(item.lat)
-                        , lng: parseFloat(item.lon)
-                    }
-                    , radius: .75 * 100
-                });
-
-                if (filtered !== true) {
-                    // Generate the categories list only once, if the categories have not been filtered.
-                    if (item.type) {
-                        for (restaurant of(item.type.split(','))) {
-                            var isInArray = categories.indexOf(restaurant.trim());
-
-                            if (isInArray < 0) {
-                                categories.push(restaurant.trim());
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                content = "";
-                content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
-                content += "<h2>Establishment Details</h2>";
-                content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
-                content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
-                content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
-                content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
-                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-                content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
-                content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
-                content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
-
-
-                google.maps.event.addListener(marker, 'click', (function (marker, content) {
-                    return function () {
-
-                        check = false;
-
-                        var card = $('#info-card');
-
-
-                        card.addClass('active');
-                        card.html(content);
-
-                    }
-                })(marker, content));
-
-                markers.push(marker);
+                mapItem(item);
             }
 
             if (filtered !== true) {
                 // Sort the categories only once
                 categories.sort();
-
+                buildCategoriesGUI(categories);
             }
 
-            //            map.markers.setMap(map);
-            buildCategoriesGUI(categories);
+
         }
 
         function handleFailData(data, status, jqHXR) {
@@ -156,7 +98,7 @@
             var categoriesElems = "";
 
             for (item of categories) {
-                categoriesElems += "<div class='input-item'><div class='input-control'><input type='checkbox' category=" + item + " checked><i></i></div><span>" + item + "</span></div>";
+                categoriesElems += "<div class='input-item'><div class='input-control'><input type='checkbox' category='" + item + "' checked><i></i></div><span>" + item + "</span></div>";
             }
 
             var pasteTo = document.getElementById('options');
@@ -175,6 +117,17 @@
 
                 $('#options-container input').prop('checked', true);
             });
+
+            $('.button-container .button.action').click(function () {
+                if (!$(this).hasClass('disabled')) {
+                    filtered = true;
+                }
+            });
+
+            $('#selectAll').click(function(){
+                $('#options input').prop('checked', false);
+                $('.button-container .button.action').removeClass('disabled');
+            });
         }
 
 
@@ -192,8 +145,89 @@
                 }
                 markers = [];
 
-                debugger;
+                for (item of origData) {
+                    if (item.type) {
+                        for (type of(item.type.split(','))) {
+                            var isInArray = excludeList.indexOf(type.trim());
+
+                            if (isInArray !== -1) {
+                                break;
+                            } else {
+                                mapItem(item);
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                $('#options-container').removeClass('active');
+
             }
+        }
+
+        function mapItem(item) {
+            marker = new google.maps.Circle({
+                strokeColor: '#2196F3'
+                , strokeOpacity: 0
+                , strokeWeight: 0
+                , fillColor: '#1565C0'
+                , fillOpacity: .5
+                , map: map
+                , center: {
+                    lat: parseFloat(item.lat)
+                    , lng: parseFloat(item.lon)
+                }
+                , radius: (item.reviews / item.rating) * 5
+            });
+
+            content = "";
+            content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
+            content += "<h2>Establishment Details</h2>";
+            content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
+            content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
+            content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
+            content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
+            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+            content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
+            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
+            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
+
+
+            google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                return function () {
+
+                    check = false;
+
+                    var card = $('#info-card');
+
+
+                    card.addClass('active');
+                    card.html(content);
+
+                }
+            })(marker, content));
+
+            if (filtered !== true) {
+                // Generate the categories list only once, if the categories have not been filtered.
+                if (item.type) {
+                    for (restaurant of(item.type.split(','))) {
+                        var isInArray = categories.indexOf(restaurant.trim());
+
+                        if (isInArray < 0) {
+                            categories.push(restaurant.trim());
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            markers.push(marker);
         }
     </script>
 
@@ -366,7 +400,7 @@
                         , lng: lon
                     }
                     , zoom: 13
-                    , maxZoom: 13
+                    , maxZoom: 16
                     , styles: mapStyles
                 });
 
@@ -434,7 +468,8 @@
         <div class="container12">
             <h1>Categories</h1>
             <div class="button-container">
-                <div class="button disabled action" onclick="filter(this)">Apply</div>
+                <div id="selectAll"><a>Deselect All</a></div>
+                <div class="button disabled action" onclick="filter(this);">Apply</div>
                 <div class="button close" onclick="$('#options-container').removeClass('active'); $('html, body').removeClass('modal-bg-open');">Cancel</div>
             </div>
             <div id="options">

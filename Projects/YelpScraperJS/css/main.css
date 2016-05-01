@@ -2872,6 +2872,20 @@ div.map svg.tracer {
     top: .5rem;
 }
 
+.button-container div{
+    display: inline-block;
+}
+
+.button-container div:first-child{
+    margin-right: 1rem;
+    font-size: .9rem
+}
+
+.button-container div:first-child:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .button-container .button{
     border-radius: 0;
     padding: 1rem 1.5rem;
