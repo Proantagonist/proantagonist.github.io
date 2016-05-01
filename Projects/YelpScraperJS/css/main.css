@@ -72,12 +72,6 @@ section {
     height: 500px;
 }
 
-#racialMap {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
-
 #map-showcase {
     width: 95%;
     height: auto;
@@ -833,7 +827,7 @@ div.modal-init,
     color: #414141;
 }
 
-#info-card .card-list-item{
+#info-card .card-list-item {
     margin: 1rem;
 }
 
@@ -842,7 +836,7 @@ div.modal-init,
 }
 
 #info-card .card-list-item p:nth-child(2) {
-/*    margin-left: .25rem;*/
+    /*    margin-left: .25rem;*/
     color: inherit;
 }
 
@@ -1574,6 +1568,21 @@ s .content-block {
     background-repeat: no-repeat;
     left: 10px;
     top: 3.5em;
+    border-radius: 4px;
+    z-index: 100;
+}
+
+.dotToggle {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    background: #fff;
+    background-image: url(../img/Layers.svg);
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+    left: 10px;
+    top: 5.75em;
     border-radius: 4px;
     z-index: 100;
 }
@@ -2816,14 +2825,22 @@ div.map svg.tracer {
     pointer-events: none;
 }
 
-#racialMap{
+#racialMap {
+    position: absolute;
+    height: 100%;
+    width: 100%;
     top: 0;
     right: 0;
     z-index: -1;
     opacity: 0;
 }
 
-#options-container{
+#racialMap.active{
+    z-index: 50;
+    opacity: .5;
+}
+
+#options-container {
     position: absolute;
     background: white;
     width: 100%;
@@ -2834,11 +2851,11 @@ div.map svg.tracer {
     z-index: 110;
 }
 
-#options-container.active{
+#options-container.active {
     top: 0;
 }
 
-#options-container #options{
+#options-container #options {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -2846,57 +2863,57 @@ div.map svg.tracer {
     justify-content: center;
 }
 
-#options-container h1{
+#options-container h1 {
     font-size: 3.25rem;
     font-weight: 200;
     margin: 1rem 0;
     color: #616161;
 }
 
-#options .input-item{
+#options .input-item {
     width: 25%;
     padding: .5rem 0;
 }
 
-#options .input-item span{
+#options .input-item span {
     margin-left: 1.5rem;
 }
 
-#options .input-control{
+#options .input-control {
     position: absolute;
 }
 
-.button-container{
+.button-container {
     position: absolute;
     right: 3rem;
     top: .5rem;
 }
 
-.button-container div{
+.button-container div {
     display: inline-block;
 }
 
-.button-container div:first-child{
+.button-container div:first-child {
     margin-right: 1rem;
     font-size: .9rem
 }
 
-.button-container div:first-child:hover{
+.button-container div:first-child:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.button-container .button{
+.button-container .button {
     border-radius: 0;
     padding: 1rem 1.5rem;
     box-shadow: none;
 }
 
-.button-container .button.close{
+.button-container .button.close {
     background: #F44336;
 }
 
-.button-container .button.action:not(.disabled){
+.button-container .button.action:not(.disabled) {
     background: #4CAF50;
     color: white;
 }
