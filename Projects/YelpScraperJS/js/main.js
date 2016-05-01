@@ -1,12 +1,7 @@
-$(document).ready(function () {
-    materialRipple(),
-        floatingLabels(),
-        setActivePage(),
-        menuAnims(),
-        modalPaneGeneric(),
-        modalPaneAdd(),
-        formSubmitInitialize();
-});
+//$(document).ready(function () {
+//        floatingLabels(),
+//        menuAnims(),
+//});
 
 $(document).ajaxComplete(function () {
     floatingLabels();
