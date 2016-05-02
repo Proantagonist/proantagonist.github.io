@@ -14,6 +14,9 @@
         var map, lat, lon;
         var modified = false;
         var markers = [];
+        var distancePathList = [];
+        var destinationList = [];
+        var surveyLocationMarkerList = [];
         var marker;
         var origData;
         var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
@@ -67,12 +70,34 @@
         }
 
         function loadSurveyData() {
+            //If the polyline array is empty, load data. If not, remove all survey markers and lines.
 
-            var pathToRESTDetails = "../surveyData-processed.json";
-            $.getJSON(pathToRESTDetails, {})
-                .done(handleDoneSurveyData)
-                .fail(handleFailSurveyData);
+            if (distancePathList.length > 0) {
 
+                for (var i = 0; i < distancePathList.length; i++) {
+                    distancePathList[i].setMap(null); //Remove polylines
+                }
+
+                for (var i = 0; i < destinationList.length; i++) {
+                    destinationList[i].setMap(null); // Remove endpoints
+                }
+
+                for (var i = 0; i < surveyLocationMarkerList.length; i++) {
+                    surveyLocationMarkerList[i].setMap(null); // Remove root locations
+                }
+
+                distancePathList = [];
+                destinationList = [];
+                surveyLocationMarkerList = [];
+
+            } else {
+
+                var pathToRESTDetails = "../surveyData-processed.json";
+                $.getJSON(pathToRESTDetails, {})
+                    .done(handleDoneSurveyData)
+                    .fail(handleFailSurveyData);
+
+            }
         }
 
         function handleDoneData(data, textStatus, jqXHR) {
@@ -136,47 +161,49 @@
                     var distancePath = new google.maps.Polyline({
                         path: distance
                         , geodesic: true
-                        , strokeColor: '#4CAF50'
+                        , strokeColor: '#898989'
                         , strokeOpacity: 1.0
                         , strokeWeight: 1.5
                         , map: map
                     });
+
+                    distancePathList.push(distancePath);
 
 
                     var destination = new google.maps.Circle({
                         strokeColor: '#2196F3'
                         , strokeOpacity: 0
                         , strokeWeight: 0
-                        , fillColor: '#43A047'
+                        , fillColor: '#616161'
                         , fillOpacity: 1
                         , map: map
                         , center: {
                             lat: locationFromLatitude
                             , lng: locationFromLongitude
                         }
-                        , radius: 75
+                        , radius: 25
                     });
 
-                    if (surveyLocations.length > 0) {
-                        for (item of surveyLocations) {
-                            var surveyLocationMarker = new google.maps.Circle({
-                                strokeColor: '#4CAF50'
-                                , strokeOpacity: 0
-                                , strokeWeight: 0
-                                , fillColor: '#1B5E20'
-                                , fillOpacity: 1
-                                , map: map
-                                , center: {
-                                    lat: parseFloat(item.split(',')[0].trim())
-                                    , lng: parseFloat(item.split(',')[1].trim())
-                                }
-                                , radius: 75
-                            });
-                        }
-                    }
+                    destinationList.push(destination);
                 }
 
+            }
 
+            if (surveyLocations.length > 0) {
+                for (item of surveyLocations) {
+
+                    var surveyLocationMarker = new google.maps.Marker({
+                        position: {
+                            lat: parseFloat(item.split(',')[0].trim())
+                            , lng: parseFloat(item.split(',')[1].trim())
+                        }
+                        , map: map
+                        , title: 'Hello World!'
+                        , icon: '../img/circle-survey-location.svg'
+                    });
+
+                    surveyLocationMarkerList.push(surveyLocationMarker);
+                }
             }
 
         }
@@ -236,13 +263,19 @@
                 if (exists) {
                     $('iframe').remove();
                     for (var i = 0; i < markers.length; i++) {
-                        markers[i].setOptions({fillOpacity: .5});
+                        markers[i].setOptions({
+                            fillOpacity: .5
+                        });
                     }
+
+                    $('#map').removeClass('no-events');
                 } else {
                     addDotMap(map.getCenter().lat(), map.getCenter().lng(), map.getZoom());
-                    
+                    $('#map').addClass('no-events');
                     for (var i = 0; i < markers.length; i++) {
-                        markers[i].setOptions({fillOpacity: 1});
+                        markers[i].setOptions({
+                            fillOpacity: 1
+                        });
                     }
                 }
 
@@ -287,66 +320,79 @@
         }
 
         function mapItem(item) {
-            marker = new google.maps.Circle({
-                strokeColor: '#2196F3'
-                , strokeOpacity: 0
-                , strokeWeight: 0
-                , fillColor: '#1565C0'
-//                , fillOpacity: .5
-                , map: map
-                , center: {
-                    lat: parseFloat(item.lat)
-                    , lng: parseFloat(item.lon)
+            if (item.lat !== "null" || item.lon !== "null") {
+
+                var formula = (item.reviews / item.rating) * 5;
+                var radius;
+
+                if (!isNaN(formula)) {
+                    radius = formula;
+                } else {
+                    radius = 75
                 }
-                , radius: (item.reviews / item.rating) * 5
-            });
 
-            content = "";
-            content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
-            content += "<h2>Establishment Details</h2>";
-            content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
-            content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
-            content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
-            content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
-            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-            content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
-            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
-            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
+                marker = new google.maps.Circle({
+                    strokeColor: '#2196F3'
+                    , strokeOpacity: 0
+                    , strokeWeight: 0
+                    , fillColor: '#1565C0'
+                    , map: map
+                    , radius: radius
+                    , center: {
+                        lat: parseFloat(item.lat)
+                        , lng: parseFloat(item.lon)
+                    }
+                });
+
+                content = "";
+                content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
+                content += "<h2>Establishment Details</h2>";
+                content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
+                content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
+                content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
+                content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
+                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
+                content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
+                content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
+                content += "<div class='card-list-item'><p>Radius</p><p>" + formula + " meters</p></div>";
 
 
-            google.maps.event.addListener(marker, 'click', (function (marker, content) {
-                return function () {
+                google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                    return function () {
 
-                    check = false;
+                        check = false;
 
-                    var card = $('#info-card');
+                        var card = $('#info-card');
 
 
-                    card.addClass('active');
-                    card.html(content);
+                        card.addClass('active');
+                        card.html(content);
 
-                }
-            })(marker, content));
+                    }
+                })(marker, content));
 
-            if (filtered !== true) {
-                // Generate the categories list only once, if the categories have not been filtered.
-                if (item.type) {
-                    for (restaurant of(item.type.split(','))) {
-                        var isInArray = categories.indexOf(restaurant.trim());
+                if (filtered !== true) {
+                    // Generate the categories list only once, if the categories have not been filtered.
+                    if (item.type) {
+                        for (restaurant of(item.type.split(','))) {
+                            var isInArray = categories.indexOf(restaurant.trim());
 
-                        if (isInArray < 0) {
-                            categories.push(restaurant.trim());
+                            if (isInArray < 0) {
+                                categories.push(restaurant.trim());
+                            }
+
                         }
 
                     }
 
                 }
 
+
+                markers.push(marker);
             }
 
-
-            markers.push(marker);
         }
 
         $(document).ready(function () {
@@ -529,7 +575,6 @@
                         , lng: lon
                     }
                     , zoom: 13
-                    , maxZoom: 13
                     , styles: mapStyles
                 });
 
@@ -553,7 +598,6 @@
                         , lng: lon
                     }
                     , zoom: 13
-                    , maxZoom: 13
                     , styles: mapStyles
                     , streetViewControl: false
                 });
@@ -572,6 +616,15 @@
                     }
                 });
             })
+
+            map.addListener('zoom_changed', function () {
+                if (map.getZoom() > 13 && ($('.dotToggle').hasClass('disabled') === false)) {
+                    $('.dotToggle').addClass('disabled');
+                    notification('', 'Dot Map not available at this zoom level')
+                } else if (map.getZoom() <= 13 && ($('.dotToggle').hasClass('disabled') === true)) {
+                    $('.dotToggle').removeClass('disabled');
+                }
+            });
 
         }
     </script>
