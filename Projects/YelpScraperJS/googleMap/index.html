@@ -68,7 +68,7 @@
 
         function loadSurveyData() {
 
-            var pathToRESTDetails = "../surveyData.json";
+            var pathToRESTDetails = "../surveyData-processed.json";
             $.getJSON(pathToRESTDetails, {})
                 .done(handleDoneSurveyData)
                 .fail(handleFailSurveyData);
@@ -138,7 +138,7 @@
                         geodesic: true,
                         strokeColor: '#4CAF50',
                         strokeOpacity: 1.0,
-                        strokeWeight: 2,
+                        strokeWeight: 1,
                         map: map
                     });
 
@@ -170,7 +170,7 @@
                                     lat: parseFloat(item.split(',')[0].trim()),
                                     lng: parseFloat(item.split(',')[1].trim())
                                 },
-                                radius: 125
+                                radius: 75
                             });
                         }
                     }
