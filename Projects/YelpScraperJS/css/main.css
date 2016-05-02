@@ -1582,7 +1582,7 @@ s .content-block {
     background-position: center;
     background-repeat: no-repeat;
     left: 10px;
-    top: 5.75em;
+    top: 8em;
     border-radius: 4px;
     z-index: 100;
 }
@@ -1597,7 +1597,7 @@ s .content-block {
     background-position: center;
     background-repeat: no-repeat;
     left: 10px;
-    top: 8em;
+    top: 5.75em;
     border-radius: 4px;
     z-index: 100;
 }
@@ -2846,8 +2846,8 @@ div.map svg.tracer {
     width: 100%;
     top: 0;
     right: 0;
-    z-index: -1;
-    opacity: 0;
+/*    z-index: -1;*/
+    opacity: .6;
 }
 
 #racialMap.active{
