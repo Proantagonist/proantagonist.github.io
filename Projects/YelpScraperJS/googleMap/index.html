@@ -19,6 +19,7 @@
         var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
         var content; // Content for the info pane
         var categories = []; // Array to store the restaurant categories
+        var surveySetUp = false;
 
         function getCurrentGeoLocation() {
             if (navigator.geolocation) {
@@ -95,9 +96,88 @@
         }
 
         function handleDoneSurveyData(data, textStatus, jqXHR) {
+            surveySetUp = false;
             surveyData = data;
-            debugger;
 
+            if (!surveySetUp === true) {
+                surveySetUp = true;
+                //Prepare questions one time
+                //This is a maybe feature
+            }
+            var surveyLocations = [];
+
+            for (i = 1; i < surveyData.length; i++) {
+                var locationFromLatitude = undefined,
+                    locationFromLongitude = undefined;
+
+                var currentItemLocation = (surveyData[i].LocationLatitude + ',' + surveyData[i].LocationLongitude);
+                var hasProcessedLocation = surveyLocations.indexOf(currentItemLocation);
+
+                if (hasProcessedLocation === -1) {
+                    surveyLocations.push(currentItemLocation);
+                }
+
+                if (surveyData[i].Q8.split(',')[0].trim() !== 'null') {
+                    locationFromLatitude = parseFloat(surveyData[i].Q8.split(',')[0].trim());
+                }
+                if (surveyData[i].Q8.split(',')[1].trim() !== 'null') {
+                    locationFromLongitude = parseFloat(surveyData[i].Q8.split(',')[1].trim());
+                }
+
+                if (locationFromLatitude && locationFromLongitude) {
+                    var distance = [{
+                        lat: surveyData[i].LocationLatitude,
+                        lng: surveyData[i].LocationLongitude
+                }, {
+                        lat: locationFromLatitude,
+                        lng: locationFromLongitude
+                }]
+
+                    var distancePath = new google.maps.Polyline({
+                        path: distance,
+                        geodesic: true,
+                        strokeColor: '#4CAF50',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        map: map
+                    });
+
+
+                    var destination = new google.maps.Circle({
+                        strokeColor: '#2196F3',
+                        strokeOpacity: 0,
+                        strokeWeight: 0,
+                        fillColor: '#43A047',
+                        fillOpacity: 1,
+                        map: map,
+                        center: {
+                            lat: locationFromLatitude,
+                            lng: locationFromLongitude
+                        },
+                        radius: 75
+                    });
+
+                    if (surveyLocations.length > 0) {
+                        for (item of surveyLocations) {
+                            var surveyLocationMarker = new google.maps.Circle({
+                                strokeColor: '#4CAF50',
+                                strokeOpacity: 0,
+                                strokeWeight: 0,
+                                fillColor: '#388E3C',
+                                fillOpacity: 1,
+                                map: map,
+                                center: {
+                                    lat: parseFloat(item.split(',')[0].trim()),
+                                    lng: parseFloat(item.split(',')[1].trim())
+                                },
+                                radius: 125
+                            });
+                        }
+                    }
+                }
+
+
+            }
 
         }
 
@@ -480,7 +560,7 @@
     <div class="layerToggle" onclick="$('#options-container').addClass('active'); $('html, body').addClass('modal-bg-open');" title="Filters"></div>
 
     <div class="dotToggle" onclick="$('iframe').toggleClass('active')" title="Dot Map Overlay"></div>
-    
+
     <div class="surveyToggle" onclick="loadSurveyData()" title="Toggle Survey Data"></div>
 
     <div id="map" onload="getCurrentGeoLocation()"></div>
