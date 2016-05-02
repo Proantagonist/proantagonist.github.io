@@ -322,7 +322,7 @@
         function mapItem(item) {
             if (item.lat !== "null" || item.lon !== "null") {
 
-                var formula = (item.reviews / item.rating) * 5;
+                var formula = (item.reviews / item.rating) * 10;
                 var radius;
 
                 if (!isNaN(formula)) {
