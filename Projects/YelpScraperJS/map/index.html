@@ -1,224 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" id="tamuGeoservices" class="" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#">
+<!DOCTYPE html>
+<html>
 
 <head>
+    <title>GEOG 380 Project</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/1140.css" />
 
-    <!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="../js/main.js "></script>
-    <script src="../js/fastclick.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700' rel='stylesheet' type='text/css'>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="../js/main.js"></script>
     <script>
-        $(document).ready(function () {
-            getCurrentGeoLocation();
-            toolTrigger();
-            layerTrigger();
-            onLoadLayerSetup();
-            getNextModalContent();
-
-            $('.layerToggle').click(function () {
-                $('.layers.card').toggleClass('active');
-            })
-
-        });
-
-        var map, lat, lon, check, clearIcon, markers, fenceLayer, selectedGuid, currentSubmisisonGuid;
-
-        //Action state variables & Conditions
-        var addPoint = false
-            , addFence = false;
-
-        //On-load layer setup
-        var sightingsCategory = true
-            , fencesCategory = false
-            , allSubmissionsToggle = true
-            , userSubmissionsToggle = false;
-
-        function toolTrigger() {
-
-            $(".fab").click(function () {
-
-                //if the main fab is clicked, invoke the tool drawer
-                if ($(this).parent().hasClass('main-action')) {
-                    $('.action-container').toggleClass('expanded');
-                    $('#map').toggleClass('tool-active');
-                }
-
-                //check if tool has been engaged after subsuquent fab clicks. If so, reset the tool state for new tool selection before handing over to the tool handler.
-                if ($('#map').hasClass('tool-engaged')) {
-                    resetTool();
-                }
-
-                //If tool drawer has been invoked go to tool handler, otherwise the drawer has been dismissed so reset all tool states.
-                if ($('#map').hasClass('tool-active')) {
-                    toolControl(this);
-                } else {
-                    resetTool();
-                }
-
-            });
-
-            //resets tool states when "close" button is pressed on the modal. Modal removal is handled by the handler initialized with the modal.
-            $("html").delegate('#modal-close-button-container', 'click', function () {
-                resetTool();
-            })
-
-            //when esc key is pressed on map page, it resets tool states for new tool selection
-            $(document).keyup(function (e) {
-                if (e.keyCode == 27) {
-                    resetTool();
-                }
-            });
-        }
-
-        function toolControl(element) {
-
-            //class to append to #map to keep track of which tool is currently active, used to intiate tool-specific instances below.
-            var appendClass = "add-" + $(element).attr('id') + "-active";
-
-            //finds classes beginning with .add-xxx on #map and replaces it with tool appropriate add class
-            $("#map").removeClass(function (index, css) {
-                return (css.match(/(^|\s)add\S+/g) || []).join(' ');
-            }).toggleClass(appendClass);
-
-            //At this point, a tool selection has been made. Reflect selection on DOM
-            $('#map').addClass('tool-engaged');
-
-            //Fires if add point tool was selected. Sets addPoit variable to true. Handler in background checks for this variable when clicking on map. If true, it fires up a modal.
-            if ($('#map').hasClass('add-point-active')) {
-                addPoint = true;
-                addFence = false;
-            }
-
-            //Fires if add fence tool was selected. AddFence variable does not serve a functional purpose, just to keep a consistent workflow.
-            if ($('#map').hasClass('add-fence-active')) {
-                addPoint = false;
-                addFence = true;
-                addFenceInit();
-            }
-
-            //Fires if add report without location has been selected. addPoint is false because the location will be the clients current. Fires a modal.
-            if ($('#map').hasClass('add-report-active')) {
-                addPoint = false;
-                addFence = false;
-                modalPaneAddReport();
-            }
-        }
-
-        function resetTool() {
-            //All conditions for reseting tool for next tool selections or dismissal of tool drawer. 
-            $("#map").removeClass(function (index, css) {
-                return (css.match(/(^|\s)add\S+/g) || []).join(' ');
-            }).removeClass('tool-engaged');
-
-            addPoint = false;
-            addFence = false;
-
-            //If there is a FreeDrawLayer instance, set it's mode to VIEW.
-            if (typeof FreeDrawLayer !== 'undefined') {
-                FreeDrawLayer.setMode(L.FreeDraw.MODES.VIEW);
-            }
-        }
-
-        function onLoadLayerSetup() {
-            //Sets layer pane options on load.
-            if (userSubmissionsToggle === true || allSubmissionsToggle === true) {
-                sightingsCategory = true;
-                $('#sightingsCategory').prop('checked', true);
-            }
-            if (userSubmissionsToggle === true) {
-                $('#userSubmissionsToggle').prop('checked', true);
-            }
-            if (allSubmissionsToggle === true) {
-                $('#allSubmissionsToggle').prop('checked', true);
-            }
-            if (fencesCategory === true) {
-                $('#fencesCategory').prop('checked', true);
-            }
-
-        }
-
-        function layerTrigger() {
-
-            $('.layers.card input').change(function () {
-                //gets the id of the clicked input and flips the boolean of its respective variable
-                var changedCategory; //will only be the parent layer, so when we load data we don't innecessarily re-add data or delete objects that don't exist
-                var variableByDOMId = $(this).attr('id');
-                window[variableByDOMId] = !window[variableByDOMId];
-
-                //if radio input was clicked
-                if ($(this).parent().parent().hasClass('layer-subgroup')) {
-                    //if a sublayer is clicked it swaps the respective variable boolean values of all the other radio inputs exept the clicked one. One layer at a time with radio inputs
-                    if (window[$(this).parents().eq(1).find('input:not(#' + variableByDOMId + ')').attr('id')] === window[variableByDOMId]) {
-                        window[$(this).parents().eq(1).find('input:not(#' + variableByDOMId + ')').attr('id')] = !window[$(this).parents().eq(1).find('input:not(#' + variableByDOMId + ')').attr('id')];
-                    }
-                    //checks the parent input for UI consistency
-                    $(this).parents().eq(2).find('input[type="checkbox"]').prop('checked', true);
-                    sightingsCategory = true;
-
-                    changedCategory = $(this).parents().eq(2).find('input[type="checkbox"]').attr('id');
-                }
-
-                //if checkbox input was clicked
-                if ($(this).parent().hasClass('layer-group')) {
-                    if (window[variableByDOMId] === false) {
-                        //if the parent cat sightings category is deselected, set all sublayer variables to false and uncheck any checked for UI consistency.
-                        $(this).parent().children('ul').find('input').prop('checked', false);
-
-                        $(this).parent().children('ul').find('input').each(function (key, element) {
-                            window[element.id] = false;
-                        });
-
-                        changedCategory = $(this).attr('id');
-                    } else if (window[variableByDOMId] === true) {
-                        //set a default sublayer option when the parent is clicked. We'll make it the first radio input
-                        if ($(this).parent().find('input').size() > 1) {
-                            window[$(this).parent().find('input').eq(1).attr('id')] = !window[$(this).parent().find('input').eq(1).attr('id')];
-                            $(this).parent().find('input').eq(1).prop('checked', true);
-                        }
-
-                        changedCategory = $(this).attr('id');
-                    }
-                }
-
-                getData(changedCategory);
-
-            });
-
-            function getData(changed) {
-
-                if (changed === "sightingsCategory") {
-
-                    if (allSubmissionsToggle === true) {
-                        LoadData();
-                    }
-
-                    if (userSubmissionsToggle === true) {
-                        LoadData(selectedGuid);
-                    }
-
-                    if (sightingsCategory === false || (allSubmissionsToggle === !userSubmissionsToggle)) {
-                        if (markers !== undefined) {
-                            map.removeLayer(markers);
-                        }
-                    }
-                }
-
-                if (changed === "fencesCategory") {
-
-                    if (fencesCategory === true) {
-                        loadUserFences(appId, selectedGuid);
-                    }
-
-                    if (fencesCategory === false) {
-                        map.removeLayer(fenceLayer);
-                    }
-                }
-            }
-        }
+        var map, lat, lon;
+        var modified = false;
+        var markers = [];
+        var distancePathList = [];
+        var destinationList = [];
+        var surveyLocationMarkerList = [];
+        var marker;
+        var origData;
+        var filtered = false; // Set false if the categories have never been filtered. This prevents a rebuild of the categories every time the mapped categories are filtered.
+        var content; // Content for the info pane
+        var categories = []; // Array to store the restaurant categories
+        var surveySetUp = false;
 
         function getCurrentGeoLocation() {
             if (navigator.geolocation) {
@@ -230,7 +34,7 @@
             function getPosition(position) {
                 lat = position.coords.latitude;
                 lon = position.coords.longitude;
-                initMap(lat, lon, 14);
+                initMap(lat, lon);
             }
 
             function positionError(error) {
@@ -253,781 +57,609 @@
                     break;
                 }
             }
+
         }
 
-        function initMap(latitude, longitude, zoom) {
+        function LoadData() {
 
-            var userIcon = L.icon({
-                iconUrl: '../img/circle-user.svg'
-                , iconSize: [15, 15], // size of the icon
-            });
+            var pathToRESTDetails = "../mergedData.json";
+            $.getJSON(pathToRESTDetails, {})
+                .done(handleDoneData)
+                .fail(handleFailData);
 
-            if (latitude && longitude && zoom) {
-                map = L.map('map').setView([latitude, longitude], zoom);
-                var marker = L.marker([latitude, longitude], {
-                    icon: userIcon
-                }).addTo(map).bindPopup("Current Location");
+        }
+
+        function loadSurveyData() {
+            //If the polyline array is empty, load data. If not, remove all survey markers and lines.
+
+            if (distancePathList.length > 0) {
+
+                for (var i = 0; i < distancePathList.length; i++) {
+                    distancePathList[i].setMap(null); //Remove polylines
+                }
+
+                for (var i = 0; i < destinationList.length; i++) {
+                    destinationList[i].setMap(null); // Remove endpoints
+                }
+
+                for (var i = 0; i < surveyLocationMarkerList.length; i++) {
+                    surveyLocationMarkerList[i].setMap(null); // Remove root locations
+                }
+
+                distancePathList = [];
+                destinationList = [];
+                surveyLocationMarkerList = [];
+
             } else {
-                map = L.map('map').setView([39.87, -98.77], 5);
-            }
 
-            //lat = '';
-            //lon = '';
-            var layer = L.esri.basemapLayer('DarkGray', {
-                detectRetina: true
-            }).addTo(map);
-
-            var layerLabels;
-
-            clearIcon = L.icon({
-                iconUrl: '../img/circle-point.svg'
-                , iconSize: [10, 10], // size of the icon
-            });
-
-            function setBasemap(basemap) {
-                if (layer) {
-                    map.removeLayer(layer);
-                }
-                layer = L.esri.basemapLayer(basemap);
-                map.addLayer(layer);
-                if (layerLabels) {
-                    map.removeLayer(layerLabels);
-                }
-
-                if (basemap === 'ShadedRelief' || basemap === 'Oceans' || basemap === 'Gray' || basemap === 'DarkGray' || basemap === 'Imagery' || basemap === 'Terrain') {
-
-                    layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-                    map.addLayer(layerLabels);
-                }
-            }
-
-            LoadData();
-
-            map.on("click", function (e) {
-                check = true;
-                clearInfoCard();
-
-                if (addPoint === true) {
-                    addPointOnClickLocation(e);
-                }
-
-                function clearInfoCard() {
-                    var passiveText = "Click on a point to see details.";
-                    $('body').find('#info-card.active').removeClass('active').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
-                        if (check == true) {
-                            $("#info-card").html(passiveText);
-                        }
-                    });
-                }
-            });
-        }
-
-        function addPointOnClickLocation(e) {
-
-            //record coordinates for map cilck when point tool is selected
-            lat = e.latlng.lat;
-            lon = e.latlng.lng;
-
-            //create modal with questions for submission
-
-            $('html').append("<div id='info-modal'><div class='container12 modal-container'><div class='large-form card'><h2>Illness Survey</h2></div></div></div>").addClass('modal-open').delay(20).queue(function () {
-                $('#info-modal').addClass('slide-in');
-                $('#info-modal').children().prepend('<span id="close-help">Press "esc" to close.</span><div title="Close" id="modal-close-button-container"><span id="modal-close-button"></span></div>');
-                LoadForm();
-                $(this).dequeue();
-
-                $("#modal-close-button-container").click(function () {
-                    $("#info-modal").removeClass("slide-in").on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
-                        recycler();
-                    });
-                });
-
-                $(document).keyup(function (e) {
-                    if (e.keyCode == 13) {
-                        $('.button:first').trigger('click');
-                    }
-                })
-            });
-        };
-
-        function LoadForm() {
-            var pathToREST = baseRestUrl + "Form/Get/?appId=" + appId;
-            $.getJSON(pathToREST, {})
-                .done(handleDoneForm)
-                .fail(handleFailForm);
-        }
-
-        function handleDoneForm(data, textStatus, jqXHR) {
-
-            var content;
-
-            $.each(data.questions, function (i, item) {
-                if (item.questionInputType === "YesNoMaybe") {
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='Yes'><i></i><span>Yes</span></div>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='No'/><i></i><span>No</span></div>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='Maybe'/><i></i><span>Maybe</span></div>";
-                    content += "</div>";
-                    content += "</div>"
-
-                } else if (item.questionInputType === "Spinner") {
-                    var options = "";
-                    $.each(item.possibleAnswers, function (i, option) {
-                        options += "<option value='" + option.possibleAnswer + "'>" + option.possibleAnswer + "</option>";
-                    });
-
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<select>";
-                    content += "<option value='null'>--Select Option--</option>";
-                    content += options;
-                    content += "</select>";
-                    content += "</div>";
-                    content += "</div>"
-
-                } else if (item.questionInputType === "Stepper") {
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<input type='number' value='0'>";
-                    content += "</div>"
-                    content += "</div>"
-                }
-
-                $('.large-form').append(content);
-
-            });
-
-            $('.large-form').append("<div class='form-input'><a class='button' href='javascript:void(0)' onClick='postFormSubmission()'>Submit</a></div>");
-        }
-
-        function handleFailForm(data, textStatus, jqXHR) {
-            notification("failed", textStatus)
-        }
-
-
-        function LoadData(userGuid) {
-            //LOADS CATS BY GUID
-            if (userGuid) {
-                var pathToRESTDetails = "../mergedData.json";
+                var pathToRESTDetails = "../surveyData-processed.json";
                 $.getJSON(pathToRESTDetails, {})
-                    .done(handleDoneData)
-                    .fail(handleFailData);
-                //                    loadUserFences(appId, userGuid);
-            } else {
-                //IF NO GUID OF FALSE GUIDE, LOAD ALL CATS
-                var pathToRESTDetails = "../mergedData.json";
-                $.getJSON(pathToRESTDetails, {})
-                    .done(handleDoneData)
-                    .fail(handleFailData);
+                    .done(handleDoneSurveyData)
+                    .fail(handleFailSurveyData);
+
             }
         }
 
         function handleDoneData(data, textStatus, jqXHR) {
-            //MarkerClusterGroup enables clustering
-            markers = new L.MarkerClusterGroup({
-                disableClusteringAtZoom: 16
-            });
+            origData = data;
 
-            var markerCat;
-            var content;
+            for (item of data) {
+                mapItem(item);
+            }
 
-            $.each(data, function (i, item) {
-                if (item.lat || item.lon !== null) {
-                    markerCat = L.marker(new L.LatLng(item.lat, item.lon), {
-                        icon: clearIcon
-                    });
-                    markers.addLayer(markerCat);
-
-                    markerCat.on("click", function () {
+            if (filtered !== true) {
+                // Sort the categories only once
+                categories.sort();
+                buildCategoriesGUI(categories);
+            }
 
 
-                        handleDonePhoto();
-
-                        var photoItem = "";
-
-                        check = false; // boolean check for info-card clearing
-
-                        function handleDonePhoto(data, textStatus, jqXHR) {
-
-
-                            var card = $('#info-card');
-                            content = "";
-                            content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
-                            content += "<h2>Establishment Details</h2>";
-                            content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
-                            content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
-                            content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
-                            content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
-                            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-                            content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
-                            content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
-                            content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
-                            content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
-
-
-                            card.addClass('active');
-                            card.html(content);
-
-                            $("#card-close-button-container").click(function () {
-                                card.removeClass('active');
-                            });
-
-                            //                            ModalInit(item.subId);
-                        }
-                    });
-                }
-            });
-
-
-            map.addLayer(markers);
         }
 
         function handleFailData(data, status, jqHXR) {
             notification('failed', 'Error: ' + status);
         }
 
-        function handleFailPhoto() {
-            notification('failed', 'Failed to load the submission image');
-        }
+        function handleDoneSurveyData(data, textStatus, jqXHR) {
+            surveySetUp = false;
+            surveyData = data;
 
-        function loadUserFences(appId, userGuid) {
-            var pathToFenceREST = baseRestUrl + "GetFences/";
-            $.getJSON(pathToFenceREST, {
-                    userGuid: userGuid
-                    , appId: appId
-                })
-                .done(handleDoneFence)
-                .fail(handleFailFence);
+            if (!surveySetUp === true) {
+                surveySetUp = true;
+                //Prepare questions one time
+                //This is a maybe feature
+            }
+            var surveyLocations = [];
 
-            function handleDoneFence(data, textStatus, jqXHR) {
-                fenceLayer = L.layerGroup();
-                $.each(data.items, function (i, item) {
-                    var polygon = omnivore.wkt.parse(item.WKT);
-                    polygon.setStyle({
-                        color: '#7684ff'
-                        , fillOpacity: 0.3
-                        , weight: 2
+            for (i = 1; i < surveyData.length; i++) {
+                var locationFromLatitude = undefined
+                    , locationFromLongitude = undefined;
+
+                var currentItemLocation = (surveyData[i].LocationLatitude + ',' + surveyData[i].LocationLongitude);
+                var hasProcessedLocation = surveyLocations.indexOf(currentItemLocation);
+
+                if (hasProcessedLocation === -1) {
+                    surveyLocations.push(currentItemLocation);
+                }
+
+                if (surveyData[i].Q8.split(',')[0].trim() !== 'null') {
+                    locationFromLatitude = parseFloat(surveyData[i].Q8.split(',')[0].trim());
+                }
+                if (surveyData[i].Q8.split(',')[1].trim() !== 'null') {
+                    locationFromLongitude = parseFloat(surveyData[i].Q8.split(',')[1].trim());
+                }
+
+                if (locationFromLatitude && locationFromLongitude) {
+                    var distance = [{
+                        lat: surveyData[i].LocationLatitude
+                        , lng: surveyData[i].LocationLongitude
+                }, {
+                        lat: locationFromLatitude
+                        , lng: locationFromLongitude
+                }]
+
+                    var distancePath = new google.maps.Polyline({
+                        path: distance
+                        , geodesic: true
+                        , strokeColor: '#898989'
+                        , strokeOpacity: 1.0
+                        , strokeWeight: 1.5
+                        , map: map
                     });
-                    fenceLayer.addLayer(polygon);
-                });
-                map.addLayer(fenceLayer);
-            }
+
+                    distancePathList.push(distancePath);
 
 
-            function handleFailFence() {
-                notification('failed', 'Failed to load user fences');
+                    var destination = new google.maps.Circle({
+                        strokeColor: '#2196F3'
+                        , strokeOpacity: 0
+                        , strokeWeight: 0
+                        , fillColor: '#616161'
+                        , fillOpacity: 1
+                        , map: map
+                        , center: {
+                            lat: locationFromLatitude
+                            , lng: locationFromLongitude
+                        }
+                        , radius: 25
+                    });
+
+                    destinationList.push(destination);
+                }
+
             }
+
+            if (surveyLocations.length > 0) {
+                for (item of surveyLocations) {
+
+                    var surveyLocationMarker = new google.maps.Marker({
+                        position: {
+                            lat: parseFloat(item.split(',')[0].trim())
+                            , lng: parseFloat(item.split(',')[1].trim())
+                        }
+                        , map: map
+                        , title: 'Hello World!'
+                        , icon: '../img/circle-survey-location.svg'
+                    });
+
+                    surveyLocationMarkerList.push(surveyLocationMarker);
+                }
+            }
+
         }
 
-        function refreshPointsRemoveModal(data, status, jqHXR) {
-            //Display nontification, remove modal, clear the map markers, and re-load data
+        function handleFailSurveyData(data, status, jqHXR) {
+            notification('failed', 'Error: ' + status);
+        }
 
-            if (addPoint === true) {
-                map.removeLayer(markers);
-                notification('', 'Report has been submitted successfully.');
-                remove_modal();
-                resetTool();
-            } else {
-                if (data) {
-                    if (data.subId) {
-                        currentSubmisisonGuid = data.subId;
-                    } else if (data === 'stop') {
-                        map.removeLayer(markers);
-                        notification('', 'Report has been submitted successfully.');
-                        remove_modal();
-                        resetTool();
+        function addDotMap(lat, lon, zoom) {
+            var dotMapElem = document.createElement("iframe");
+            dotMapElem.src = "http://demographics.coopercenter.org/DotMap/index.html#lat=" + lat + "&lon=" + lon + "&z=" + zoom;
+            dotMapElem.id = 'racialMap';
+            dotMapElem.name = 'racialDotMap';
+            dotMapElem.style = '.cssButton{display:none}'
+            document.body.insertBefore(dotMapElem, document.getElementById(map));
+        }
+
+        function buildCategoriesGUI(categories) {
+            var categoriesElems = "";
+
+            for (item of categories) {
+                categoriesElems += "<div class='input-item'><div class='input-control'><input type='checkbox' category='" + item + "' checked><i></i></div><span>" + item + "</span></div>";
+            }
+
+            var pasteTo = document.getElementById('options');
+            pasteTo.innerHTML = categoriesElems;
+
+            $('.input-item input').click(function () {
+                if (modified !== true) {
+                    modified = true;
+                    $('.button-container .button.action').removeClass('disabled');
+                }
+            });
+
+            $('.button-container .button.close').click(function () {
+                modified = false;
+                $('.button-container .button.action').addClass('disabled');
+
+                $('#options-container input').prop('checked', true);
+            });
+
+            $('.button-container .button.action').click(function () {
+                if (!$(this).hasClass('disabled')) {
+                    filtered = true;
+                }
+            });
+
+            $('#selectAll').click(function () {
+                $('#options input').prop('checked', false);
+                $('.button-container .button.action').removeClass('disabled');
+            });
+
+
+            $('.dotToggle').click(function () {
+                var exists = document.getElementById('racialMap');
+
+                if (exists) {
+                    $('iframe').remove();
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setOptions({
+                            fillOpacity: .5
+                        });
+                    }
+
+                    $('#map').removeClass('no-events');
+                } else {
+                    addDotMap(map.getCenter().lat(), map.getCenter().lng(), map.getZoom());
+                    $('#map').addClass('no-events');
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setOptions({
+                            fillOpacity: 1
+                        });
                     }
                 }
+
+            })
+        }
+
+
+        function filter(elem) {
+            if (!$(elem).hasClass('disabled')) {
+                var excludeElems = $('input:checkbox:not(:checked)');
+                var excludeList = [];
+
+                for (item of excludeElems) {
+                    excludeList.push($(item).attr('category'));
+                }
+
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                markers = [];
+
+                for (item of origData) {
+                    if (item.type) {
+                        for (type of(item.type.split(','))) {
+                            var isInArray = excludeList.indexOf(type.trim());
+
+                            if (isInArray !== -1) {
+                                break;
+                            } else {
+                                mapItem(item);
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                $('#options-container').removeClass('active');
+
             }
+        }
 
-            addPoint = false;
+        function mapItem(item) {
+            if (item.lat !== "null" || item.lon !== "null") {
 
-            function remove_modal() {
-                if (selectedGuid && userSubmissionsToggle === true) {
-                    //This clause if user is logged in and has User Submissions selected under the Layers pane
-                    LoadData(selectedGuid);
-                    $("#info-modal").removeClass("slide-in").on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
-                        recycler();
-                    });
+                var formula = (item.reviews / item.rating) * 5;
+                var radius;
+
+                if (!isNaN(formula)) {
+                    radius = formula;
                 } else {
-                    //This clause if user has All Submissions selected under the layers pane
-                    LoadData();
-                    $("#info-modal").removeClass("slide-in").on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
-                        recycler();
-                    });
+                    radius = 75
                 }
+
+                marker = new google.maps.Circle({
+                    strokeColor: '#2196F3'
+                    , strokeOpacity: 0
+                    , strokeWeight: 0
+                    , fillColor: '#1565C0'
+                    , map: map
+                    , radius: radius
+                    , center: {
+                        lat: parseFloat(item.lat)
+                        , lng: parseFloat(item.lon)
+                    }
+                });
+
+                content = "";
+                content += "<div title='Close' id='card-close-button-container'><span id='modal-close-button'></span></div>";
+                content += "<h2>Establishment Details</h2>";
+                content += "<div class='card-list-item'><p>Name</p><p>" + item.name + "</p></div>";
+                content += "<div class='card-list-item'><p>Street Address</p><p>" + item.streetAddress + "</p></div>";
+                content += "<div class='card-list-item'><p>City</p><p>" + item.city + "</p></div>";
+                content += "<div class='card-list-item'><p>Yelp Rating</p><p>" + item.rating + "</p></div>";
+                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                content += "<div class='card-list-item'><p>Number of Reviews</p><p>" + item.reviews + "</p></div>";
+                content += "<div class='card-list-item'><p>Type</p><p>" + item.type + "</p></div>";
+                content += "<div class='card-list-item'><p>Latitude</p><p>" + item.lat + "</p></div>";
+                content += "<div class='card-list-item'><p>Longitude</p><p>" + item.lon + "</p></div>";
+                content += "<div class='card-list-item'><p>Radius</p><p>" + formula + " meters</p></div>";
+
+
+                google.maps.event.addListener(marker, 'click', (function (marker, content) {
+                    return function () {
+
+                        check = false;
+
+                        var card = $('#info-card');
+
+
+                        card.addClass('active');
+                        card.html(content);
+
+                    }
+                })(marker, content));
+
+                if (filtered !== true) {
+                    // Generate the categories list only once, if the categories have not been filtered.
+                    if (item.type) {
+                        for (restaurant of(item.type.split(','))) {
+                            var isInArray = categories.indexOf(restaurant.trim());
+
+                            if (isInArray < 0) {
+                                categories.push(restaurant.trim());
+                            }
+
+                        }
+
+                    }
+
+                }
+
+
+                markers.push(marker);
             }
+
         }
+
+        $(document).ready(function () {
+            var monitor = setInterval(function () {
+                var elem = document.activeElement;
+                if (elem && elem.tagName == 'IFRAME') {
+                    clearInterval(monitor);
+                    console.log('clicked');
+                }
+            }, 100);
+        })
     </script>
 
-    <script>
-        function ModalInit(rowData) {
-
-            $('#info-card').append("<div id='subGuid' style='display:none;'>" + rowData + "</div>");
-            LoadFormQuestions(rowData);
-            LoadFridges(rowData);
-            LoadRestaurantItems(rowData);
-
-
-            function LoadFormQuestions(subId) {
-                var pathToREST = baseRestUrl + "Form/Get/?appId=" + appId;
-                $.getJSON(pathToREST, {})
-                    .done(handleDoneLoadFormQuestions)
-                    .fail(handleFailLoadFormQuestions);
-
-
-            }
-
-            function handleDoneLoadFormQuestions(data, textStatus, jqXHR) {
-
-
-                $.each(data.questions, function (i, item) {
-                    var content = "";
-                    content += "<div class='card-list-item' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<div id='answer_" + item.questionId + "'>";
-                    content += "</div>";
-                    content += "</div>";
-                    content += "</div>"
-                    $('#divQuestions').append(content);
-
-                });
-
-                $.each(data.questions, function (i, item) {
-                    var subGuid = $("#subGuid").html();
-                    LoadQuestionAnswer(subGuid, item.questionId);
-                });
-
-
-
-            }
-
-            function handleFailLoadFormQuestions(data, textStatus, jqXHR) {
-                notification("failed", textStatus)
-            }
-
-            function LoadQuestionAnswer(subId, questionId) {
-                var pathToREST = baseRestUrl + "Answers/GetDetails/";
-                $.getJSON(pathToREST, {
-                        subId: subId
-                        , questionId: questionId
-                    })
-                    .done(handleDoneLoadQuestionAnswer)
-                    .fail(handleFailLoadQuestionAnswer);
-            }
-
-            function handleDoneLoadQuestionAnswer(data, textStatus, jqXHR) {
-
-                if (data.answer) {
-                    $('#answer_' + data.questionId).html("<p>" + data.answer + "</p>");
-                }
-            }
-
-            function handleFailLoadQuestionAnswer(data, textStatus, jqXHR) {
-                notification("failed", textStatus)
-            }
-
-            function LoadFridges(submissionGuid) {
-                var pathToREST = baseRestUrl + "Fridges/GetBySubmissionGuid/";
-                $.getJSON(pathToREST, {
-                        guid: submissionGuid
-                    , })
-                    .done(handleDoneFridges)
-                    .fail(handleFailFridges);
-            }
-
-            function handleDoneFridges(data, textStatus, jqXHR) {
-
-                $.each(data.items, function (i, item) {
-                    LoadFridgeItems(item.guid);
-                });
-            }
-
-            function handleFailFridges(data, textStatus, jqXHR) {
-                var classString = "failed";
-                var message = "Error: failed to retrieve Fridges!";
-                notification(classString, message);
-            }
-
-            function LoadFridgeItems(fridgeGuid) {
-                var pathToREST = baseRestUrl + "FridgeItems/GetByFridgeGuid/";
-                $.getJSON(pathToREST, {
-                        guid: fridgeGuid
-                    })
-                    .done(handleDoneFridgeItems)
-                    .fail(handleFailFridgeItems);
-            }
-
-            function handleDoneFridgeItems(data, textStatus, jqXHR) {
-
-                $.each(data.items, function (i, item) {
-                    var viewLink = '' + '/stomachflu.tamu.edu/Admin/Settings/FridgeItems/View.aspx' + '?Guid=' + item.Guid;
-                    var content = "";
-                    content += " <tr> ";
-                    content += " <td>" + item.foodGroup + "</td>";
-                    content += " <td>" + item.productName + "</td>";
-                    content += " </tr> ";
-
-                    $('#FridgeItemsContainer > tbody:last').append(content);
-                });
-
-            }
-
-            function handleFailFridgeItems(data, textStatus, jqXHR) {
-                var classString = "failed";
-                var message = "Error: failed to retrieve Fridge Items!";
-                notification(classString, message);
-            }
-
-            function LoadRestaurantItems(submissionGuid) {
-                var pathToREST = baseRestUrl + "Restaurants/GetBySubmissionGuid/";
-                $.getJSON(pathToREST, {
-                        guid: submissionGuid
-                    , })
-                    .done(handleDoneRestaurants)
-                    .fail(handleFailRestaurants);
-            }
-
-            function handleDoneRestaurants(data, textStatus, jqXHR) {
-
-                $.each(data.items, function (i, item) {
-                    var viewLink = '' + '/stomachflu.tamu.edu/Admin/Settings/Restaurants/View.aspx' + '?Guid=' + item.guid;
-                    var content = "";
-                    content += " <tr> ";
-                    content += " <td>" + item.name + "</td>";
-                    content += " <td>" + item.address + "</td>";
-                    content += " <td>" + item.dateEaten + "</td>";
-                    content += " </tr> ";
-
-                    $('#RestaurantsItemsContainer > tbody:last').append(content);
-                });
-            }
-
-            function handleFailRestaurants(data, textStatus, jqXHR) {
-                var classString = "failed";
-                var message = "Error: failed to retrieve Restaurants!";
-                notification(classString, message);
-            }
-        }
-
-        function LoadForm() {
-            var pathToREST = baseRestUrl + "Form/Get/?appId=" + appId;
-            $.getJSON(pathToREST, {})
-                .done(handleDoneForm)
-                .fail(handleFailForm);
-        }
-
-        function handleDoneForm(data, textStatus, jqXHR) {
-
-            var content;
-
-            $.each(data.questions, function (i, item) {
-                if (item.questionInputType === "YesNoMaybe") {
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='Yes'><i></i><span>Yes</span></div>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='No'/><i></i><span>No</span></div>";
-                    content += "<div class='radio-group'><input type='radio' name='" + item.questionId + "' value='Maybe'/><i></i><span>Maybe</span></div>";
-                    content += "</div>";
-                    content += "</div>"
-
-                } else if (item.questionInputType === "Spinner") {
-                    var options = "";
-                    $.each(item.possibleAnswers, function (i, option) {
-                        options += "<option value='" + option.possibleAnswer + "'>" + option.possibleAnswer + "</option>";
-                    });
-
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<select>";
-                    content += "<option value='null'>--Select Option--</option>";
-                    content += options;
-                    content += "</select>";
-                    content += "</div>";
-                    content += "</div>"
-
-                } else if (item.questionInputType === "Stepper") {
-                    content = "";
-                    content += "<div class='form-input' questionID=" + item.questionId + " type='" + item.questionInputType + "'>";
-                    content += "<div>";
-                    content += "<p>" + item.questionText + "</p>";
-                    content += "<input type='number' value='0'>";
-                    content += "</div>"
-                    content += "</div>"
-                }
-
-                $('.large-form').append(content);
-
-            });
-
-            $('.large-form').append("<div class='form-input'><a class='button' href='javascript:void(0)' onClick='postFormSubmission()'>Submit</a></div>");
-        }
-
-        function handleFailForm(data, textStatus, jqXHR) {
-            notification("failed", textStatus)
-        }
-
-        function getNextModalContent() {
-            $('html').delegate('#info-modal .button', 'click', function () {
-
-                if ($(this).attr('step')) {
-                    var nextCard = $(this).attr('step');
-                }
-
-                if ($('#info-modal .card.fade-in-left')) {
-                    $('#info-modal .card.fade-in-left').removeClass('fade-in-left');
-                }
-
-                if ($(this).attr('status') === 'continue') {
-                    $('#info-modal .card').addClass('fade-out-left').on('animationend webkitAnimationEnd oAnimationEnd', function () {
-                        $('.card.fade-out-left').remove();
-                        next(nextCard);
-                    });
-                } else if ($(this).attr('status') === 'waitForUpdate') {
-
-                } else if ($(this).attr('status') === 'stop') {
-                    var data = 'stop';
-                    refreshPointsRemoveModal(data);
-                }
-            });
-        }
-
-        function next(nextCard) {
-
-            if (nextCard) {
-                var dir = (window.location.pathname).substring(0, window.location.pathname.lastIndexOf('/'));
-                $('#info-modal').load(dir + "/Modal.aspx ." + nextCard, function () {
-                    $('#info-modal .card').addClass('fade-in-left');
-                    $('#info-modal').children().prepend('<span id="close-help">Press "esc" to close.</span><div title="Close" id="modal-close-button-container"><span id="modal-close-button"></span></div>');
-
-                    modalCommonInteractions();
-
-                    $('.fab #Add.foods').click(function () {
-                        var html = '';
-
-                        html += '<tr>';
-                        html += '<td><div class="form-input"><input type="text" placeholder="Product Name" id="txtProductName" /><label>Product Name</label></div></td>';
-                        html += '<td><div class="form-input"><input type="text" placeholder="Food Group" id="txtFoodGroup"/><label>Food Group</label></div></td>';
-                        html += '<td><div class="form-input"><input type="text" placeholder="Bar Code" id="txtBarCode"/><label>Bar Code</label></div></td>';
-                        html += '<td><div class="form-input"><input type="file" class="hollow"  id="txtFileName"/></div></td>';
-                        html += '</tr>';
-
-
-                        $(html).appendTo('#tableFridgeItemsContainer tbody');
-                    });
-
-                    $('.fab #Add.restaurants').click(function () {
-                        var html = '';
-
-                        html += '<tr>';
-                        html += '<td><div class="form-input"><input type="text" placeholder="Restaurant Name" id="txt_" /><label>Restaurant Name</label></div></td>';
-                        html += '<td><div class="form-input"><input type="text" placeholder="Address" id="txt_"/><label>Address</label></div></td>';
-                        html += '<td><div class="form-input"><input type="date" placeholder="Date" id="txt_"/><label class="no-float">Date</label></div></td>';
-                        html += '</tr>';
-
-
-                        $(html).appendTo('#tableRestaurantItemsContainer tbody');
-                    });
-
-                });
-            }
-
-        }
-
-        function modalPaneAddReport() {
-            /*Separate functions needed because of the differing content fragment*/
-
-            modalPreload();
-
-            var dir = (window.location.pathname).substring(0, window.location.pathname.lastIndexOf('/'));
-            $('#info-modal').load(dir + "/Modal.aspx .modal-init"
-                , function () {
-                    $('#info-modal').children().addClass('container12');
-                    $('#info-modal').children().prepend('<span id="close-help">Press "esc" to close.</span><div title="Close" id="modal-close-button-container"><span id="modal-close-button"></span></div>');
-
-                    modalCommonInteractions();
-
-                    loadBasicForm();
-
-                });
-        }
-
-        function refreshRemoveModal() {
-
-            $("#info-modal").removeClass("slide-in").on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
-                recycler();
-            });
-        }
-
-//
-//        function randomIntFromInterval(min, max) {
-//
-//            var rand = Math.random();
-//            var ret = rand / 1000.00;
-//            return ret;
-//        }
-    </script>
 
     <style>
-        /*** Map page ONLY specific classes since #aspnetForm is an inherited class from the master page. Needed else map height is 0***/
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #ffffff;
+        }
         
-        #aspnetForm,
         #map {
-            position: relative;
-            z-index: 0;
+            height: 100%;
         }
         
-        #basemaps-wrapper {
+        iframe {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-            background: white;
-            padding: 10px;
-        }
-        
-        #basemaps {
-            margin-bottom: 5px;
+            height: 100%;
+            width: 100%;
         }
     </style>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta property="fb:app_id" content="280160452122409" />
-    <meta property="og:site_name" content="TAMU CatMapper" />
-    <meta property="og:image" content="http :// 165.91.120.47/stomachflu.tamu.edu/images/tamu/Logo.PNG " />
 
-    <meta name="robots" content="noodp, noydir" />
-    <meta id="ctl00_meta_referrer" name="referrer" content="default" />
-    <meta http-equiv="content-script-type" content="text/javascript" />
+    <script>
+        var map, check;
 
-    <link rel="stylesheet" href="../css/normalize.css ">
-    <link rel="stylesheet" href="../css/1140.css ">
-    <link rel="stylesheet" href="../css/main.css ">
-    <link rel="stylesheet" href="../css/mobile.css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+        var mapStyles = [{
+            "featureType": "poi"
+            , "elementType": "all"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "poi"
+            , "elementType": "all"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "administrative"
+            , "elementType": "all"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": 0
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road"
+            , "elementType": "labels"
+            , "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "water"
+            , "elementType": "labels"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road.local"
+            , "elementType": "all"
+            , "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "water"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "hue": "#ffffff"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 100
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "transit"
+            , "elementType": "labels"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": 0
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "landscape"
+            , "elementType": "labels"
+            , "stylers": [{
+                "hue": "#000000"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -100
+            }, {
+                "visibility": "off"
+            }]
+        }, {
+            "featureType": "road"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "hue": "#bbbbbb"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": 26
+            }, {
+                "visibility": "on"
+            }]
+        }, {
+            "featureType": "landscape"
+            , "elementType": "geometry"
+            , "stylers": [{
+                "hue": "#dddddd"
+            }, {
+                "saturation": -100
+            }, {
+                "lightness": -3
+            }, {
+                "visibility": "on"
+            }]
+        }]
 
+        function initMap(lat, lon) {
 
-    <!-- Load Leaflet from CDN-->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.css" />
-    <script src="//cdn.jsdelivr.net/leaflet/0.7.3/leaflet.js"></script>
-    <script src="../js/leaflet.markercluster.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="../js/clipper.js"></script>
-    <script src="../js/concavehull.js"></script>
-    <script src="../js/leaflet.freedraw.js"></script>
+            if (lat && lon !== undefined) {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: lat
+                        , lng: lon
+                    }
+                    , zoom: 13
+                    , styles: mapStyles
+                });
 
-    <!-- Load Omnivore plugin (WKT parsing) from CDN -->
-    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: lat
+                        , lng: lon
+                    }
+                    , map: map
+                    , title: 'Current Position'
+                    , icon: '../img/circle-user.svg'
+                });
+            } else {
 
-    <!-- Load Esri Leaflet from CDN -->
-    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
+                lat = 30.6187;
+                lon = -96.3365;
 
-    <script type="text/javascript">
-        var baseUrl = '' + '/stomachflu.tamu.edu/';
-        var baseRestUrl = '' + '/stomachflu.tamu.edu/Rest/';
-        pageTitle = '';
-        appId = "StomachFlu";
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {
+                        lat: lat
+                        , lng: lon
+                    }
+                    , zoom: 13
+                    , styles: mapStyles
+                    , streetViewControl: false
+                });
+            }
 
-        $(function () {
-            $("#map, #aspnetForm").height(($(window).height() - $("#main-menu").height()));
-        });
+            LoadData();
 
-        $(window).resize(function () {
-            $("#map, #aspnetForm").height(($(window).height() - $("#main-menu").height()));
-        });
+            map.addListener('click', function () {
+
+                check = true;
+
+                var passiveText = "Click on a point to see details.";
+                $('body').find('#info-card.active').removeClass('active').on('transitionend webkitTransitionEnd oTransitionEnd otransitionend MSTransitionEnd', function () {
+                    if (check == true) {
+                        $("#info-card").html(passiveText);
+                    }
+                });
+            })
+
+            map.addListener('zoom_changed', function () {
+                if (map.getZoom() > 13 && ($('.dotToggle').hasClass('disabled') === false)) {
+                    $('.dotToggle').addClass('disabled');
+                    notification('', 'Dot Map not available at this zoom level')
+                } else if (map.getZoom() <= 13 && ($('.dotToggle').hasClass('disabled') === true)) {
+                    $('.dotToggle').removeClass('disabled');
+                }
+            });
+
+        }
     </script>
 
-    <title>
-        College Station Food Access
-    </title>
 </head>
 
-<body class="map-container">
 
-    <form name="aspnetForm" method="post" action="./" id="aspnetForm">
-        <div>
+<body>
 
-        </div>
+    <div class="layerToggle" onclick="$('#options-container').addClass('active'); $('html, body').addClass('modal-bg-open');" title="Filters"></div>
 
+    <div class="surveyToggle" onclick="loadSurveyData()" title="Toggle Survey Data"></div>
 
-
-        <input type="hidden" name="ctl00$ContentPlaceHolderBody$txtUserGuid" id="ctl00_ContentPlaceHolderBody_txtUserGuid" value="f65e67d0-62f3-4cb3-8732-f5985decb2f1" />
-        
-        
-        <iframe id="racialMap" src="http://demographics.coopercenter.org/DotMap/index.html"></iframe>
-        <div id="map" class="map"></div>
-        <div id="ctl00_ContentPlaceHolderBody_layerToggle" class="layerToggle"></div>
-        <div id="ctl00_ContentPlaceHolderBody_layerControls" class="layers card">
-            <h3>Layers</h3>
-            <ul class="layer-group">
-                <input type="checkbox" id="sightingsCategory">
-                <i></i>
-                <span>Reports</span>
-                <ul class="layer-subgroup">
-                    <li class="radio-group">
-                        <input type="radio" id="allSubmissionsToggle" name="points-selection">
-                        <i></i>
-                        <span>All Submissions</span>
-                    </li>
-                    <li class="radio-group">
-                        <input type="radio" id="userSubmissionsToggle" name="points-selection">
-                        <i></i>
-                        <span>My Submissions</span>
-                    </li>
-                </ul>
-            </ul>
-            <ul class="layer-group">
-                <input type="checkbox" id="fencesCategory">
-                <i></i>
-                <span>Geo-Fences</span>
-            </ul>
-        </div>
-
-        <div class="card column6" id="info-card">Click on a point to see details.</div>
+    <div class="dotToggle" title="Dot Map Overlay"></div>
 
 
+    <div id="map" onload="getCurrentGeoLocation()"></div>
 
-<!--
-        <div id="ctl00_actionContainer" class="action-container">
-            <div class="fab-container main-action">
-                <div class="fab data" id="root"><span></span>
-                </div>
+    <div class="card column6" id="info-card">Click on a point to see details.</div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjPVsUzrehA8OnJimLrQb2myO8KXXRvlg&callback=getCurrentGeoLocation" async defer></script>
+
+    <div id="options-container">
+        <div class="container12">
+            <h1>Categories</h1>
+            <div class="button-container">
+                <div id="selectAll"><a>Deselect All</a></div>
+                <div class="button disabled action" onclick="filter(this);">Apply</div>
+                <div class="button close" onclick="$('#options-container').removeClass('active'); $('html, body').removeClass('modal-bg-open');">Cancel</div>
             </div>
-            <div class="fab-container" tooltip="Add Fence">
-                <div class="fab" id="fence"><span></span>
-                </div>
-            </div>
-            <div class="fab-container" tooltip="Add Point with Location">
-                <div class="fab" id="point"><span></span>
-                </div>
-            </div>
-            <div class="fab-container" tooltip="Add Point without Location">
-                <div class="fab" id="report"><span></span>
-                </div>
+            <div id="options">
             </div>
         </div>
--->
-
-
-        <div>
-    </form>
+    </div>
 </body>
+
 
 </html>
