@@ -1,0 +1,173 @@
+{
+    "items": [
+
+        {
+            "Name": "3G Tl (Modified and tuned by ImagioX1)",
+            "Value": "3G_TL"
+		},
+        {
+            "Name": "4G TL Replica",
+            "Value": "4G_TL_Replica"
+		},
+
+        {
+            "Name": "Chinese Mini H4",
+            "Value": "Mini_H4"
+		},
+
+        {
+            "Name": "Corolla LED",
+            "Value": "Corolla_LED"
+		},
+
+        {
+            "Name": "E46",
+            "Value": "E46"
+		},
+
+        {
+            "Name": "E55",
+            "Value": "E55"
+		},
+
+        {
+            "Name": "FX35",
+            "Value": "FX35"
+		},
+
+        {
+            "Name": "Fusion Fog, Halogen Bulb",
+            "Value": "Fusion_Fog_Halogen"
+		},
+
+        {
+            "Name": "Fusion Fog, HID Bulb",
+            "Value": "Fusion_Fog_HID"
+		},
+
+        {
+            "Name": "G37 Coupe",
+            "Value": "G37_Coupe"
+		},
+
+        {
+            "Name": "G37 Sedan",
+            "Value": "G37_Sedan"
+		},
+
+        {
+            "Name": "Generic MH1",
+            "Value": "Generic_MH1"
+		},
+
+        {
+            "Name": "Koito Bi-LED",
+            "Value": "Koito_Bi-LED"
+		},
+
+        {
+            "Name": "LS430 Left",
+            "Value": "LS430_Left"
+		},
+
+        {
+            "Name": "LS460 Right",
+            "Value": "LS460_Right"
+		},
+
+        {
+            "Name": "M45",
+            "Value": "M45"
+		},
+
+        {
+            "Name": "Maxima/RX330 Non-AFS",
+            "Value": "Maxima-RX330_Non_AFS"
+		},
+
+        {
+            "Name": "Morimoto Type U Fog",
+            "Value": "Morimoto_Type_U_Fog"
+		},
+
+        {
+            "Name": "Morimoto EVOX-R",
+            "Value": "Morimoto_EVOX-R"
+		},
+
+        {
+            "Name": "Morimoto FX-R 3.0 3-Inch",
+            "Value": "Morimoto_FX-R_3.0_3"
+		},
+
+        {
+            "Name": "Morimoto Matchbox",
+            "Value": "Morimoto_Matchbox"
+		},
+
+        {
+            "Name": "Morimoto Mini D2S 3.0",
+            "Value": "Morimoto_MD2S_3.0"
+		},
+
+        {
+            "Name": "Morimoto Mini H1 7.0",
+            "Value": "Morimoto_MH1_7.0"
+		},
+
+        {
+            "Name": "Murano H11 3-Inch Halogen Bulb",
+            "Value": "Murano_H11_3_Halogen"
+		},
+
+        {
+            "Name": "Murano H11 3_Inch PnP HID Bulb",
+            "Value": "Murano_H11_3_PnP_HID"
+		},
+
+        {
+            "Name": "Murano HID (Step)",
+            "Value": "Murano_HID_Step"
+		},
+
+        {
+            "Name": "Murano LED Low Beam + High Beam Reflector",
+            "Value": "Murano_LED_High_Reflector"
+		},
+
+        {
+            "Name": "Q45",
+            "Value": "Q45"
+		},
+
+        {
+            "Name": "RX330 AFS",
+            "Value": "RX330_AFS"
+		},
+
+        {
+            "Name": "RX350 Low Beam US Shield",
+            "Value": "RX350_Low_Beam_US"
+		},
+
+        {
+            "Name": "RX350 Bi-Xenon EU Shield",
+            "Value": "RX350-BiX-EU"
+		},
+
+        {
+            "Name": "S2000 (Modded and Tuned by ImagioX1)",
+            "Value": "S2000_ImagioX1_Tuned"
+		},
+
+        {
+            "Name": "Toyota Crown Left (Clear lens and tuned by Nuvolari)",
+            "Value": "Crown"
+		},
+
+        {
+            "Name": "TSX",
+            "Value": "TSX"
+		}
+  ]
+}

@@ -18,138 +18,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
     <!--    IMPORT ANGULAR-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.5/angular-filter.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
 </head>
 
-<body class="full-flex-height-container" ng-app="mainApp" ng-controller="mainController">
-    <header>
-        <h1>HIDP Projector Output Comparison</h1>
+<body class="full-flex-height-container" ng-app="mainApp" ui-view>
 
-        <div class="image-controls">
-            <div id="preset-exposure">
-                <div class="controls">
-                    <i class="zmdi zmdi-zero zmdi-hc-lg" ng-click="step = 2"></i>
-                    <i class="zmdi zmdi-neg-1 zmdi-hc-lg" ng-click="step = 3"></i>
-                    <i class="zmdi zmdi-neg-2 zmdi-hc-lg" ng-click="step = 4"></i>
-                </div>
-                <h3>Preset Exposures</h3>
-            </div>
-
-            <div id="high-beam-toggle">
-                <div class="controls">
-                    <i class="custom-icon" title="High beam shot for those that have it" style="background-image: url(./img/icons/high-beam.svg); //Full Beam Light by Lloyd Humphreys from the Noun Project" ng-click="step = 5"></i>
-                </div>
-                <h3>High Beam</h3>
-            </div>
-
-            <div id="distance-toggle">
-                <div class="controls">
-                    <i class="zmdi zmdi-looks zmdi-hc-lg" ng-click="step = 6" title="Distance shots at 150ft"></i>
-                </div>
-                <h3>Distance Shot</h3>
-            </div>
-
-            <div id="distance-toggle">
-                <div class="controls">
-                    <i class="zmdi zmdi-tonality zmdi-hc-lg" title="Toggle color nversion" ng-click="invert()"></i>
-                </div>
-                <h3>Beam Analysis</h3>
-            </div>
-        </div>
-    </header>
-
-    <div class="container double flex flex-column">
-        <div class="child flex flex-column">
-            <select ng-model="selected1" ng-change="load(selected1)">
-                <option value="">-- Select Projector --</option>
-                <option value="3G_TL">3G Tl (Modified and tuned by ImagioX1)</option>
-                <option value="4G_TL_Replica">4G TL Replica</option>
-                <option value="Mini_H4">Chinese Mini H4</option>
-                <option value="Corolla_LED">Corolla LED</option>
-                <option value="E46">E46</option>
-                <option value="E55">E55 (Clear lens)</option>
-                <option value="FX35">FX35</option>
-                <option value="Fusion_Fog_Halogen">Fusion Fog, Halogen Bulb</option>
-                <option value="Fusion_Fog_HID">Fusion Fog, HID Bulb</option>
-                <option value="G37_Coupe">G37 Coupe</option>
-                <option value="G37_Sedan">G37 Sedan</option>
-                <option value="Generic_MH1">Generic MH1</option>
-                <option value="Koito_Bi-LED">Koito Bi-LED</option>
-                <option value="LS430_Left">LS430 Left</option>
-                <option value="LS460_Right">LS460 Right</option>
-                <option value="M45">M45</option>
-                <option value="Maxima-RX330_Non_AFS">Maxima/RX330 Non-AFS</option>
-                <option value="Morimoto_Type_U_Fog">Morimoto Type U Fog</option>
-                <option value="Morimoto_EVOX-R">Morimoto EVOX-R</option>
-                <option value="Morimoto_FX-R_3.0_3">Morimoto FX-R 3.0 3"</option>
-                <option value="Morimoto_Matchbox">Morimoto Matchbox</option>
-                <option value="Morimoto_MD2S_3.0">Morimoto Mini D2S 3.0</option>
-                <option value="Morimoto_MH1_7.0">Morimoto Mini H1 7.0</option>
-                <option value="Murano_H11_3_Halogen">Murano H11 3" Halogen Bulb</option>
-                <option value="Murano_H11_3_PnP_HID">Murano H11 3" PnP HID Bulb</option>
-                <option value="Murano_HID_Step">Murano HID (Step)</option>
-                <option value="Murano_LED_High_Reflector">Murano LED Low Beam + High Beam Reflector</option>
-                <option value="Q45">Q45</option>
-                <option value="RX330_AFS">RX330 AFS</option>
-                <option value="RX350_Low_Beam_US">RX350 Low Beam US Shield</option>
-                <option value="RX350-BiX-EU">RX350 Bi-Xenon EU Shield</option>
-                <option value="S2000_ImagioX1_Tuned">S2000 (Modded and Tuned by ImagioX1)</option>
-                <option value="Crown">Toyota Crown Left (Clear lens and tuned by Nuvolari)</option>
-                <option value="TSX">TSX</option>
-            </select>
-            <div class="image-container flex align-items-center justify-content-center">
-                <p>There's nothing here Jim.</p>
-            </div>
-        </div>
-        <div class="child flex flex-column">
-            <select ng-model="selected2" ng-change="load(selected2)">
-                <option value="">-- Select Projector --</option>
-                <option value="3G_TL">3G Tl (Modified and tuned by ImagioX1)</option>
-                <option value="4G_TL_Replica">4G TL Replica</option>
-                <option value="Mini_H4">Chinese Mini H4</option>
-                <option value="Corolla_LED">Corolla LED</option>
-                <option value="E46">E46</option>
-                <option value="E55">E55 (Clear lens)</option>
-                <option value="FX35">FX35</option>
-                <option value="Fusion_Fog_Halogen">Fusion Fog, Halogen Bulb</option>
-                <option value="Fusion_Fog_HID">Fusion Fog, HID Bulb</option>
-                <option value="G37_Coupe">G37 Coupe</option>
-                <option value="G37_Sedan">G37 Sedan</option>
-                <option value="Generic_MH1">Generic MH1</option>
-                <option value="Koito_Bi-LED">Koito Bi-LED</option>
-                <option value="LS430_Left">LS430 Left</option>
-                <option value="LS460_Right">LS460 Right</option>
-                <option value="M45">M45</option>
-                <option value="Maxima-RX330_Non_AFS">Maxima/RX330 Non-AFS</option>
-                <option value="Morimoto_Type_U_Fog">Morimoto Type U Fog</option>
-                <option value="Morimoto_EVOX-R">Morimoto EVOX-R</option>
-                <option value="Morimoto_FX-R_3.0_3">Morimoto FX-R 3.0 3"</option>
-                <option value="Morimoto_Matchbox">Morimoto Matchbox</option>
-                <option value="Morimoto_MD2S_3.0">Morimoto Mini D2S 3.0</option>
-                <option value="Morimoto_MH1_7.0">Morimoto Mini H1 7.0</option>
-                <option value="Murano_H11_3_Halogen">Murano H11 3" Halogen Bulb</option>
-                <option value="Murano_H11_3_PnP_HID">Murano H11 3" PnP HID Bulb</option>
-                <option value="Murano_HID_Step">Murano HID (Step)</option>
-                <option value="Murano_LED_High_Reflector">Murano LED Low Beam + High Beam Reflector</option>
-                <option value="Q45">Q45</option>
-                <option value="RX330_AFS">RX330 AFS</option>
-                <option value="RX350_Low_Beam_US">RX350 Low Beam US Shield</option>
-                <option value="RX350-BiX-EU">RX350 Bi-Xenon EU Shield</option>
-                <option value="S2000_ImagioX1_Tuned">S2000 (Modded and Tuned by ImagioX1)</option>
-                <option value="Crown">Toyota Crown Left (Clear lens and tuned by Nuvolari)</option>
-                <option value="TSX">TSX</option>
-            </select>
-            <div class="image-container flex align-items-center justify-content-center">
-                <p>There's nothing here Jim.</p>
-            </div>
-        </div>
-
-    </div>
 
     <!--    Modules    -->
     <script src="./js/angular/apps/mainApp.js"></script>
+    <script src="./js/angular/modules/common.js"></script>
 
     <!--    Controllers    -->
     <script src="./js/angular/controllers/mainController.js"></script>
