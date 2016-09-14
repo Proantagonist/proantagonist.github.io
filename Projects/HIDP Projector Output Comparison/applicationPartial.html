@@ -4,39 +4,39 @@
     <div class="image-controls">
         <div id="preset-exposure">
             <div class="controls">
-                <i class="zmdi zmdi-zero zmdi-hc-lg" ng-click="step = 2"></i>
-                <i class="zmdi zmdi-neg-1 zmdi-hc-lg" ng-click="step = 3"></i>
-                <i class="zmdi zmdi-neg-2 zmdi-hc-lg" ng-click="step = 4"></i>
+                <i class="zmdi zmdi-zero zmdi-hc-lg" ng-click="locationHashProperties.step = 2" ng-class="(locationHashProperties.step == 2) ? 'active' : ''"></i>
+                <i class="zmdi zmdi-neg-1 zmdi-hc-lg" ng-click="locationHashProperties.step = 3" ng-class="(locationHashProperties.step == 3) ? 'active' : ''"></i>
+                <i class="zmdi zmdi-neg-2 zmdi-hc-lg" ng-click="locationHashProperties.step = 4" ng-class="(locationHashProperties.step == 4) ? 'active' : ''"></i>
             </div>
             <h3>Preset Exposures</h3>
         </div>
 
         <div id="high-beam-toggle">
             <div class="controls">
-                <i class="custom-icon" title="High beam shot for those that have it" style="background-image: url(./img/icons/high-beam.svg); //Full Beam Light by Lloyd Humphreys from the Noun Project" ng-click="step = 5"></i>
+                <i class="custom-icon" title="High beam shot for those that have it" style="background-image: url(./img/icons/high-beam.svg); //Full Beam Light by Lloyd Humphreys from the Noun Project" ng-click="locationHashProperties.step = 5" ng-class="(locationHashProperties.step == 5) ? 'active' : ''"></i>
             </div>
             <h3>High Beam</h3>
         </div>
 
         <div id="distance-toggle">
             <div class="controls">
-                <i class="zmdi zmdi-looks zmdi-hc-lg" ng-click="step = 6" title="Distance shots at 150ft"></i>
+                <i class="zmdi zmdi-looks zmdi-hc-lg" ng-click="locationHashProperties.step = 6" ng-class="(locationHashProperties.step == 6) ? 'active' : ''" title="Distance shots at 150ft"></i>
             </div>
             <h3>Distance Shot</h3>
         </div>
 
         <div id="distance-toggle">
             <div class="controls">
-                <i class="zmdi zmdi-tonality zmdi-hc-lg" title="Toggle color nversion" ng-click="invert()"></i>
+                <i class="zmdi zmdi-tonality zmdi-hc-lg" title="Toggle color nversion" ng-click="invert($event)" ng-class="(locationHashProperties.inverted == true) ? 'active' : ''"></i>
             </div>
             <h3>Beam Analysis</h3>
         </div>
     </div>
 </header>
 
-<div class="container double flex flex-column">
+<div class="container double flex flex-column" ng-init="init()">
     <div class="child flex flex-column">
-        <select ng-model="projector1" ng-change="load(projector1, '1')">
+        <select ng-model="locationHashProperties.projector1" ng-change="load(locationHashProperties.projector1, '1')">
             <option value="">-- Select Projector --</option>
             <option ng-repeat="projector in list | orderBy: 'Name'" value="{{projector.Value}}">{{projector.Name}}</option>
         </select>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="child flex flex-column">
-        <select ng-model="projector2" ng-change="load(projector2, '2')">
+        <select ng-model="locationHashProperties.projector2" ng-change="load(locationHashProperties.projector2, '2')">
             <option value="">-- Select Projector --</option>
             <option ng-repeat="projector in list | orderBy: 'Name'" value="{{projector.Value}}">{{projector.Name}}</option>
         </select>
