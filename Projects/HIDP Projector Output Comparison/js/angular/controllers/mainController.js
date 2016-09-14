@@ -124,6 +124,7 @@ app.controller('mainController', ['$scope', '$stateParams', '$state', '$filter',
                 }
             }
             location.hash = hash;
+            console.log('hash');
         }
     }
 
