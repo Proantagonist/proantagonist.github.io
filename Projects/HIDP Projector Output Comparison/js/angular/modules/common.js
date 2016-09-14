@@ -4,7 +4,7 @@ angular.module('projectorList', ['ngResource']).factory('projectorListSrvc', ['$
 
         getProjectorList: function () {
 
-            var path = '../../../projectorList.json';
+            var path = '../projectorList.json';
 
             return $resource(path, {}, {
                 query: {
