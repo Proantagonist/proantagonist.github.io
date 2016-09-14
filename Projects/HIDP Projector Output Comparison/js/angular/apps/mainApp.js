@@ -7,7 +7,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('default', {
             url: '/?projector1&projector2&step&inverted',
-            templateUrl: '../../applicationPartial.html',
+            templateUrl: 'applicationPartial.html',
             controller: 'mainController'
         })
 
