@@ -50,7 +50,7 @@ app.controller('mainController', ['$scope', '$stateParams', '$state', '$filter',
             $scope.generateHash();
 
             if (value) {
-                        var path = window.location.href + '/img/' + value + '/' + value + '-' + $scope.step + '.jpg'; //Server path. Uncomment before uploading.
+                        var path = window.location.href + '/img/' + value + '/' + value + '-' + $scope.locationHashProperties.step + '.jpg'; //Server path. Uncomment before uploading.
 //                path = window.location.origin + '/img/' + value + '/' + value + '-' + $scope.locationHashProperties.step + '.jpg'; //Local path. Comment before uploading
             }
 
