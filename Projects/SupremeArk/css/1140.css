@@ -235,6 +235,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
     .container12 .prefix1, .container12 .prefix2, .container12 .prefix3, .container12 .prefix4, .container12 .prefix5, .container12 .prefix6, .container12 .prefix7, .container12 .prefix8, .container12 .prefix9, .container12 .prefix10, .container12 .prefix11, .container16 .prefix1, .container16 .prefix2, .container16 .prefix3, .container16 .prefix4, .container16 .prefix5, .container16 .prefix6, .container16 .prefix7, .container16 .prefix8, .container16 .prefix9, .container16 .prefix10, .container16 .prefix11, .container16 .prefix12, .container16 .prefix13, .container16 .prefix14, .container16 .prefix15 {padding-left:0;}
     .row {margin:0;}
 }
+/*
 .clearfix:before, .clearfix:after,
 .row:before, .row:after,
 .container12:before, .container12:after, .container16:before, .container16:after {
@@ -245,6 +246,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
     visibility:hidden;
     width:0;
 }
+*/
 /* http://sonspring.com/journal/clearing-floats */
 .clear {
     clear:both;
