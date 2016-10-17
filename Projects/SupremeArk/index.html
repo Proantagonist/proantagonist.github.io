@@ -3,12 +3,16 @@
 
 <head>
     <title>Supreme Ark</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
     <link rel="stylesheet" href="./css/1140.css" />
     <link rel="stylesheet" href="./css/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Expletus+Sans:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="icon" type="image/png" href="./favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+    <script src="js/angular-ui-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.5/angular-filter.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
 </head>
 
 <body>
@@ -25,48 +29,16 @@
         </div>
     </header>
 
-    <section class="banner" id="rex-se">
-        <div class="container12">
-            <h1 class="site-logo"><span>Supreme</span> <span>Ark</span></h1>
-            <h2 class="clr-md-grey-100">All of the fun with less of the grind</h2>
-        </div>
-    </section>
+    <div ui-view ng-app="arkDataApp"></div>
 
-    <section class="large-partition center bg-md-grey-50">
-        <h3>Double the Arks, Double the Fun</h3>
-        <div class="partition-heading container12 flex justify-center">
-            <p class="column10">Why limit yourself to a single map? Expand your kingdom with Ark's Cross-Ark Travel and transfer your character and even creatures from one map to the other.</p>
-        </div>
-        <div class="container12">
-            <div class="flex flex-row justify-around sm-margin">
-                <div class="card column4">
-                    <h3 class="site-logo-alt"><span>Supreme</span> <span>Center</span></h3>
-                    <a class="button" href="steam://connect/158.69.120.102:17116">Join Now >></a>
-                    <span class="low-key">158.69.120.102:17116</span>
-                </div>
+    <!--Apps-->
+    <script src="js/angular/apps/arkDataApp.js"></script>
 
-                <div class="card column4">
-                    <h3 class="site-logo-alt"><span>Supreme</span> <span>Scorched</span></h3>
-                    <a class="button primary" href="steam://connect/158.69.120.102:17126">Join Now >></a>
-                    <span class="low-key">158.69.120.102:17126</span>
-                </div>
-            </div>
+    <!--Controllers-->
+    <script src="js/angular/controllers/arkDataController.js"></script>
 
-            <a href="./maps/#rules" class="attn">Please be sure to review the server rules.</a>
-        </div>
-    </section>
-
-    <section class="large-partition center bg-md-grey-900 clr-md-grey-50">
-        <h3>Server Events and News</h3>
-        <div class="partition-heading container12 flex justify-center">
-            <p class="column10">We plan to introduce new and exciting server-wide community events including PvE battles, tribe wars, player dino duels, and purge events. Stay up to date on the progress and details of these events as they become available and look out for important news regarding server wipes, mod changes, and server health status.</p>
-        </div>
-        <div class="container12">
-            <div class="flex flex-row justify-around sm-margin">
-                <a href="javascript:void(0)" class="button primary">Coming Soon...</a>
-            </div>
-        </div>
-    </section>
+    <!--Modules-->
+    <script src="js/angular/modules/common.js"></script>
 
     <script>
         (function (i, s, o, g, r, a, m) {
