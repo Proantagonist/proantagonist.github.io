@@ -15,21 +15,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
 </head>
 
-<body>
+<body ng-app="arkDataApp">
 
     <header class="bg-md-grey-50">
         <div class="container12">
-            <div class="site-logo-alt"></div>
+            <div class="flex"><a class="site-logo-alt" href="../"><span>Supreme</span>&nbsp;<span>Ark</span></a></div>
             <div class="links">
-                <div><a href="./maps/">Maps</a></div>
+                <div><a ui-sref="maps">Maps</a></div>
                 <!--                <div><a href="#">Events &amp; News</a></div>-->
                 <!--                <div><a href="#">FAQ</a></div>-->
-                <div><a href="./mods/">Mods &amp; Tweaks</a></div>
+                <div><a ui-sref="mods">Mods &amp; Tweaks</a></div>
             </div>
         </div>
     </header>
 
-    <div ui-view ng-app="arkDataApp"></div>
+    <div ui-view></div>
 
     <!--Apps-->
     <script src="js/angular/apps/arkDataApp.js"></script>

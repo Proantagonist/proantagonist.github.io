@@ -1,6 +1,6 @@
 //Angular module with methods relating to project listings not bound by userGuid
 
-var baseUrl = 'http://localhost';
+var baseUrl = 'http://www.supremeark.com';
 
 angular.module('ArkData', ['ngResource']).factory('ArkDataSrvc', ['$http', '$resource', function ($http, $resource) {
 
