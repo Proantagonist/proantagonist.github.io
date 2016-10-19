@@ -11,7 +11,8 @@ angular.module('ArkData', ['ngResource']).factory('ArkDataSrvc', ['$http', '$res
 
             return $resource(path, {}, {
                 query: {
-                    method: 'GET'
+                    method: 'GET',
+                    isArray: true
                 },
                 isArray: true
             }).query();
