@@ -1,6 +1,6 @@
 arkData.controller('arkDataController', ['$scope', '$stateParams', '$state', '$filter', 'ArkDataSrvc', function ($scope, $stateParams, $state, $filter, ArkDataSrvc) {
 
-    if ($state.includes('default')) {
+    if ($state.includes('playersTribes')) {
         ArkDataSrvc.getOnline(81).$promise.then(function (data) {
             $scope.CenterPlayers = data;
         });

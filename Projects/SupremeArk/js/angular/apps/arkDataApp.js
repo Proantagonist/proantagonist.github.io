@@ -26,6 +26,12 @@ arkData.config(function ($stateProvider, $urlRouterProvider, $locationProvider) 
         controller: 'arkDataController'
     })
 
+    .state('playersTribes', {
+        url: '/players-and-tribes',
+        templateUrl: window.location.origin + '/players-and-tribes/onlinePlayersPartial.html',
+        controller: 'arkDataController'
+    })
+
     //    .state('reserve', {
     //        url: '/reserveProject/:guid',
     //        templateUrl: baseUrl + 'Projects/projectReservePartial.html',
