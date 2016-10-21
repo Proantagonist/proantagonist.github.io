@@ -76,7 +76,7 @@ namespace ArkData.Server
         private static void handleException(Exception ex)
         {
             Program.cfgForm.OpenUI();
-            Stop();
+            //Stop();
 
             if (ex is System.IO.DirectoryNotFoundException)
             {
