@@ -26,9 +26,33 @@ arkData.config(function ($stateProvider, $urlRouterProvider, $locationProvider) 
         controller: 'arkDataController'
     })
 
-    .state('playersTribes', {
-        url: '/players-and-tribes',
+    .state('explorer', {
+        url: '/explorer',
+        templateUrl: window.location.origin + '/players-and-tribes/explorerPartial.html',
+        controller: 'arkDataController'
+    })
+    
+    .state('explorer.online', {
+        url: '/online',
         templateUrl: window.location.origin + '/players-and-tribes/onlinePlayersPartial.html',
+        controller: 'arkDataController'
+    })
+    
+    .state('explorer.survivors', {
+        url: '/survivors',
+        templateUrl: window.location.origin + '/players-and-tribes/survivorsPartial.html',
+        controller: 'arkDataController'
+    })
+    
+    .state('explorer.tribes', {
+        url: '/tribes',
+        templateUrl: window.location.origin + '/players-and-tribes/tribesPartial.html',
+        controller: 'arkDataController'
+    })
+    
+    .state('explorer.search', {
+        url: '/search',
+        templateUrl: window.location.origin + '/players-and-tribes/searchPartial.html',
         controller: 'arkDataController'
     })
 
