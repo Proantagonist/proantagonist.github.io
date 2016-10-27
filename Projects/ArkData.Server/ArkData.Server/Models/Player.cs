@@ -10,6 +10,7 @@ namespace ArkData.Server.Models
     {
         public string SteamId { get; set; }
         public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
         public SimpleTribe Tribe { get; set; }
         public string ProfileUrl { get; set; }
         public bool CommunityBanned { get; set; }
@@ -17,5 +18,6 @@ namespace ArkData.Server.Models
         public int NumberOfVACBans { get; set; }
         public int DaysSinceLastBan { get; set; }
         public int NumberOfGameBans { get; set; }
+        public SimpleTribe OwnedTribes { get; set; }
     }
 }

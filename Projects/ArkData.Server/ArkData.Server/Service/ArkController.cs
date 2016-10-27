@@ -25,20 +25,32 @@ namespace ArkData.Server
                 return SearchTribe(q);
         }
 
-        private List<Models.SimplePlayer> SearchPlayer(string q)
+        private List<Models.Player> SearchPlayer(string q)
         {
-            List<Models.SimplePlayer> result;
+            List<Models.Player> result;
             lock (Server.containerLock)
                 result = Server.container.Players.Where(
                     p => p.CharacterName.ToLower().Contains(q) || p.SteamName.ToLower().Contains(q)
-                    ).Select(p => new Models.SimplePlayer()
+                    ).Select(p => new Models.Player()
                     {
                         Id = p.Id,
+                        SteamId = p.SteamId,
                         CharacterName = p.CharacterName,
                         SteamName = p.SteamName,
                         AvatarUrl = p.AvatarUrl,
                         Level = p.Level,
-                        Online = p.Online
+                        Online = p.Online,
+                        Tribe = new Models.SimpleTribe()
+                        {
+                            Id = p.Tribe.Id,
+                            Name = p.Tribe.Name,
+                            Owner = p.Tribe.OwnerId.Value,
+                            Members = p.Tribe.Players.Count
+                        },
+                        ProfileUrl = p.ProfileUrl,
+                        Created = p.FileCreated,
+                        Updated = p.FileUpdated
+
                     }).ToList();
             return result;
         }
@@ -83,6 +95,7 @@ namespace ArkData.Server
                     NumberOfGameBans = player.NumberOfGameBans,
                     NumberOfVACBans = player.NumberOfVACBans,
                     Created = player.FileCreated,
+                    Updated = player.FileUpdated,
                     Online = player.Online,
                     Tribe = new Models.SimpleTribe()
                     {
@@ -136,18 +149,30 @@ namespace ArkData.Server
         }
 
         [HttpGet, Authorization]
-        public List<Models.SimplePlayer> Online()
+        public List<Models.Player> Online()
         {
-            List<Models.SimplePlayer> players;
+            List<Models.Player> players;
             lock (Server.containerLock)
-                players = Server.container.Players.Where(p => p.Online).Select(p => new Models.SimplePlayer()
+                players = Server.container.Players.Where(p => p.Online).Select(p => new Models.Player()
                 {
                     Id = p.Id,
+                    SteamId = p.SteamId,
                     CharacterName = p.CharacterName,
                     SteamName = p.SteamName,
                     AvatarUrl = p.AvatarUrl,
                     Level = p.Level,
-                    Online = p.Online
+                    Online = p.Online,
+                    Tribe = new Models.SimpleTribe()
+                    {
+                        Id = p.Tribe.Id,
+                        Name = p.Tribe.Name,
+                        Owner = p.Tribe.OwnerId.Value,
+                        Members = p.Tribe.Players.Count
+                    },
+                    ProfileUrl = p.ProfileUrl,
+                    Created = p.FileCreated,
+                    Updated = p.FileUpdated
+                    
                 }).ToList();
             return players;
         }
