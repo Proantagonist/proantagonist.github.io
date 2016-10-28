@@ -29,30 +29,82 @@ namespace ArkData.Server
         {
             List<Models.Player> result;
             lock (Server.containerLock)
-                result = Server.container.Players.Where(
-                    p => p.CharacterName.ToLower().Contains(q) || p.SteamName.ToLower().Contains(q)
-                    ).Select(p => new Models.Player()
-                    {
-                        Id = p.Id,
-                        SteamId = p.SteamId,
-                        CharacterName = p.CharacterName,
-                        SteamName = p.SteamName,
-                        AvatarUrl = p.AvatarUrl,
-                        Level = p.Level,
-                        Online = p.Online,
-                        Tribe = new Models.SimpleTribe()
-                        {
-                            Id = p.Tribe.Id,
-                            Name = p.Tribe.Name,
-                            Owner = p.Tribe.OwnerId.Value,
-                            Members = p.Tribe.Players.Count
-                        },
-                        ProfileUrl = p.ProfileUrl,
-                        Created = p.FileCreated,
-                        Updated = p.FileUpdated
 
-                    }).ToList();
+                result = Server.container.Players.Where(
+                p => p.CharacterName.ToLower().Contains(q) || p.SteamName.ToLower().Contains(q)
+                ).Select(
+                    p => createNewPlayerFromQuery(p)
+                    //p => new Models.Player()
+                    //{
+                    //    Id = p.Id,
+                    //    SteamId = p.SteamId,
+                    //    CharacterName = p.CharacterName,
+                    //    SteamName = p.SteamName,
+                    //    AvatarUrl = p.AvatarUrl,
+                    //    Level = p.Level,
+                    //    Online = p.Online,
+                    //    Tribe = new Models.SimpleTribe()
+                    //    {
+                    //        Id = p.Tribe.Id,
+                    //        Name = p.Tribe.Name,
+                    //        Owner = p.Tribe.OwnerId.Value,
+                    //        Members = p.Tribe.Players.Count
+                    //    },
+                    //    ProfileUrl = p.ProfileUrl,
+                    //    Created = p.FileCreated,
+                    //    Updated = p.FileUpdated
+
+                    //}
+                  
+                    ).ToList();
+                
             return result;
+        }
+
+        private Models.Player createNewPlayerFromQuery(Player p)
+        {
+            Models.Player ret = new Models.Player();
+            try
+            {
+                ret.Id = p.Id;
+                ret.SteamId = p.SteamId;
+                ret.CharacterName = p.CharacterName;
+                ret.SteamName = p.SteamName;
+                ret.AvatarUrl = p.AvatarUrl;
+                ret.Level = p.Level;
+                ret.Online = p.Online;
+                ret.ProfileUrl = p.ProfileUrl;
+                ret.Created = p.FileCreated;
+                ret.Updated = p.FileUpdated;
+                Models.SimpleTribe tribe = new Models.SimpleTribe();
+                tribe.Id = p.Tribe.Id;
+                tribe.Name = p.Tribe.Name;
+                tribe.Owner = p.Tribe.OwnerId.Value;
+                tribe.Members = p.Tribe.Players.Count;
+                ret.Tribe = tribe;
+            }
+            catch (NullReferenceException e)
+            {
+                ret.Id = p.Id;
+                ret.SteamId = p.SteamId;
+                ret.CharacterName = p.CharacterName;
+                ret.SteamName = p.SteamName;
+                ret.AvatarUrl = p.AvatarUrl;
+                ret.Level = p.Level;
+                ret.Online = p.Online;
+                ret.ProfileUrl = p.ProfileUrl;
+                ret.Created = p.FileCreated;
+                ret.Updated = p.FileUpdated;
+                Models.SimpleTribe tribe = null;
+                ret.Tribe = tribe;
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
+            return ret;
         }
 
         private List<Models.SimpleTribe> SearchTribe(string q)
