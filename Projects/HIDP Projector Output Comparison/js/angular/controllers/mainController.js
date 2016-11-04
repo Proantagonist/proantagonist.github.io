@@ -113,7 +113,7 @@ app.controller('mainController', ['$scope', '$stateParams', '$state', '$filter',
 
 
         $scope.generateHash = function () {
-            var hash = "#/?";
+            var hash = "?";
             var keys = Object.keys($scope.locationHashProperties);
             for (i = 0; i < keys.length; i++) {
                 if ($scope.locationHashProperties[keys[i]] != undefined && $scope.locationHashProperties[keys[i]] != "") {
@@ -123,8 +123,7 @@ app.controller('mainController', ['$scope', '$stateParams', '$state', '$filter',
                     }
                 }
             }
-            location.hash = hash;
-            console.log('hash');
+            $scope.hash = window.location.origin + window.location.pathname + '#/' + hash;
         }
     }
 
