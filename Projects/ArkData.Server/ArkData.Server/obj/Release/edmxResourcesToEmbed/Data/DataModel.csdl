@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="OSecret">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Secret" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="OToken" Relationship="Self.FK_OToken_OSecret" FromRole="OSecret" ToRole="OToken" />
+  </EntityType>
+  <EntityType Name="OToken">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="OSecret" Relationship="Self.FK_OToken_OSecret" FromRole="OToken" ToRole="OSecret" />
+  </EntityType>
+  <EntityType Name="XToken">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="XUser" Relationship="Self.FK_XToken_User" FromRole="XToken" ToRole="XUser" />
+  </EntityType>
+  <EntityType Name="XUser">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="XToken" Relationship="Self.FK_XToken_User" FromRole="XUser" ToRole="XToken" />
+  </EntityType>
+  <Association Name="FK_OToken_OSecret">
+    <End Role="OSecret" Type="Self.OSecret" Multiplicity="1" />
+    <End Role="OToken" Type="Self.OToken" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="OSecret">
+        <PropertyRef Name="Key" />
+      </Principal>
+      <Dependent Role="OToken">
+        <PropertyRef Name="Key" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XToken_User">
+    <End Role="XUser" Type="Self.XUser" Multiplicity="1" />
+    <End Role="XToken" Type="Self.XToken" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="XUser">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="XToken">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="OSecrets" EntityType="Self.OSecret" />
+    <EntitySet Name="OTokens" EntityType="Self.OToken" />
+    <EntitySet Name="XTokens" EntityType="Self.XToken" />
+    <EntitySet Name="XUsers" EntityType="Self.XUser" />
+    <AssociationSet Name="FK_OToken_OSecret" Association="Self.FK_OToken_OSecret">
+      <End Role="OSecret" EntitySet="OSecrets" />
+      <End Role="OToken" EntitySet="OTokens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XToken_User" Association="Self.FK_XToken_User">
+      <End Role="XUser" EntitySet="XUsers" />
+      <End Role="XToken" EntitySet="XTokens" />
+    </AssociationSet>
+    <EntitySet Name="Settings" EntityType="DataModel.Setting" />
+  </EntityContainer>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="Key" />
+    </Key>
+    <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
