@@ -77,7 +77,7 @@ sans-serif;
 @roboto: 'Roboto',
 sans-serif;
 html {
-    color: @light-grey;
+    color: @dark-grey;
     font-family: @roboto;
     font-size: 16px;
     font-weight: 400;
@@ -108,7 +108,7 @@ li {
     margin-top: 1rem;
     p {
         color: #9E9E9E;
-        font-weight: 600;
+        font-weight: 400;
     }
 }
 
@@ -121,17 +121,14 @@ h2,
 h3,
 h4 {
     font-family: @roboto;
-    //    font-weight: 400;
 }
 
 h1 {
     font-size: 2.5rem;
-    font-weight: 400;
 }
 
 h2 {
     font-size: 1.75rem;
-    font-weight: 300;
     margin-top: .4rem;
     margin-bottom: .2rem;
 }
@@ -154,6 +151,11 @@ a {
     position: relative;
     text-decoration: none;
 }
+
+strong{
+    font-weight: 400;
+}
+
 
 nav a {
     //CAUTION: Heavy use overflow: hidden; !important declarations in this selector. Nav anchors will have their own style and cannot negate [nav a].
@@ -206,7 +208,7 @@ body {
 }
 
 body {
-    background: @background;
+    background: #F5F5F5;
 }
 
 body > header {
