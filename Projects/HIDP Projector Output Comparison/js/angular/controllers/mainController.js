@@ -50,7 +50,7 @@ app.controller('mainController', ['$scope', '$stateParams', '$state', '$filter',
             $scope.generateHash();
 
             if (value) {
-                        var path = 'http://proantagonist.github.io/Projects/HIDP%20Projector%20Output%20Comparison/' + 'img/' + value + '/' + value + '-' + $scope.locationHashProperties.step + '.jpg'; //Server path. Uncomment before uploading.
+                        var path = 'https://proantagonist.github.io/Projects/HIDP%20Projector%20Output%20Comparison/' + 'img/' + value + '/' + value + '-' + $scope.locationHashProperties.step + '.jpg'; //Server path. Uncomment before uploading.
 //                path = window.location.origin + '/img/' + value + '/' + value + '-' + $scope.locationHashProperties.step + '.jpg'; //Local path. Comment before uploading
             }
 
